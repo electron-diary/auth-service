@@ -10,3 +10,4 @@ class DomainValidationError(DomainException):
 class AuthentificationError(DomainException):
     pass
 
+

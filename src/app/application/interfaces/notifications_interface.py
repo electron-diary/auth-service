@@ -15,7 +15,6 @@ class NotificationsInterface(Protocol):
             'method must be implemented by subclasses'
         )
     
-
     @abstractmethod
     async def send_push_notification(self: Self) -> None:
         raise NotImplementedError(

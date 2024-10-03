@@ -42,7 +42,7 @@ class GetUserUseCase(Interactor[UserUUID, GetUserResponse]):
         self.user_interface: UserInterface = user_interface
 
     async def __call__(self: Self, request: UserUUID) -> GetUserResponse:
-        user_entity: UserEntity = await self.user_interface.get_user(
+        user_entity: UserEntity = await self.user_interface.get_user_by_uuid(
             user_uuid=request
         )
         return GetUserResponse.from_entity(user=user_entity)
