@@ -15,18 +15,14 @@ from src.app.domain.user.value_objects import UserStatus
 from src.app.application.dto.auth.request_dto import UserLoginRequest, RegisterUserRequest
 from app.application.interfaces.interactor import Interactor
 from src.app.domain.user.repositories import UserInterface
-from src.app.application.interfaces.notifications_interface import NotificationsInterface
 from src.app.domain.common.exceptions import AuthentificationError
 
 
 class LoginUserUseCase(Interactor[UserLoginRequest, UserUUID]):
     def __init__(
         self: Self, user_interface: UserInterface, 
-        notifications_interface: NotificationsInterface
     ) -> None:
         self.user_interface: UserInterface = user_interface
-        self.notifications_interface: NotificationsInterface = notifications_interface
-
     async def __call__(self: Self, request: UserLoginRequest) -> UserUUID:
         user: UserEntity = await self.user_interface.get_user_by_contact(
             user_contact=UserContact(object=request.user_contact)
@@ -35,18 +31,15 @@ class LoginUserUseCase(Interactor[UserLoginRequest, UserUUID]):
             raise AuthentificationError('email or password are incorrect')
         if user.user_password != request.user_password:
             raise AuthentificationError('email or password are incorrect')
-        # await self.notifications_interface.send_email_notification()
         return UserUUID(object=user.user_uuid)
         
             
 class RegisterUserUseCase(Interactor[RegisterUserRequest, UserUUID]):
     def __init__(
         self: Self, user_interface: UserInterface,
-        notifications_interface: NotificationsInterface
 
     ) -> None:
         self.user_interface: UserInterface = user_interface
-        self.notifications_interface: NotificationsInterface = notifications_interface
 
     async def __call__(self: Self, request: RegisterUserRequest) -> UserUUID:
         if await self.user_interface.get_user_by_contact(
@@ -64,7 +57,6 @@ class RegisterUserUseCase(Interactor[RegisterUserRequest, UserUUID]):
             user_created_at=UserCreatedAt(object=date_time),
             user_updated_at=UserUpdatedAt(object=date_time)
         )
-        # await self.notifications_interface.send_email_notification()
         return UserUUID(object=user_uuid)
         
 
