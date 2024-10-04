@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "user-service"
+version = "0.1.0"
+description = ""
+authors = ["NxtaSunstrike <unixalle765@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.12.4"
+sqlalchemy = "^2.0.35"
+faststream = {extras = ["nats"], version = "^0.5.25"}
+asyncpg = "^0.29.0"
+pytest = "^8.3.3"
+gunicorn = "^23.0.0"
+uvicorn = "^0.31.0"
+pyjwt = "^2.9.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
