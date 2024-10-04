@@ -5,19 +5,31 @@ from src.app.domain.user.value_objects import UserUUID
 
 class JwtTokenInterface(Protocol):
     @abstractmethod
-    def decode_token(self: Self, token: str) -> UserUUID:
+    def encode_access_token(self: Self, user_id: UserUUID) -> str:
         raise NotImplementedError(
             'method must be implemented by subclasses'
         )
     
     @abstractmethod
-    def encode_token(self: Self, payload: dict[UserUUID]) -> str:
+    def encode_refresh_token(self: Self, user_id: UserUUID) -> str:
         raise NotImplementedError(
             'method must be implemented by subclasses'
         )
     
     @abstractmethod
-    def validate_token(self: Self, token: str) -> bool:
+    def decode_token(self: Self, token: str) -> dict[str]:
+        raise NotImplementedError(
+            'method must be implemented by subclasses'
+        )
+    
+    @abstractmethod
+    def get_user_uuid_from_token(self: Self, token: str) -> UserUUID:
+        raise NotImplementedError(
+            'method must be implemented by subclasses'
+        )
+   
+    @abstractmethod
+    def update_refresh_token(self: Self, refresh_token: str) -> str:
         raise NotImplementedError(
             'method must be implemented by subclasses'
         )
