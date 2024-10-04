@@ -20,11 +20,9 @@ class UserEntity(DomainEntity[UserUUID]):
     user_name: UserName
     user_contact: UserContact
     user_password: UserPassword
-    user_ip: list[UserIp]
     user_status: UserStatus
     user_created_at: UserCreatedAt
     user_updated_at: UserUpdatedAt
-    user_refresh_token: list[UserRefreshToken]
 
     @staticmethod
     def create(
@@ -32,20 +30,16 @@ class UserEntity(DomainEntity[UserUUID]):
         user_name: str,
         user_contact: str | int,
         user_password: str,
-        user_ip: list[str],
         user_status: str,
         user_created_at: datetime,
         user_updated_at: datetime,
-        user_refresh_token: list[str]
     ) -> 'UserEntity':
         return UserEntity(
             uuid=UserUUID(object=uuid),
             user_name=UserName(object=user_name),
             user_contact=UserContact(object=user_contact),
             user_password=UserPassword(object=user_password),
-            user_ip=list(UserIp(object=user_ip)),
             user_status=user_status,
             user_created_at=UserCreatedAt(user_created_at),
             user_updated_at=UserUpdatedAt(user_updated_at),
-            user_refresh_token=list(UserRefreshToken(user_refresh_token))
         )

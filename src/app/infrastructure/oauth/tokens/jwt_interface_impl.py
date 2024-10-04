@@ -4,7 +4,7 @@ import jwt
 from jwt.exceptions import PyJWTError
 
 from src.app.domain.user.value_objects import UserUUID
-from src.app.infrastructure.oauth.jwt_interface import JwtTokenInterface
+from src.app.infrastructure.oauth.tokens.jwt_interface import JwtTokenInterface
 from src.app.domain.common.exceptions import AuthentificationError
 
 
