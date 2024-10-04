@@ -7,10 +7,8 @@ from src.app.domain.user.value_objects import UserUUID
 from src.app.domain.user.value_objects import UserName
 from src.app.domain.user.value_objects import UserContact
 from src.app.domain.user.value_objects import UserPassword
-from src.app.domain.user.value_objects import UserIp
 from src.app.domain.user.value_objects import UserCreatedAt
 from src.app.domain.user.value_objects import UserUpdatedAt
-from src.app.domain.user.value_objects import UserRefreshToken
 from src.app.domain.user.value_objects import UserStatus
 from src.app.application.dto.user.request_dto import CreateUserRequest
 from src.app.application.dto.user.response_dto import GetUserResponse
@@ -28,8 +26,6 @@ class CreateUserUseCase(Interactor[CreateUserRequest, UserUUID]):
             user_name=UserName(object=request.user_name),
             user_contact=UserContact(object=request.user_contact),
             user_password=UserPassword(object=request.user_password),
-            user_ip=UserIp(object=...),
-            user_refresh_token=UserRefreshToken(object=...),
             user_status=UserStatus(object=False),
             user_created_at=UserCreatedAt(object=date_time),
             user_updated_at=UserUpdatedAt(object=date_time)

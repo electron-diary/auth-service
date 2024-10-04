@@ -6,10 +6,8 @@ from src.app.domain.user.value_objects import UserUUID
 from src.app.domain.user.value_objects import UserName
 from src.app.domain.user.value_objects import UserContact
 from src.app.domain.user.value_objects import UserPassword
-from src.app.domain.user.value_objects import UserIp
 from src.app.domain.user.value_objects import UserCreatedAt
 from src.app.domain.user.value_objects import UserUpdatedAt
-from src.app.domain.user.value_objects import UserRefreshToken
 from src.app.domain.user.value_objects import UserStatus
 
 
@@ -20,8 +18,6 @@ class UserInterface(Protocol):
         user_name: UserName,
         user_contact: UserContact,
         user_password: UserPassword,
-        user_ip: UserIp,
-        user_refresh_token: UserRefreshToken,
         user_status: UserStatus,
         user_created_at: UserCreatedAt,
         user_updated_at: UserUpdatedAt

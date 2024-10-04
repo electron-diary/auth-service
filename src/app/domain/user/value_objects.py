@@ -76,24 +76,7 @@ class UserPassword(DomainValueObject[str]):
             raise DomainValidationError(
                 "User password must be less than 20 characters long"
             )
-    
-@dataclass(frozen=True)
-class UserIp(DomainValueObject[str]):
-    def validate(self: Self) -> None:
-        if not self.object:
-            raise DomainValidationError(
-                "User IP cannot be empty"
-            )
-        if not isinstance(self.object, str):
-            raise DomainValidationError(
-                "User IP must be a string"
-            )
 
-        if not ipaddress.ip_address(self.object):
-            raise DomainValidationError(
-                "User IP must be a valid IP address"
-            )
-        
 @dataclass(frozen=True)
 class UserCreatedAt(DomainValueObject[datetime]):
     def validate(self: Self) -> None:
@@ -128,26 +111,6 @@ class UserUpdatedAt(DomainValueObject[datetime]):
         if not isinstance(self.object, datetime):
             raise DomainValidationError(
                 "User updated at must be a datetime"
-            )
-        
-@dataclass(frozen=True)
-class UserRefreshToken(DomainValueObject[str]):
-    def validate(self: Self) -> None:
-        if not self.object:
-            raise DomainValidationError(
-                "User refresh token cannot be empty"
-            )
-        if not isinstance(self.object, str):
-            raise DomainValidationError(
-                "User refresh token must be a string"
-            )
-        if not base64.decode(self.object):
-            raise DomainValidationError(
-                "User refresh token must be a valid base64 string"
-            )
-        if len(self.object.split('.')) != 3:
-            raise DomainValidationError(
-                "User refresh token must be a valid JWT token"
             )
         
 @dataclass(frozen=True)
