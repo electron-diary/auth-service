@@ -10,7 +10,6 @@ class NotificationsService(NotificationsInterface):
     def __init__(self: Self, broker: NatsBroker) -> None:
         self.broker: NatsBroker = broker
         
-
     async def send_email_notification(self: Self) -> None:
         async with self.broker as broker:
             await broker.publish(
