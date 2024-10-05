@@ -11,3 +11,10 @@ class IdentityProvider(Protocol):
             'method must be implemented by subclasses'
         )
     
+    @abstractmethod
+    async def get_user_role(self: Self) -> str:
+        raise NotImplementedError(
+            'method must be implemented by subclasses'
+        )
+
+    
