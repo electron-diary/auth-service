@@ -10,7 +10,6 @@ class GetUserResponse:
     uuid: UUID
     user_name: str
     user_contact: str
-    user_status: bool
     user_created_at: datetime
     user_updated_at: datetime
 
@@ -20,7 +19,6 @@ class GetUserResponse:
             uuid=user.uuid.object,
             user_name=user.user_name.object,
             user_contact=user.user_contact.object,
-            user_status=user.user_status.object,
             user_created_at=user.user_created_at.object,
             user_updated_at=user.user_updated_at.object,
         )

@@ -5,10 +5,8 @@ from src.app.domain.user.entity import UserEntity
 from src.app.domain.user.value_objects import UserUUID
 from src.app.domain.user.value_objects import UserName
 from src.app.domain.user.value_objects import UserContact
-from src.app.domain.user.value_objects import UserPassword
 from src.app.domain.user.value_objects import UserCreatedAt
 from src.app.domain.user.value_objects import UserUpdatedAt
-from src.app.domain.user.value_objects import UserStatus
 
 
 class UserInterface(Protocol):
@@ -17,8 +15,6 @@ class UserInterface(Protocol):
         self: Self,
         user_name: UserName,
         user_contact: UserContact,
-        user_password: UserPassword,
-        user_status: UserStatus,
         user_created_at: UserCreatedAt,
         user_updated_at: UserUpdatedAt
     ) -> UserUUID:

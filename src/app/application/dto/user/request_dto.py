@@ -7,6 +7,4 @@ from datetime import datetime
 class CreateUserRequest:
     user_name: str
     user_contact: str | int
-    user_password: str
 
-    

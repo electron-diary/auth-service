@@ -17,4 +17,4 @@ class IdentityProvider(Protocol):
             'method must be implemented by subclasses'
         )
 
-    
+

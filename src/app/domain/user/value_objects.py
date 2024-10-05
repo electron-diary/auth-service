@@ -56,39 +56,7 @@ class UserContact(DomainValueObject[str | int]):
             raise DomainValidationError(
                 "User contact must be less than 20 characters long"
             )
-        
-@dataclass(frozen=True)
-class UserPassword(DomainValueObject[str]):
-    def validate(self: Self) -> None:
-        if not self.object:
-            raise DomainValidationError(
-                "User password cannot be empty"
-            )
-        if not isinstance(self.object, str):
-            raise DomainValidationError(
-                "User password must be a string"
-            )
-        if len(self.object) < 8:
-            raise DomainValidationError(
-                "User password must be at least 8 characters long"
-            )
-        if len(self.object) > 20:
-            raise DomainValidationError(
-                "User password must be less than 20 characters long"
-            )
 
-@dataclass(frozen=True)
-class UserCreatedAt(DomainValueObject[datetime]):
-    def validate(self: Self) -> None:
-        if not self.object:
-            raise DomainValidationError(
-                "User created at cannot be empty"
-            )
-        if not isinstance(self.object, datetime):
-            raise DomainValidationError(
-                "User created at must be a datetime"
-            )
-        
 @dataclass(frozen=True)
 class UserCreatedAt(DomainValueObject[datetime]):
     def validate(self: Self) -> None:
@@ -112,19 +80,5 @@ class UserUpdatedAt(DomainValueObject[datetime]):
             raise DomainValidationError(
                 "User updated at must be a datetime"
             )
-        
-@dataclass(frozen=True)
-class UserStatus(DomainValueObject[bool]):
-    def validate(self: Self) -> None:
-        if not self.object:
-            raise DomainValidationError(
-                "User status cannot be empty"
-            )
-        if not isinstance(self.object, bool):
-            raise DomainValidationError(
-                "User status must be a string"
-            )
-
-        
 
         
