@@ -16,9 +16,9 @@ class GetUserResponse:
     @staticmethod
     def from_entity(user: UserEntity) -> 'GetUserResponse':
         return GetUserResponse(
-            uuid=user.uuid.object,
-            user_name=user.user_name.object,
-            user_contact=user.user_contact.object,
-            user_created_at=user.user_created_at.object,
-            user_updated_at=user.user_updated_at.object,
+            uuid=user.uuid.to_raw(),
+            user_name=user.user_name.to_raw(),
+            user_contact=user.user_contact.to_raw(),
+            user_created_at=user.user_created_at.to_raw(),
+            user_updated_at=user.user_updated_at.to_raw(),
         )
