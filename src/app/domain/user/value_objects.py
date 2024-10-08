@@ -12,7 +12,7 @@ from src.app.domain.common.exceptions import DomainValidationError
 @dataclass(frozen=True)
 class UserUUID(DomainValueObject[UUID]):
     def validate(self: Self) -> None:
-        if not self.object:
+        if not self.to_raw():
             raise DomainValidationError(
                 "User UUID cannot be empty"
             )
@@ -24,19 +24,19 @@ class UserUUID(DomainValueObject[UUID]):
 @dataclass(frozen=True)
 class UserName(DomainValueObject[str]):
     def validate(self: Self) -> None:
-        if not self.object:
+        if not self.to_raw():
             raise DomainValidationError(
                 "User name cannot be empty"
             )
-        if not isinstance(self.object, str):
+        if not isinstance(self.to_raw(), str):
             raise DomainValidationError(
                 "User name must be a string"
             )
-        if len(self.object) < 3:
+        if len(self.to_raw()) < 3:
             raise DomainValidationError(
                 "User name must be at least 3 characters long"
             )
-        if len(self.object) > 20:
+        if len(self.to_raw()) > 20:
             raise DomainValidationError(
                 "User name must be less than 50 characters long"
             )
@@ -44,15 +44,15 @@ class UserName(DomainValueObject[str]):
 @dataclass(frozen=True)
 class UserContact(DomainValueObject[str | int]):
     def validate(self: Self) -> None:
-        if not self.object:
+        if not self.to_raw():
             raise DomainValidationError(
                 "User contact cannot be empty"
             )
-        if not isinstance(self.object, (str, int)):
+        if not isinstance(self.to_raw(), (str, int)):
             raise DomainValidationError(
                 "User contact must be a string or an integer"
             )
-        if isinstance(self.object, str) and len(self.object) > 20:
+        if isinstance(self.to_raw(), str) and len(self.object) > 20:
             raise DomainValidationError(
                 "User contact must be less than 20 characters long"
             )
@@ -60,11 +60,11 @@ class UserContact(DomainValueObject[str | int]):
 @dataclass(frozen=True)
 class UserCreatedAt(DomainValueObject[datetime]):
     def validate(self: Self) -> None:
-        if not self.object:
+        if not self.to_raw():
             raise DomainValidationError(
                 "User created at cannot be empty"
             )
-        if not isinstance(self.object, datetime):
+        if not isinstance(self.to_raw(), datetime):
             raise DomainValidationError(
                 "User created at must be a datetime"
             )
@@ -72,11 +72,11 @@ class UserCreatedAt(DomainValueObject[datetime]):
 @dataclass(frozen=True)
 class UserUpdatedAt(DomainValueObject[datetime]):
     def validate(self: Self) -> None:
-        if not self.object:
+        if not self.to_raw():
             raise DomainValidationError(
                 "User updated at cannot be empty"
             )
-        if not isinstance(self.object, datetime):
+        if not isinstance(self.to_raw(), datetime):
             raise DomainValidationError(
                 "User updated at must be a datetime"
             )

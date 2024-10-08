@@ -9,5 +9,8 @@ class DomainValueObject[ObjectType]:
     def validate(self: Self) -> None:
         pass
 
+    def to_raw(self: Self) -> ObjectType:
+        return self.object
+
     def __post_init__(self: Self) -> None:
         self.validate()
