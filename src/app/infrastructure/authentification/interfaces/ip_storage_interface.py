@@ -24,9 +24,10 @@ class UserIpInterface(Protocol):
         )
     
     @abstractmethod
-    async def remove_all_user_ips(self: Self) -> None:
+    async def remove_all_user_ips(self: Self, user_id: str) -> None:
         raise NotImplementedError(
             'method must be implemented by subclasses'
         )
     
     
+
