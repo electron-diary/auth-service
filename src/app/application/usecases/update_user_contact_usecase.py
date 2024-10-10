@@ -1,8 +1,8 @@
 from typing import Self
 from datetime import datetime
 
-from src.app.application.dto.user.request_dto import UpdateUserContactRequest
-from src.app.application.dto.user.response_dto import UpdateUserContactResponse
+from src.app.application.dto.request_dto import UpdateUserContactRequest
+from src.app.application.dto.response_dto import UpdateUserContactResponse
 from src.app.domain.user.repositories import UserInterface
 from src.app.application.interfaces.interactor import Interactor
 from src.app.domain.user.value_objects import UserContact, UserUpdatedAt, UserUUID

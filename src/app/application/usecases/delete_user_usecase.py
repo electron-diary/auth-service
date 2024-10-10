@@ -2,7 +2,7 @@ from typing import Self
 
 from src.app.domain.user.repositories import UserInterface
 from src.app.domain.user.value_objects import UserUUID
-from src.app.application.dto.user.request_dto import DeleteUserRequest
+from src.app.application.dto.request_dto import DeleteUserRequest
 from src.app.application.interfaces.interactor import Interactor
 
 
