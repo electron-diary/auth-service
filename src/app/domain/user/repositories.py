@@ -35,7 +35,13 @@ class UserInterface(Protocol):
         )
     
     @abstractmethod
-    async def get_user_by_contact(self: Self, user_contact: UserContact) -> UserEntity:
+    async def update_user_name(self: Self, user_uuid: UserUUID, user_name: UserName) -> UserName:
+        raise NotImplementedError(
+            'method must be implemented by subclasses'
+        )
+    
+    @abstractmethod
+    async def update_user_contact(self: Self, user_uuid: UserUUID, user_contact: UserContact) -> UserContact:
         raise NotImplementedError(
             'method must be implemented by subclasses'
         )
