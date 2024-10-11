@@ -6,11 +6,13 @@ from src.app.application.dto.response_dto import UpdateUserContactResponse
 from src.app.domain.user.repositories import UserInterface
 from src.app.application.interfaces.interactor import Interactor
 from src.app.domain.user.value_objects import UserContact, UserUpdatedAt, UserUUID
+from src.app.application.interfaces.uow import UnitOfWork
 
 
 class UpdateUserContactUseCase(Interactor[UpdateUserContactRequest, UpdateUserContactResponse]):
-    def __init__(self: Self, user_interface: UserInterface) -> None:
+    def __init__(self: Self, user_interface: UserInterface, uow: UnitOfWork) -> None:
         self.user_interface: UserInterface = user_interface
+        self.uow: UnitOfWork = uow
 
     async def __call__(self: Self, request: UpdateUserContactRequest) -> UpdateUserContactResponse:
         datetime_now: datetime = datetime.now()
@@ -19,4 +21,5 @@ class UpdateUserContactUseCase(Interactor[UpdateUserContactRequest, UpdateUserCo
             user_contact=UserContact(request.user_contact),
             user_updated_at=UserUpdatedAt(datetime_now),
         )
+        await self.uow.commit()
         return UpdateUserContactResponse.from_entity(new_user_contact=new_user_contact)
