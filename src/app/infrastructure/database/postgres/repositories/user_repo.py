@@ -33,6 +33,7 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
             result: UUID = result.scalars().first()
         except IntegrityError:
             raise UserAlreadyExistsError(f'User with this contact already exists')
+        
         return UserUUID(result)
     
     async def delete_user(self: Self, user_uuid: UserUUID) -> None:
@@ -49,6 +50,7 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
             result: str = result.scalars().first()
         except IntegrityError:
             raise UserNotFoundError(f"User with uuid {user_uuid} not found")
+        
         return UserContact(result)
     
     async def update_user_name(self: Self, user_uuid: UserUUID, user_name: UserName) -> UserName:
@@ -58,6 +60,7 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
             result: str = result.scalars().first()
         except IntegrityError:
             raise UserNotFoundError(f"User with uuid {user_uuid} not found")
+        
         return UserName(result)
 
 
