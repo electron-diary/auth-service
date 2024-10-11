@@ -6,14 +6,13 @@ from faststream.nats.broker import NatsBroker
 from src.app.infrastructure.brokers.config import NatsConfig
 
 
-class ConnectionFactory:
+class BrokerFactory:
     def __init__(self: Self, config: NatsConfig) -> None:
         self.config: NatsConfig = config
 
-    async def get_connection(self: Self) -> Client:
+    def get_broker(self: Self) -> Broker:
         broker: Broker = NatsBroker(
             servers=[self.config.nats_uri],
             log_level=logging.INFO
         )
-
-        return await broker.connect()
+        return broker
