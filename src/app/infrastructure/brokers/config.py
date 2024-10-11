@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Self
 
 @dataclass(frozen=True)
 class NatsConfig:
@@ -7,6 +8,6 @@ class NatsConfig:
     user: str = None
     password: str = None
 
-    @staticmethod
-    def nats_uri() -> str:
-        return f"nats://{NatsConfig.host}:{NatsConfig.port}"
+    @property
+    def nats_uri(self: Self) -> str:
+        return f"nats://{self.host}:{self.port}"

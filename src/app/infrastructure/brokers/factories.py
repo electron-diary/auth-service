@@ -12,7 +12,7 @@ class ConnectionFactory:
 
     async def get_connection(self: Self) -> Client:
         broker: Broker = NatsBroker(
-            servers=[self.config.nats_uri()],
+            servers=[self.config.nats_uri],
             log_level=logging.INFO
         )
 
