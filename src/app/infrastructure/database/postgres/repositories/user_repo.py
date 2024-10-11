@@ -32,7 +32,7 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
             result = await self.session.execute(statement=stmt)
             result: UUID = result.scalars().first()
         except IntegrityError:
-            raise UserAlreadyExistsError(f'User with this contact already exists')
+            raise UserAlreadyExistsError(f'User with {user_contact} already exists')
         
         return UserUUID(result)
     
