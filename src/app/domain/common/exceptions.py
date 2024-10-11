@@ -7,7 +7,5 @@ class DomainException(Exception):
 class DomainValidationError(DomainException):
     pass
 
-class AuthentificationError(DomainException):
-    pass
 
 
