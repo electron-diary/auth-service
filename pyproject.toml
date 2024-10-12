@@ -6,18 +6,15 @@ authors = ["NxtaSunstrike <unixalle765@mail.ru>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.12.4"
+python = "3.12.6"
+uvicorn = "^0.31.1"
 sqlalchemy = "^2.0.35"
 asyncpg = "^0.29.0"
-gunicorn = "^23.0.0"
-elasticsearch = "^8.15.1"
 fastapi = "^0.115.2"
-faststream = {extras = ["all"], version = "^0.5.25"}
-uvicorn = "^0.31.1"
-dishka = {extras = ["develop"], version = "^1.3.0"}
+faststream = {extras = ["nats"], version = "^0.5.25"}
+dishka = "^1.3.0"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
