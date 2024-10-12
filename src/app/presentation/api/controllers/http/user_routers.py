@@ -2,8 +2,10 @@ from typing import Annotated
 from fastapi import APIRouter, status
 from dishka.integrations.fastapi import inject, FromDishka
 
-from src.app.application.dto.request_dto import CreateUserRequest, GetUserRequest, UpdateUserContactRequest, UpdateUserNameRequest, DeleteUserRequest
-from src.app.application.dto.response_dto import CreateUserResponse, GetUserResponse, UpdateUserContactResponse, UpdateUserNameResponse
+from src.app.application.dto.request_dto import CreateUserRequest, GetUserRequest, UpdateUserContactRequest
+from src.app.application.dto.request_dto import UpdateUserNameRequest, DeleteUserRequest
+from src.app.application.dto.response_dto import CreateUserResponse, GetUserResponse
+from src.app.application.dto.response_dto import UpdateUserContactResponse, UpdateUserNameResponse
 from src.app.application.interfaces.interactor import Interactor
 from src.app.application.usecases.create_user_usecase import CreateUserUseCase
 from src.app.application.usecases.get_user_usecase import GetUserUseCase
