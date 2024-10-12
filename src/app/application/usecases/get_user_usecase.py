@@ -3,7 +3,7 @@ from uuid import UUID
 from datetime import datetime
 
 from src.app.domain.user.entity import UserEntity
-from app.application.dto.request_dto import GetUserRequest
+from src.app.application.dto.request_dto import GetUserRequest
 from src.app.application.dto.response_dto import GetUserResponse
 from src.app.application.interfaces.interactor import Interactor
 from src.app.domain.user.repositories import UserInterface

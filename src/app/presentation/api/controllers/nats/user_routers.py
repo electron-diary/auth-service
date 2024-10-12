@@ -17,45 +17,45 @@ from src.app.application.usecases.delete_user_usecase import DeleteUserUseCase
 router: NatsRouter = NatsRouter(prefix='/users')
 
 
-@router.subscriber(stream='/create-user')
+@router.subscriber('/create-user')
 async def create_user(
-    user_shema: CreateUserRequest, interactor: Annotated[Interactor, FromDishka[CreateUserUseCase]]
+    user_shema: CreateUserRequest, interactor: FromDishka[CreateUserUseCase]
 ) -> CreateUserResponse:
     return await interactor(
         request=user_shema
     )
 
 
-@router.subscriber(stream='/get-user')
+@router.subscriber('/get-user')
 async def get_user(
-    user_shema: GetUserRequest, interactor: Annotated[Interactor, FromDishka[GetUserUseCase]]
+    user_shema: GetUserRequest, interactor: FromDishka[GetUserUseCase]
 ) -> GetUserResponse:
     return await interactor(
         request=user_shema
     )
 
 
-@router.subscriber(stream='/update-user-contact')
+@router.subscriber('/update-user-contact')
 async def update_user_contact(
-    user_shema: UpdateUserContactRequest, interactor: Annotated[Interactor, FromDishka[UpdateUserContactUseCase]]
+    user_shema: UpdateUserContactRequest, interactor: FromDishka[UpdateUserContactUseCase]
 ) -> UpdateUserContactResponse:
     return await interactor(
         request=user_shema
     )
 
 
-@router.subscriber(stream='/update-user-name')
+@router.subscriber('/update-user-name')
 async def update_user_name(
-    user_shema: UpdateUserNameRequest, interactor: Annotated[Interactor, FromDishka[UpdateUserNameUseCase]]
+    user_shema: UpdateUserNameRequest, interactor: FromDishka[UpdateUserNameUseCase]
 ) -> UpdateUserNameResponse:
     return await interactor(
         request=user_shema
     )
 
 
-@router.subscriber(stream='/delete-user')
+@router.subscriber('/delete-user')
 async def delete_user(
-    user_shema: DeleteUserRequest, interactor: Annotated[Interactor, FromDishka[DeleteUserUseCase]]
+    user_shema: DeleteUserRequest, interactor: FromDishka[DeleteUserUseCase]
 ) -> None:
     return await interactor(
         request=user_shema

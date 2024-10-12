@@ -16,8 +16,8 @@ class SqlaProvider(Provider):
         return PostgresConfig
     
     @provide(scope=Scope.APP)
-    async def provide_engine(self: Self, config: PostgresConfig) -> AsyncGenerator[AsyncEngine, None]:
-        return await postgres_engine(config = config)
+    def provide_engine(self: Self, config: PostgresConfig) -> AsyncEngine:
+        return postgres_engine(config = config)
     
     @provide(scope=Scope.APP)
     def provide_postgres_session_factory(self: Self, engine: AsyncEngine) -> async_sessionmaker[AsyncSession]:
@@ -28,9 +28,9 @@ class SqlaProvider(Provider):
         return await postgres_session(session_factory = session_factory)
 
     @provide(scope=Scope.REQUEST)
-    def provide_sqla_uow(self: Self, session: AsyncSession) -> SqlaUnitOfWork:
+    def provide_sqla_uow(self: Self, session: async_sessionmaker[AsyncSession]) -> SqlaUnitOfWork:
         return SqlaUnitOfWork(session = session)
     
     @provide(scope=Scope.REQUEST, provides=AnyOf[CommonSqlaRepo, UserInterface])
-    def provide_user_repository(self: Self, session: AsyncSession) -> UserRepositoryImpl:
+    def provide_user_repository(self: Self, session: async_sessionmaker[AsyncSession]) -> UserRepositoryImpl:
         return UserRepositoryImpl(session = session)

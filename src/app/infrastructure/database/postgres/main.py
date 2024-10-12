@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, AsyncEngin
 from src.app.infrastructure.database.postgres.config import PostgresConfig
 
 
-async def postgres_engine(config: PostgresConfig) -> AsyncGenerator[AsyncEngine, None]:
+def postgres_engine(config: PostgresConfig) -> AsyncEngine:
     engine: AsyncEngine = create_async_engine(
         url=config.postgres_url,
         echo=True,
@@ -15,10 +15,7 @@ async def postgres_engine(config: PostgresConfig) -> AsyncGenerator[AsyncEngine,
         json_deserializer=lambda json_str: json.loads(json_str, strict=False),
         pool_size=50
     )
-
-    yield engine
-
-    await engine.dispose()
+    return engine
 
 
 def postgres_session_factory(engine: AsyncEngine) -> async_sessionmaker[AsyncSession]:

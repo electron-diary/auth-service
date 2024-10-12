@@ -11,5 +11,5 @@ class HealthcheckResponse:
 
 
 @router.get('/', status_code=status.HTTP_200_OK, response_model=HealthcheckResponse)
-async def healthcheck():
+async def healthcheck() -> HealthcheckResponse:
     return HealthcheckResponse()
