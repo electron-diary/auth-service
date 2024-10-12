@@ -1,6 +1,7 @@
 from typing import Self, AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, AsyncSession
 from dishka import Provider, Scope, provide, AnyOf
+import logging
 
 from src.app.infrastructure.database.postgres.config import PostgresConfig
 from src.app.infrastructure.database.postgres.main import postgres_engine, postgres_session_factory
