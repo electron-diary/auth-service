@@ -1,22 +1,14 @@
-from dishka import AsyncContainer, make_async_container
+from fastapi import FastAPI
+from faststream import FastStream
+from dishka.integrations.fastapi import setup_dishka as setup_dishka_fastapi
+from dishka.integrations.faststream import setup_dishka as setup_dishka_faststream
 
-from src.app.infrastructure.dependency_injection.adapters.provide_nats_broker import NatsProvider
-from src.app.infrastructure.dependency_injection.adapters.provide_sqla_db import SqlaProvider
-from src.app.infrastructure.dependency_injection.usecases.provide_create_user_usecase import CreateUserUseCaseProvider
-from src.app.infrastructure.dependency_injection.usecases.provide_delete_user_usecase import DeleteUserUseCaseProvider
-from src.app.infrastructure.dependency_injection.usecases.provide_get_user_usecase import GetUserUseCaseProvider
-from src.app.infrastructure.dependency_injection.usecases.provide_update_user_contact_usecase import UpdateUserContactUseCaseProvider
-from src.app.infrastructure.dependency_injection.usecases.provide_update_user_name_usecase import UpdateUserNameUseCaseProvider
+from src.app.infrastructure.dependency_injection.factories import container_factory
 
 
-def container_factory() -> AsyncContainer:
-    container: AsyncContainer = make_async_container(
-        SqlaProvider(),
-        NatsProvider(),
-        CreateUserUseCaseProvider(),
-        DeleteUserUseCaseProvider(),
-        GetUserUseCaseProvider(),
-        UpdateUserContactUseCaseProvider(),
-        UpdateUserNameUseCaseProvider(),
-    )
-    return container
+def init_di_fastapi(app: FastAPI) -> None:
+    setup_dishka_fastapi(container = container_factory, app = app)
+
+
+def init_di_faststream(app: FastStream) -> None:
+    setup_dishka_faststream(container = container_factory, app = app)
