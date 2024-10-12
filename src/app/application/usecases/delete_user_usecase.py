@@ -7,7 +7,7 @@ from src.app.application.interfaces.interactor import Interactor
 from src.app.application.interfaces.uow import UnitOfWork
 
 
-class DeleteUserInteractor(Interactor[DeleteUserRequest, None]):
+class DeleteUserUseCase(Interactor[DeleteUserRequest, None]):
     def __init__(self: Self, user_interface: UserInterface, uow: UnitOfWork) -> None:
         self.user_interface: UserInterface = user_interface
         self.uow: UnitOfWork = uow

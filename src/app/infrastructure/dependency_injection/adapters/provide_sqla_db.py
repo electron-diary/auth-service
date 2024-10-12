@@ -1,9 +1,13 @@
 from typing import Self, AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, AsyncSession
-from dishka import Provider, Scope, provide
+from dishka import Provider, Scope, provide, AnyOf
 
 from src.app.infrastructure.database.postgres.config import PostgresConfig
 from src.app.infrastructure.database.postgres.main import postgres_engine, postgres_session, postgres_session_factory
+from src.app.infrastructure.database.postgres.uow import SqlaUnitOfWork
+from src.app.infrastructure.database.postgres.repositories.common_repo import CommonSqlaRepo
+from src.app.infrastructure.database.postgres.repositories.user_repo import UserRepositoryImpl
+from src.app.domain.user.repositories import UserInterface
 
 
 class SqlaProvider(Provider):
@@ -22,3 +26,11 @@ class SqlaProvider(Provider):
     @provide(scope=Scope.REQUEST)
     async def provide_postgres_session(self: Self, session_factory: async_sessionmaker[AsyncSession]) -> AsyncGenerator[AsyncSession, None]:
         return await postgres_session(session_factory = session_factory)
+
+    @provide(scope=Scope.REQUEST)
+    def provide_sqla_uow(self: Self, session: AsyncSession) -> SqlaUnitOfWork:
+        return SqlaUnitOfWork(session = session)
+    
+    @provide(scope=Scope.REQUEST, provides=AnyOf[CommonSqlaRepo, UserInterface])
+    def provide_user_repository(self: Self, session: AsyncSession) -> UserRepositoryImpl:
+        return UserRepositoryImpl(session = session)
