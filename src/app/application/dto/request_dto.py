@@ -1,9 +1,10 @@
 from dataclasses import dataclass
+from uuid import UUID
 
 
 @dataclass(frozen=True)
 class GetUserRequest:
-    user_uuid: str
+    user_uuid: UUID
 
 
 @dataclass(frozen=True)
@@ -14,16 +15,16 @@ class CreateUserRequest:
 
 @dataclass(frozen=True)
 class DeleteUserRequest:
-    user_uuid: str
+    user_uuid: UUID
 
 
 @dataclass(frozen=True)
 class UpdateUserContactRequest:
-    user_uuid: str
+    user_uuid: UUID
     user_contact: str | int
 
 
 @dataclass(frozen=True)
 class UpdateUserNameRequest:
-    user_uuid: str
+    user_uuid: UUID
     user_name: str

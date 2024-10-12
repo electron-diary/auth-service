@@ -8,7 +8,7 @@ from src.app.domain.user.value_objects import UserUUID, UserContact, UserName
 
 @dataclass(frozen=True)
 class CreateUserResponse:
-    uuid: str
+    uuid: UUID
 
     @staticmethod
     def from_entity(user_uuid: UserUUID) -> 'CreateUserResponse':

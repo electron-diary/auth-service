@@ -18,13 +18,10 @@ def postgres_engine(config: PostgresConfig) -> AsyncEngine:
     return engine
 
 
-def postgres_session_factory(engine: AsyncEngine) -> async_sessionmaker[AsyncSession]:
+def postgres_session_factory(engine: AsyncEngine) -> AsyncSession:
     session: AsyncSession = async_sessionmaker(bind=engine, expire_on_commit=False, class_=AsyncSession)
     return session
 
 
-async def postgres_session(session_factory: async_sessionmaker[AsyncSession]) -> AsyncGenerator[AsyncSession, None]:
-    async with session_factory() as session:
-        yield session
 
 

@@ -7,8 +7,8 @@ from src.app.application.interfaces.uow import UnitOfWork
 
 
 class SqlaUnitOfWork(UnitOfWork):
-    def __init__(self: Self, session: async_sessionmaker[AsyncSession]) -> None:
-        self.session: async_sessionmaker[AsyncSession] = session
+    def __init__(self: Self, session: AsyncSession) -> None:
+        self.session: AsyncSession = session
 
     async def commit(self: Self) -> None:
         try:

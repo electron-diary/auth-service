@@ -9,7 +9,7 @@ from src.app.infrastructure.dependency_injection.usecases.provide_update_user_co
 from src.app.infrastructure.dependency_injection.usecases.provide_update_user_name_usecase import UpdateUserNameUseCaseProvider
 
 
-def container_factory(*args, **kwargs) -> AsyncContainer:
+def container_factory() -> AsyncContainer:
     container: AsyncContainer = make_async_container(
         SqlaProvider(),
         NatsProvider(),

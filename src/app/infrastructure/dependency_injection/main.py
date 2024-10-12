@@ -7,8 +7,8 @@ from src.app.infrastructure.dependency_injection.factories import container_fact
 
 
 def init_di_fastapi(app: FastAPI) -> None:
-    setup_dishka_fastapi(container = container_factory, app = app)
+    setup_dishka_fastapi(container = container_factory(), app = app)
 
 
 def init_di_faststream(app: FastStream) -> None:
-    setup_dishka_faststream(container = container_factory, app = app)
+    setup_dishka_faststream(container = container_factory(), app = app)
