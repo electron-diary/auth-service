@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from faststream import FastStream
+from faststream.asgi import AsgiFastStream
 from faststream.nats.annotations import NatsBroker
 from dishka import FromDishka
 from typing import AsyncGenerator
@@ -7,9 +7,12 @@ from contextlib import asynccontextmanager
 
 from src.app.main.dependency_injection.main import init_di_fastapi, init_di_faststream
 from src.app.presentation.main import nats_controllers_factory, http_controllers_factory
+from src.app.infrastructure.brokers.factories import BrokerFactory
+from src.app.main.config_loader import load_nats_config
+from src.app.infrastructure.brokers.config import NatsConfig
 
 @asynccontextmanager
-async def lifespan(app: FastAPI | FastStream) -> AsyncGenerator[None, None]:
+async def lifespan(app: FastAPI | AsgiFastStream) -> AsyncGenerator[None, None]:
     yield
 
 
@@ -20,9 +23,11 @@ def fastapi_app_factory() -> FastAPI:
     return app
 
 
-def faststream_app_factory() -> FastStream:
-    broker: NatsBroker = FromDishka[NatsBroker]
-    app: FastStream = FastStream(lifespan=lifespan)
+def faststream_app_factory() -> AsgiFastStream:
+    config: NatsConfig = load_nats_config()
+    broker_factory: BrokerFactory = BrokerFactory(config = config)
+    broker: NatsBroker = broker_factory.get_broker()
+    app: AsgiFastStream = AsgiFastStream(broker, asyncapi_path='/docs')
     init_di_faststream(app = app)
     nats_controllers_factory(broker = broker)
     return app

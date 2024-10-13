@@ -51,8 +51,11 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
         stmt = update(UserModel).where(UserModel.uuid == user_uuid.to_raw()).values(
             user_contact=user_contact.to_raw(), user_updated_at=user_updated_at.to_raw()
         ).returning(UserModel.user_contact)
-        result = await self.session.execute(statement=stmt)
-        result: str = result.scalars().first()
+        try:
+            result = await self.session.execute(statement=stmt)
+            result: str = result.scalars().first()
+        except IntegrityError:
+            raise UserAlreadyExistsError(f'User with {user_contact.to_raw()} already exists')
         if result is None:
             raise UserNotFoundError(f"User with uuid {user_uuid.to_raw()} not found")
         

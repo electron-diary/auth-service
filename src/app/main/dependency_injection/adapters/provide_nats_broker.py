@@ -1,9 +1,10 @@
 from typing import Self
 from dishka import Provider, Scope, provide
-from faststream.nats.annotations import NatsBroker
+from faststream.nats.annotations import NatsBroker, Client
 
 from src.app.infrastructure.brokers.config import NatsConfig
 from src.app.infrastructure.brokers.factories import BrokerFactory
+from src.app.infrastructure.brokers.factories import BrokerConnection
 from src.app.main.config import ConfigFactory
 
 class NatsProvider(Provider):
@@ -16,4 +17,11 @@ class NatsProvider(Provider):
         factory: BrokerFactory = BrokerFactory(config = config)
         broker: NatsBroker = factory.get_broker()
         return broker
+    
+    @provide(scope=Scope.APP)
+    async def provide_nats_connection(self: Self, broker: NatsBroker) -> Client:
+        factory: BrokerConnection = BrokerConnection(broker = broker)
+        connection: Client = await factory.connect()
+        return connection
+
 

@@ -16,3 +16,10 @@ class BrokerFactory:
             log_level=logging.INFO
         )
         return broker
+    
+class BrokerConnection:
+    def __init__(self: Self, broker: Broker) -> None:
+        self.broker: Broker = broker
+
+    async def connect(self: Self) -> Client:
+        return await self.broker.connect()
