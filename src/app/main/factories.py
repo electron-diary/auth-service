@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from faststream import FastStream
 from faststream.nats.annotations import NatsBroker
-from sqlalchemy.ext.asyncio import AsyncEngine
 from dishka import FromDishka
 from typing import AsyncGenerator
 from contextlib import asynccontextmanager
