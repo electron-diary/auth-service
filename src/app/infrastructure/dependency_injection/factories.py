@@ -7,10 +7,12 @@ from src.app.infrastructure.dependency_injection.usecases.provide_delete_user_us
 from src.app.infrastructure.dependency_injection.usecases.provide_get_user_usecase import GetUserUseCaseProvider
 from src.app.infrastructure.dependency_injection.usecases.provide_update_user_contact_usecase import UpdateUserContactUseCaseProvider
 from src.app.infrastructure.dependency_injection.usecases.provide_update_user_name_usecase import UpdateUserNameUseCaseProvider
+from src.app.infrastructure.dependency_injection.adapters.provide_configs import ConfigProvider
 
 
 def container_factory() -> AsyncContainer:
     container: AsyncContainer = make_async_container(
+        ConfigProvider(),
         SqlaProvider(),
         NatsProvider(),
         CreateUserUseCaseProvider(),

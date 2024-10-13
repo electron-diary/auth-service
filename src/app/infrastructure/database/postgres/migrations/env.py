@@ -8,6 +8,9 @@ from alembic import context
 from src.app.infrastructure.database.postgres.config import PostgresConfig
 from src.app.infrastructure.database.postgres.models.declarative import Base
 from src.app.infrastructure.database.postgres.models.user import UserModel
+from src.app.main.config_loader import load_config
+
+config_factory = load_config()
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -19,7 +22,7 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 config.set_main_option(
-    "sqlalchemy.url", PostgresConfig().postgres_url + '?async_fallback=True'
+    "sqlalchemy.url", config_factory.postgres_config.postgres_url + '?async_fallback=True'
 )
 
 # add your model's MetaData object here

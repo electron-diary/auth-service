@@ -10,12 +10,13 @@ from src.app.infrastructure.database.postgres.uow import SqlaUnitOfWork
 from src.app.infrastructure.database.postgres.repositories.common_repo import CommonSqlaRepo
 from src.app.infrastructure.database.postgres.repositories.user_repo import UserRepositoryImpl
 from src.app.domain.user.repositories import UserInterface
+from src.app.main.config import ConfigFactory
 
 
 class SqlaProvider(Provider):
     @provide(scope=Scope.APP)
-    def provide_sqla_config(self: Self) -> PostgresConfig:
-        return PostgresConfig()
+    def provide_sqla_config(self: Self, config: ConfigFactory) -> PostgresConfig:
+        return config.postgres_config
     
     @provide(scope=Scope.APP)
     def provide_engine(self: Self, config: PostgresConfig) -> AsyncEngine:

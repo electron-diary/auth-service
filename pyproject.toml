@@ -14,6 +14,7 @@ fastapi = "^0.115.2"
 faststream = {extras = ["nats"], version = "^0.5.25"}
 dishka = "^1.3.0"
 alembic = "^1.13.3"
+python-dotenv = "^1.0.1"
 
 
 [build-system]
