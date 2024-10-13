@@ -9,7 +9,6 @@ from src.app.infrastructure.database.elastic.config import ElasticConfig
 load_dotenv()
 
 
-
 def load_config() -> ConfigFactory:
     return ConfigFactory(
         postgres_config=PostgresConfig(

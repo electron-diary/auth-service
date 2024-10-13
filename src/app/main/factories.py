@@ -5,7 +5,7 @@ from dishka import FromDishka
 from typing import AsyncGenerator
 from contextlib import asynccontextmanager
 
-from src.app.infrastructure.dependency_injection.main import init_di_fastapi, init_di_faststream
+from src.app.main.dependency_injection.main import init_di_fastapi, init_di_faststream
 from src.app.presentation.main import nats_controllers_factory, http_controllers_factory
 
 @asynccontextmanager
