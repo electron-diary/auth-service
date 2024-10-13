@@ -10,7 +10,7 @@ from src.app.presentation.exception_factories import fastapi_exceptions_factory
 def nats_controllers_factory(broker: NatsBroker) -> None:
     broker.include_router(nats_users.router)
     broker.include_router(nats_health.router)
-    # nats_exceptions_factory(broker = broker)
+    nats_exceptions_factory(broker = broker)
     
 
 def http_controllers_factory(app: FastAPI) -> None:
