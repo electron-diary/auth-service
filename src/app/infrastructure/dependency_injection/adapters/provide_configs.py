@@ -1,0 +1,1 @@
+from dishka import Provider, Scope, provide
