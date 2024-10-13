@@ -6,7 +6,7 @@ from src.app.application.dto.request_dto import CreateUserRequest, GetUserReques
 from src.app.application.dto.request_dto import UpdateUserNameRequest, DeleteUserRequest
 from src.app.application.dto.response_dto import CreateUserResponse, GetUserResponse
 from src.app.application.dto.response_dto import UpdateUserContactResponse, UpdateUserNameResponse
-from src.app.application.interfaces.interactor import Interactor
+from src.app.presentation.api.responses.successful_response import SuccessfullResponse
 from src.app.application.usecases.create_user_usecase import CreateUserUseCase
 from src.app.application.usecases.get_user_usecase import GetUserUseCase
 from src.app.application.usecases.update_user_contact_usecase import UpdateUserContactUseCase
@@ -24,9 +24,7 @@ router: APIRouter = APIRouter(prefix='/users', tags=['Users'])
 async def create_user(
     user_shema: CreateUserRequest, interactor: FromDishka[CreateUserUseCase]
 ) -> CreateUserResponse:
-    return await interactor(
-        request=user_shema
-    )
+    return await interactor(request=user_shema)
 
 
 @router.get(
@@ -36,9 +34,7 @@ async def create_user(
 async def get_user(
     user_uuid: UUID, interactor: FromDishka[GetUserUseCase]
 ) -> GetUserResponse:
-    return await interactor(
-        request=GetUserRequest(user_uuid=user_uuid)
-    )
+    return await interactor(request=GetUserRequest(user_uuid=user_uuid))
 
 
 @router.put(
@@ -48,9 +44,7 @@ async def get_user(
 async def update_user_contact(
     user_shema: UpdateUserContactRequest, interactor: FromDishka[UpdateUserContactUseCase]
 ) -> UpdateUserContactResponse:
-    return await interactor(
-        request=user_shema
-    )
+    return await interactor(request=user_shema)
 
 
 @router.put(
@@ -60,9 +54,7 @@ async def update_user_contact(
 async def update_user_name(
     user_shema: UpdateUserNameRequest, interactor: FromDishka[UpdateUserNameUseCase]
 ) -> UpdateUserNameResponse:
-    return await interactor(
-        request=user_shema
-    )
+    return await interactor(request=user_shema)
 
 
 @router.delete(
@@ -72,8 +64,6 @@ async def update_user_name(
 async def delete_user(
     user_shema: DeleteUserRequest, interactor: FromDishka[DeleteUserUseCase]
 ) -> None:
-    return await interactor(
-        request=user_shema
-    )
+    return await interactor(request=user_shema)
 
 
