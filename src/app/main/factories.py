@@ -7,11 +7,9 @@ from contextlib import asynccontextmanager
 
 from src.app.main.dependency_injection.main import init_di_fastapi, init_di_faststream
 from src.app.presentation.main import nats_controllers_factory, http_controllers_factory
-from src.app.infrastructure.logger.main import setup_logger
 
 @asynccontextmanager
 async def lifespan(app: FastAPI | FastStream) -> AsyncGenerator[None, None]:
-    setup_logger()
     yield
 
 
