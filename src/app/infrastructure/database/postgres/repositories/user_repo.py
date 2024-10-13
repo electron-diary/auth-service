@@ -23,10 +23,12 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
         return user_model_to_entity(user=user)
     
     async def create_user(
-        self: Self, user_name: UserName, user_contact: UserContact, user_created_at: UserCreatedAt, user_updated_at: UserUpdatedAt,
+        self: Self, user_name: UserName, user_contact: UserContact, 
+        user_created_at: UserCreatedAt, user_updated_at: UserUpdatedAt,
     ) -> UserUUID:
         stmt = insert(UserModel).values(
-            name=user_name.to_raw(), contact=user_contact.to_raw(), created_at=user_created_at.to_raw(), updated_at=user_updated_at.to_raw()
+            name=user_name.to_raw(), contact=user_contact.to_raw(), 
+            created_at=user_created_at.to_raw(), updated_at=user_updated_at.to_raw()
         ).returning(UserModel.uuid)
         try:
             result = await self.session.execute(statement=stmt)
