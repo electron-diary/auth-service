@@ -14,7 +14,7 @@ from src.app.infrastructure.database.postgres.mappers import user_model_to_entit
 
 class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
     async def get_user_by_uuid(self: Self, user_uuid: UserUUID) -> UserEntity:
-        stmt = select(UserModel).where(UserModel.uuid == user_uuid)
+        stmt = select(UserModel).where(UserModel.uuid == user_uuid.to_raw())
         result = await self.session.execute(statement=stmt)
         user: UserModel | None = result.scalars().first()
         if user is None:
@@ -26,7 +26,7 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
         self: Self, user_name: UserName, user_contact: UserContact, user_created_at: UserCreatedAt, user_updated_at: UserUpdatedAt,
     ) -> UserUUID:
         stmt = insert(UserModel).values(
-            name=user_name, contact=user_contact, created_at=user_created_at, updated_at=user_updated_at
+            name=user_name.to_raw(), contact=user_contact.to_raw(), created_at=user_created_at.to_raw(), updated_at=user_updated_at.to_raw()
         ).returning(UserModel.uuid)
         try:
             result = await self.session.execute(statement=stmt)
@@ -37,14 +37,14 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
         return UserUUID(result)
     
     async def delete_user(self: Self, user_uuid: UserUUID) -> None:
-        stmt = delete(UserModel).where(UserModel.uuid == user_uuid)
+        stmt = delete(UserModel).where(UserModel.uuid == user_uuid.to_raw())
         try:
             await self.session.execute(statement=stmt)
         except IntegrityError:
             raise UserNotFoundError(f"User with uuid {user_uuid} not found")
         
     async def update_user_contact(self: Self, user_uuid: UserUUID, user_contact: UserContact) -> UserContact:
-        stmt = update(UserModel).where(UserModel.uuid == user_uuid).values(contact=user_contact).returning(UserModel.contact)
+        stmt = update(UserModel).where(UserModel.uuid == user_uuid.to_raw()).values(contact=user_contact.to_raw()).returning(UserModel.contact)
         try:
             result = await self.session.execute(statement=stmt)
             result: str = result.scalars().first()
@@ -54,7 +54,7 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
         return UserContact(result)
     
     async def update_user_name(self: Self, user_uuid: UserUUID, user_name: UserName) -> UserName:
-        stmt = update(UserModel).where(UserModel.uuid == user_uuid).values(name=user_name).returning(UserModel.name)
+        stmt = update(UserModel).where(UserModel.uuid == user_uuid.to_raw()).values(name=user_name.to_raw()).returning(UserModel.name)
         try:
             result = await self.session.execute(statement=stmt)
             result: str = result.scalars().first()
