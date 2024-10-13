@@ -1,4 +1,4 @@
-from typing import Annotated
+from uuid import UUID
 from fastapi import APIRouter, status
 from dishka.integrations.fastapi import inject, FromDishka
 
@@ -34,10 +34,10 @@ async def create_user(
 )
 @inject
 async def get_user(
-    user_shema: GetUserRequest, interactor: FromDishka[GetUserUseCase]
+    user_uuid: UUID, interactor: FromDishka[GetUserUseCase]
 ) -> GetUserResponse:
     return await interactor(
-        request=user_shema
+        request=GetUserRequest(user_uuid=user_uuid)
     )
 
 

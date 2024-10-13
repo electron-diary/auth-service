@@ -22,4 +22,4 @@ class UpdateUserNameUseCase(Interactor[UpdateUserNameRequest, UpdateUserNameResp
             user_updated_at=UserUpdatedAt(datetime_now),
         )
         await self.uow.commit()
-        return UpdateUserNameResponse.from_entity(new_user_name=new_user_name)
+        return UpdateUserNameResponse.from_entity(user_name=new_user_name)

@@ -28,7 +28,7 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
     ) -> UserUUID:
         stmt = insert(UserModel).values(
             user_name=user_name.to_raw(), user_contact=user_contact.to_raw(), 
-            created_at=user_created_at.to_raw(), updated_at=user_updated_at.to_raw()
+            user_created_at=user_created_at.to_raw(), user_updated_at=user_updated_at.to_raw()
         ).returning(UserModel.uuid)
         try:
             result = await self.session.execute(statement=stmt)

@@ -22,4 +22,4 @@ class UpdateUserContactUseCase(Interactor[UpdateUserContactRequest, UpdateUserCo
             user_updated_at=UserUpdatedAt(datetime_now),
         )
         await self.uow.commit()
-        return UpdateUserContactResponse.from_entity(new_user_contact=new_user_contact)
+        return UpdateUserContactResponse.from_entity(user_contact=new_user_contact)
