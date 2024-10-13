@@ -45,7 +45,9 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
         except IntegrityError:
             raise UserNotFoundError(f"User with uuid {user_uuid} not found")
         
-    async def update_user_contact(self: Self, user_uuid: UserUUID, user_contact: UserContact) -> UserContact:
+    async def update_user_contact(
+        self: Self, user_uuid: UserUUID, user_contact: UserContact, user_updated_at: UserUpdatedAt
+    ) -> UserContact:
         stmt = update(UserModel).where(UserModel.uuid == user_uuid.to_raw()).values(contact=user_contact.to_raw()).returning(UserModel.contact)
         try:
             result = await self.session.execute(statement=stmt)
@@ -55,7 +57,9 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
         
         return UserContact(result)
     
-    async def update_user_name(self: Self, user_uuid: UserUUID, user_name: UserName) -> UserName:
+    async def update_user_name(
+        self: Self, user_uuid: UserUUID, user_name: UserName, user_updated_at: UserUpdatedAt
+    ) -> UserName:
         stmt = update(UserModel).where(UserModel.uuid == user_uuid.to_raw()).values(name=user_name.to_raw()).returning(UserModel.name)
         try:
             result = await self.session.execute(statement=stmt)
