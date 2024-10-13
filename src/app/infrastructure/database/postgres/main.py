@@ -6,6 +6,7 @@ from src.app.infrastructure.database.postgres.config import PostgresConfig
 
 
 def postgres_engine(config: PostgresConfig) -> AsyncEngine:
+    print('connecting to db')
     engine: AsyncEngine = create_async_engine(
         url=config.postgres_url,
         echo=True,

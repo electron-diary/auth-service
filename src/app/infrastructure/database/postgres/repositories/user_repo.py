@@ -18,7 +18,7 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
         result = await self.session.execute(statement=stmt)
         user: UserModel | None = result.scalars().first()
         if user is None:
-            raise UserNotFoundError(f"User with uuid {user_uuid} not found")
+            raise UserNotFoundError(f"User with uuid {user_uuid.to_raw()} not found")
         
         return user_model_to_entity(user=user)
     
@@ -27,14 +27,14 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
         user_created_at: UserCreatedAt, user_updated_at: UserUpdatedAt,
     ) -> UserUUID:
         stmt = insert(UserModel).values(
-            name=user_name.to_raw(), contact=user_contact.to_raw(), 
+            user_name=user_name.to_raw(), user_contact=user_contact.to_raw(), 
             created_at=user_created_at.to_raw(), updated_at=user_updated_at.to_raw()
         ).returning(UserModel.uuid)
         try:
             result = await self.session.execute(statement=stmt)
             result: UUID = result.scalars().first()
         except IntegrityError:
-            raise UserAlreadyExistsError(f'User with {user_contact} already exists')
+            raise UserAlreadyExistsError(f'User with {user_contact.to_raw()} already exists')
         
         return UserUUID(result)
     
@@ -43,30 +43,32 @@ class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
         try:
             await self.session.execute(statement=stmt)
         except IntegrityError:
-            raise UserNotFoundError(f"User with uuid {user_uuid} not found")
+            raise UserNotFoundError(f"User with uuid {user_uuid.to_raw()} not found")
         
     async def update_user_contact(
         self: Self, user_uuid: UserUUID, user_contact: UserContact, user_updated_at: UserUpdatedAt
     ) -> UserContact:
-        stmt = update(UserModel).where(UserModel.uuid == user_uuid.to_raw()).values(contact=user_contact.to_raw()).returning(UserModel.contact)
-        try:
-            result = await self.session.execute(statement=stmt)
-            result: str = result.scalars().first()
-        except IntegrityError:
-            raise UserNotFoundError(f"User with uuid {user_uuid} not found")
+        stmt = update(UserModel).where(UserModel.uuid == user_uuid.to_raw()).values(
+            user_contact=user_contact.to_raw(), user_updated_at=user_updated_at.to_raw()
+        ).returning(UserModel.user_contact)
+        result = await self.session.execute(statement=stmt)
+        result: str = result.scalars().first()
+        if result is None:
+            raise UserNotFoundError(f"User with uuid {user_uuid.to_raw()} not found")
         
         return UserContact(result)
     
     async def update_user_name(
         self: Self, user_uuid: UserUUID, user_name: UserName, user_updated_at: UserUpdatedAt
     ) -> UserName:
-        stmt = update(UserModel).where(UserModel.uuid == user_uuid.to_raw()).values(name=user_name.to_raw()).returning(UserModel.name)
-        try:
-            result = await self.session.execute(statement=stmt)
-            result: str = result.scalars().first()
-        except IntegrityError:
-            raise UserNotFoundError(f"User with uuid {user_uuid} not found")
-        
+        stmt = update(UserModel).where(UserModel.uuid == user_uuid.to_raw()).values(
+            user_name=user_name.to_raw(), user_updated_at=user_updated_at.to_raw()
+        ).returning(UserModel.user_name)
+        result = await self.session.execute(statement=stmt)
+        result: str = result.scalars().first()
+        if result is None:
+            raise UserNotFoundError(f"User with uuid {user_uuid.to_raw()} not found")
+
         return UserName(result)
 
 
