@@ -18,18 +18,3 @@ class UserEntity(DomainEntity[UserUUID]):
     user_created_at: UserCreatedAt
     user_updated_at: UserUpdatedAt
 
-    @staticmethod
-    def create(
-        uuid: UUID, 
-        user_name: str,
-        user_contact: str | int,
-        user_created_at: datetime,
-        user_updated_at: datetime,
-    ) -> 'UserEntity':
-        return UserEntity(
-            uuid=UserUUID(object=uuid),
-            user_name=UserName(object=user_name),
-            user_contact=UserContact(object=user_contact),
-            user_created_at=UserCreatedAt(user_created_at),
-            user_updated_at=UserUpdatedAt(user_updated_at),
-        )
