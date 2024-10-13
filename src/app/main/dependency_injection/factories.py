@@ -9,7 +9,6 @@ from src.app.main.dependency_injection.usecases.provide_update_user_contact_usec
 from src.app.main.dependency_injection.usecases.provide_update_user_name_usecase import UpdateUserNameUseCaseProvider
 from src.app.main.dependency_injection.adapters.provide_configs import ConfigProvider
 
-
 def container_factory() -> AsyncContainer:
     container: AsyncContainer = make_async_container(
         ConfigProvider(),

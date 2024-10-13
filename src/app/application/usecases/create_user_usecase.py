@@ -1,5 +1,6 @@
 from typing import Self
 from datetime import datetime
+import logging
 
 from src.app.application.dto.request_dto import CreateUserRequest
 from src.app.application.dto.response_dto import CreateUserResponse
