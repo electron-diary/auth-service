@@ -5,8 +5,6 @@ import logging
 
 from src.app.infrastructure.database.postgres.config import PostgresConfig
 from src.app.infrastructure.database.postgres.main import postgres_engine, postgres_session_factory
-from src.app.application.interfaces.uow import UnitOfWork
-from src.app.infrastructure.database.postgres.uow import SqlaUnitOfWork
 from src.app.infrastructure.database.postgres.repositories.common_repo import CommonSqlaRepo
 from src.app.infrastructure.database.postgres.repositories.user_repo import UserRepositoryImpl
 from src.app.domain.user.repositories import UserInterface
@@ -29,11 +27,15 @@ class SqlaProvider(Provider):
     @provide(scope=Scope.REQUEST, provides=AsyncSession)
     async def provide_postgres_session(self: Self, session_factory: async_sessionmaker[AsyncSession]) -> AsyncGenerator[AsyncSession, None]:
         async with session_factory() as session:
-            yield session
-
-    @provide(scope=Scope.REQUEST)
-    def provide_sqla_uow(self: Self, session: AsyncSession) -> UnitOfWork:
-        return SqlaUnitOfWork(session = session)
+            try:
+                yield session
+                await session.commit()
+                print("Session commited")
+            except Exception:
+                await session.rollback()
+            finally:
+                await session.close()
+                print("Session closed")
     
     @provide(scope=Scope.REQUEST)
     def provide_user_repository(self: Self, session: AsyncSession) -> AnyOf[CommonSqlaRepo, UserInterface]:
