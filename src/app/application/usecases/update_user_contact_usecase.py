@@ -3,14 +3,17 @@ from datetime import datetime
 
 from src.app.application.dto.request_dto import UpdateUserContactRequest
 from src.app.application.dto.response_dto import UpdateUserContactResponse
-from src.app.domain.user.repositories import UserInterface
+from src.app.domain.repositories.user_repository import UserRepositoryInterface
 from src.app.application.interfaces.interactor import Interactor
-from src.app.domain.user.value_objects import UserContact, UserUpdatedAt, UserUUID
+from src.app.domain.value_objects.user_contact_value_object import UserContact
+from src.app.domain.value_objects.user_updated_at_value_object import UserUpdatedAt
+from src.app.domain.value_objects.user_uuid_value_object import UserUUID
+from src.app.application.interfaces.interactor import Interactor
 
 
 class UpdateUserContactUseCase(Interactor[UpdateUserContactRequest, UpdateUserContactResponse]):
-    def __init__(self: Self, user_interface: UserInterface) -> None:
-        self.user_interface: UserInterface = user_interface
+    def __init__(self: Self, user_interface: UserRepositoryInterface) -> None:
+        self.user_interface: UserRepositoryInterface = user_interface
 
     async def __call__(self: Self, request: UpdateUserContactRequest) -> UpdateUserContactResponse:
         datetime_now: datetime = datetime.now()

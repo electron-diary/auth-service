@@ -1,15 +1,15 @@
 from typing import Protocol, Self
 from abc import abstractmethod
 
-from src.app.domain.user.entity import UserEntity
-from src.app.domain.user.value_objects import UserUUID
-from src.app.domain.user.value_objects import UserName
-from src.app.domain.user.value_objects import UserContact
-from src.app.domain.user.value_objects import UserCreatedAt
-from src.app.domain.user.value_objects import UserUpdatedAt
+from src.app.domain.value_objects.user_contact_value_object import UserContact
+from src.app.domain.value_objects.user_created_at_value_object import UserCreatedAt
+from src.app.domain.value_objects.user_name_value_object import UserName
+from src.app.domain.value_objects.user_updated_at_value_object import UserUpdatedAt
+from src.app.domain.entities.user_entities import UserEntity
+from src.app.domain.value_objects.user_uuid_value_object import UserUUID
 
 
-class UserInterface(Protocol):
+class UserRepositoryInterface(Protocol):
     @abstractmethod
     async def create_user(
         self: Self,

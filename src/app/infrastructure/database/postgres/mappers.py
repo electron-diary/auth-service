@@ -1,8 +1,11 @@
-from datetime import datetime
-
 from src.app.infrastructure.database.postgres.models.user import UserModel
-from src.app.domain.user.entity import UserEntity
-from src.app.domain.user.value_objects import UserContact, UserCreatedAt, UserName, UserUpdatedAt, UserUUID
+from src.app.domain.value_objects.user_contact_value_object import UserContact
+from src.app.domain.value_objects.user_created_at_value_object import UserCreatedAt
+from src.app.domain.value_objects.user_name_value_object import UserName
+from src.app.domain.value_objects.user_updated_at_value_object import UserUpdatedAt
+from src.app.domain.value_objects.user_uuid_value_object import UserUUID
+from src.app.domain.entities.user_entities import UserEntity
+
 
 
 def user_entity_to_model(user: UserEntity) -> UserModel:

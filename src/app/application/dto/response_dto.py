@@ -2,8 +2,11 @@ from dataclasses import dataclass
 from datetime import datetime
 from uuid import UUID
 
-from src.app.domain.user.entity import UserEntity
-from src.app.domain.user.value_objects import UserUUID, UserContact, UserName
+
+from src.app.domain.value_objects.user_uuid_value_object import UserUUID
+from src.app.domain.value_objects.user_contact_value_object import UserContact
+from src.app.domain.value_objects.user_name_value_object import UserName
+from src.app.domain.entities.user_entities import UserEntity
 
 
 @dataclass(frozen=True)

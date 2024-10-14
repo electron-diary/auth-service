@@ -3,16 +3,20 @@ from uuid import UUID
 from sqlalchemy import select, update, delete, insert
 from sqlalchemy.exc import IntegrityError
 
-from src.app.domain.user.entity import UserEntity
-from src.app.domain.user.repositories import UserInterface
-from src.app.domain.user.value_objects import UserContact, UserCreatedAt, UserUUID, UserName, UserUpdatedAt
+from src.app.domain.entities.user_entities import UserEntity
+from src.app.domain.value_objects.user_contact_value_object import UserContact
+from src.app.domain.value_objects.user_created_at_value_object import UserCreatedAt
+from src.app.domain.value_objects.user_name_value_object import UserName
+from src.app.domain.value_objects.user_updated_at_value_object import UserUpdatedAt
+from src.app.domain.value_objects.user_uuid_value_object import UserUUID
+from src.app.domain.repositories.user_repository import UserRepositoryInterface
 from src.app.infrastructure.database.postgres.models.user import UserModel
 from src.app.infrastructure.database.postgres.repositories.common_repo import CommonSqlaRepo
-from src.app.domain.user.exceptions import UserNotFoundError, UserAlreadyExistsError
+from src.app.domain.exceptions.user_exceptions import UserNotFoundError, UserAlreadyExistsError
 from src.app.infrastructure.database.postgres.mappers import user_model_to_entity
 
 
-class UserRepositoryImpl(CommonSqlaRepo, UserInterface):
+class UserRepositoryImpl(CommonSqlaRepo, UserRepositoryInterface):
     async def get_user_by_uuid(self: Self, user_uuid: UserUUID) -> UserEntity:
         stmt = select(UserModel).where(UserModel.uuid == user_uuid.to_raw())
         result = await self.session.execute(statement=stmt)
