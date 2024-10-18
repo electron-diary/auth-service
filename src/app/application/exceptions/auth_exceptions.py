@@ -5,3 +5,9 @@ class AuthentificationError(DomainException):
 
 class AccessDeniedError(DomainException):
     pass
+
+class UserAlreadyExistsError(DomainException):
+    pass
+
+class UserNotFoundError(DomainException):
+    pass
