@@ -28,3 +28,8 @@ class UpdateUserContactRequest:
 class UpdateUserNameRequest:
     user_uuid: UUID
     user_name: str
+
+
+@dataclass(frozen=True)
+class AuthentificateUserRequest:
+    user_contact: str

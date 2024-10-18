@@ -59,3 +59,13 @@ class UpdateUserNameResponse:
         return UpdateUserNameResponse(
             new_user_name=user_name.to_raw(),
         )
+    
+@dataclass(frozen=True)
+class AuthentificationResponse:
+    user_uuid: UUID
+
+    @staticmethod
+    def from_entity(user_uuid: UserUUID) -> 'AuthentificationResponse':
+        return AuthentificationResponse(
+            user_uuid=user_uuid.to_raw(),
+        )

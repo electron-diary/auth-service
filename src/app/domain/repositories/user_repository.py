@@ -46,3 +46,9 @@ class UserRepositoryInterface(Protocol):
             'method must be implemented by subclasses'
         )
     
+    @abstractmethod
+    async def get_user_uuid_by_contact(self: Self, user_contact: UserContact) -> UserUUID:
+        raise NotImplementedError(
+            'method must be implemented by subclasses'
+        )
+    
