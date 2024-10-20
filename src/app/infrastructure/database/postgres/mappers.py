@@ -5,6 +5,7 @@ from src.app.domain.value_objects.user_name_value_object import UserName
 from src.app.domain.value_objects.user_updated_at_value_object import UserUpdatedAt
 from src.app.domain.value_objects.user_uuid_value_object import UserUUID
 from src.app.domain.entities.user_entities import UserEntity
+from src.app.domain.value_objects.user_status_value_object import UserStatus
 
 
 
@@ -14,7 +15,8 @@ def user_entity_to_model(user: UserEntity) -> UserModel:
         user_name=user.user_name.to_raw(),
         user_contact=user.user_contact.to_raw(),
         user_created_at=user.user_created_at.to_raw(),
-        user_updated_at=user.user_updated_at.to_raw()
+        user_updated_at=user.user_updated_at.to_raw(),
+        user_status=user.is_active.to_raw()
     )
 
 
@@ -24,5 +26,6 @@ def user_model_to_entity(user: UserModel) -> UserEntity:
         user_name=UserName(user.user_name),
         user_contact=UserContact(user.user_contact),
         user_created_at=UserCreatedAt(user.user_created_at),
-        user_updated_at=UserUpdatedAt(user.user_updated_at)
+        user_updated_at=UserUpdatedAt(user.user_updated_at),
+        is_active=UserStatus(user.user_status)
     )

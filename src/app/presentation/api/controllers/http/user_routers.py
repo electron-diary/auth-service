@@ -2,16 +2,16 @@ from uuid import UUID
 from fastapi import APIRouter, status
 from dishka.integrations.fastapi import inject, FromDishka
 
-from src.app.application.dto.request_dto import CreateUserRequest, GetUserRequest, UpdateUserContactRequest
+from src.app.application.dto.request_dto import CreateUserRequest, GetUserRequest, UpdateUserContactRequest, EditUserStatusRequest
 from src.app.application.dto.request_dto import UpdateUserNameRequest, DeleteUserRequest
 from src.app.application.dto.response_dto import CreateUserResponse, GetUserResponse
 from src.app.application.dto.response_dto import UpdateUserContactResponse, UpdateUserNameResponse
-from src.app.presentation.api.responses.successful_response import SuccessfullResponse
 from src.app.application.usecases.create_user_usecase import CreateUserUseCase
 from src.app.application.usecases.get_user_usecase import GetUserUseCase
 from src.app.application.usecases.update_user_contact_usecase import UpdateUserContactUseCase
 from src.app.application.usecases.update_user_name_usecase import UpdateUserNameUseCase
 from src.app.application.usecases.delete_user_usecase import DeleteUserUseCase
+from src.app.application.usecases.edit_user_status import EditUserStatusUseCase
 
 
 router: APIRouter = APIRouter(prefix='/users', tags=['Users'])
@@ -67,3 +67,11 @@ async def delete_user(
     return await interactor(request=user_shema)
 
 
+@router.post(
+    '/edit-user-status', status_code=status.HTTP_200_OK, response_model=None
+)
+@inject
+async def edit_user_status(
+    user_shema: EditUserStatusRequest, interactor: FromDishka[EditUserStatusUseCase]
+) -> None:
+    return await interactor(request=user_shema)

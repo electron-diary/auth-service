@@ -8,9 +8,18 @@ from src.app.main.dependency_injection.usecases.provide_get_user_usecase import 
 from src.app.main.dependency_injection.usecases.provide_update_user_contact_usecase import UpdateUserContactUseCaseProvider
 from src.app.main.dependency_injection.usecases.provide_update_user_name_usecase import UpdateUserNameUseCaseProvider
 from src.app.main.dependency_injection.adapters.provide_configs import ConfigProvider
+from src.app.main.dependency_injection.adapters.provide_user_name_generator import UserNameGeneratorProvider
+from src.app.main.dependency_injection.usecases.provide_authentificate_user_usecase import AuthentificateeUserUseCaseProvider
+from src.app.main.dependency_injection.usecases.provide_edit_user_status_usecase import EditUserStatusUseCaseProvider
+from src.app.main.dependency_injection.adapters.provide_uuid_generator import UUIDGeneratorProvider
+
 
 def container_factory() -> AsyncContainer:
     container: AsyncContainer = make_async_container(
+        UUIDGeneratorProvider(),
+        UserNameGeneratorProvider(),
+        EditUserStatusUseCaseProvider(),
+        AuthentificateeUserUseCaseProvider(),
         ConfigProvider(),
         SqlaProvider(),
         NatsProvider(),

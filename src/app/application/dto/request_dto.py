@@ -33,3 +33,9 @@ class UpdateUserNameRequest:
 @dataclass(frozen=True)
 class AuthentificateUserRequest:
     user_contact: str
+
+
+@dataclass(frozen=True)
+class EditUserStatusRequest:
+    user_uuid: UUID
+    user_status: bool
