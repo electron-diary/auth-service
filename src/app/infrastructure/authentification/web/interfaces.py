@@ -1,4 +1,4 @@
-from typing import Protocol, Self
+from typing import Protocol, Self, Tuple
 from abc import abstractmethod
 
 
@@ -21,7 +21,7 @@ class JwtInterface(Protocol):
             'method must be implemented by subclasses'
         )
     
-    
+
 class JwtGatewayInterface(Protocol):
     @abstractmethod
     async def get_token(self: Self) -> ...:
@@ -68,4 +68,3 @@ class AuthentificatorInterface(Protocol):
         raise NotImplementedError(
             'method must be implemented by subclasses'
         )
-    
