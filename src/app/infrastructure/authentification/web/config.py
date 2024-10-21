@@ -7,7 +7,7 @@ class AuthConfig:
     secret_key: Path
     public_key: Path
     algorithm: str
-    secret_key_expire_minutes: timedelta
-    public_key_expire_days: timedelta
+    access_expire_minutes: timedelta
+    refresh_expire_days: timedelta
 
 
