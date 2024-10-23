@@ -1,7 +1,7 @@
 from typing import Protocol, Self
 from abc import abstractmethod
 
-from src.app.infrastructure.authentification.web.tokens.constants import UserData, TokenData
+from app.infrastructure.authentification.web.constants import UserData, TokenData
 
 class JwtRepositoryInterface(Protocol):
     @abstractmethod

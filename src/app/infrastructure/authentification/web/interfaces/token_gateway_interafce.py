@@ -1,7 +1,7 @@
 from typing import Self, Protocol
 from abc import abstractmethod
 
-from src.app.infrastructure.authentification.web.tokens.constants import TokenData
+from app.infrastructure.authentification.web.constants import TokenData
 from src.app.domain.value_objects.user_uuid_value_object import UserUUID
 
 class JwtGatewayInterface(Protocol):

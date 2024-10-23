@@ -5,9 +5,9 @@ from datetime import datetime, timedelta
 
 from src.app.domain.value_objects.user_status_value_object import UserStatus
 from src.app.domain.value_objects.user_uuid_value_object import UserUUID
-from src.app.infrastructure.authentification.web.tokens.repository_interface import JwtRepositoryInterface
+from src.app.infrastructure.authentification.web.interfaces.token_repository_interface import JwtRepositoryInterface
 from src.app.infrastructure.authentification.web.config import AuthConfig
-from src.app.infrastructure.authentification.web.tokens.constants import UserData, TokenData
+from src.app.infrastructure.authentification.web.constants import UserData, TokenData
 from src.app.application.exceptions.auth_exceptions import AuthentificationError
 
 
@@ -34,9 +34,9 @@ class JwtRepository(JwtRepositoryInterface):
     def encode_access_token(self: Self, user_data: UserData) -> TokenData:
         access_expires_at: datetime = datetime.now() + timedelta(minutes=self.config.access_expire_minutes)
         to_encode: dict[str] = dict(
-            sub = UserUUID(user_data.user_uuid).to_raw(),
+            sub =user_data.user_uuid,
             expires_at = access_expires_at,
-            status = UserStatus(user_data.status).to_raw(),
+            status = user_data.status,
             type = 'access'
         )
         token: str | bytes = jwt.encode(
@@ -47,9 +47,9 @@ class JwtRepository(JwtRepositoryInterface):
     def encode_refresh_token(self: Self, user_data: UserData) -> TokenData:
         refresh_expires_at: datetime = datetime.now() + timedelta(days=self.config.refresh_expire_days)
         to_encode: dict[str] = dict(
-            sub = UserUUID(user_data.user_uuid).to_raw(),
+            sub = user_data.user_uuid,
             expires_at = refresh_expires_at,
-            status = UserStatus(user_data.status).to_raw(),
+            status = user_data.status,
             type = 'refresh'
         )
         token: str | bytes = jwt.encode(
