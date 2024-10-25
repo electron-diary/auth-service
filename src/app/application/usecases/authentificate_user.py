@@ -32,6 +32,7 @@ class AuthentificateUserUseCase(Interactor[AuthentificateUserRequest, Authentifi
         user_uuid: UserUUID = await self.user_repository.get_user_uuid_by_contact(
             user_contact=UserContact(object=request.user_contact)
         )
+        user_status: UserStatus = UserStatus(False)
         if not user_uuid:
             time_now: datetime = datetime.now()
             user_name: str = self.user_name_generator.generate_user_name()
@@ -44,9 +45,9 @@ class AuthentificateUserUseCase(Interactor[AuthentificateUserRequest, Authentifi
                     user_contact=UserContact(request.user_contact),
                     user_created_at=UserCreatedAt(time_now),
                     user_updated_at=UserUpdatedAt(time_now),
-                    is_active=UserStatus(False)
+                    is_active=user_status
                 )
             )
-        return AuthentificationResponse.from_entity(user_uuid=user_uuid)
+        return AuthentificationResponse.from_entity(user_uuid=user_uuid, user_status=user_status)
         
         

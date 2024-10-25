@@ -6,6 +6,7 @@ from uuid import UUID
 from src.app.domain.value_objects.user_uuid_value_object import UserUUID
 from src.app.domain.value_objects.user_contact_value_object import UserContact
 from src.app.domain.value_objects.user_name_value_object import UserName
+from src.app.domain.value_objects.user_status_value_object import UserStatus
 from src.app.domain.entities.user_entities import UserEntity
 
 
@@ -63,9 +64,11 @@ class UpdateUserNameResponse:
 @dataclass(frozen=True)
 class AuthentificationResponse:
     user_uuid: UUID
+    user_status: bool
 
     @staticmethod
-    def from_entity(user_uuid: UserUUID) -> 'AuthentificationResponse':
+    def from_entity(user_uuid: UserUUID, user_status: UserStatus) -> 'AuthentificationResponse':
         return AuthentificationResponse(
             user_uuid=user_uuid.to_raw(),
+            user_status=user_status.to_raw()
         )
