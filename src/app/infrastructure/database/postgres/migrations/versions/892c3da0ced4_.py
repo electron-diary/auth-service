@@ -26,7 +26,6 @@ def upgrade() -> None:
     sa.Column('user_contact', sa.String(length=50), nullable=False),
     sa.Column('user_created_at', sa.DateTime(), nullable=False),
     sa.Column('user_updated_at', sa.DateTime(), nullable=True),
-    sa.Column('user_status', sa.Boolean(), nullable=False, default=False),
     sa.PrimaryKeyConstraint('uuid'),
     sa.UniqueConstraint('user_contact')
     )
