@@ -12,10 +12,14 @@ from src.app.main.dependency_injection.adapters.provide_user_name_generator impo
 from src.app.main.dependency_injection.usecases.provide_authentificate_user_usecase import AuthentificateeUserUseCaseProvider
 from src.app.main.dependency_injection.usecases.provide_edit_user_status_usecase import EditUserStatusUseCaseProvider
 from src.app.main.dependency_injection.adapters.provide_uuid_generator import UUIDGeneratorProvider
+from src.app.main.dependency_injection.adapters.provide_mongo_db import MongoProvider
+from src.app.main.dependency_injection.adapters.provide_redis_db import RedisProvider
 
 
 def container_factory() -> AsyncContainer:
     container: AsyncContainer = make_async_container(
+        MongoProvider(),
+        RedisProvider(),
         UUIDGeneratorProvider(),
         UserNameGeneratorProvider(),
         EditUserStatusUseCaseProvider(),

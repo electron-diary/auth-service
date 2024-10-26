@@ -30,12 +30,10 @@ class SqlaProvider(Provider):
             try:
                 yield session
                 await session.commit()
-                print("Session commited")
             except Exception:
                 await session.rollback()
             finally:
                 await session.close()
-                print("Session closed")
     
     @provide(scope=Scope.REQUEST)
     def provide_user_repository(self: Self, session: AsyncSession) -> AnyOf[CommonSqlaRepo, UserRepositoryInterface]:

@@ -5,6 +5,9 @@ from src.app.main.config import ConfigFactory
 from src.app.infrastructure.database.postgres.config import PostgresConfig
 from src.app.infrastructure.brokers.config import NatsConfig
 from src.app.infrastructure.database.elastic.config import ElasticConfig
+from src.app.infrastructure.database.mongo.config import MongoConfig
+from src.app.infrastructure.database.redis.config import RedisConfig
+from src.app.infrastructure.user_name_generator.config import UserNameGeneratorConfig
 
 load_dotenv()
 
@@ -29,9 +32,29 @@ def load_postgres_config() -> PostgresConfig:
         database=environ.get("POSTGRES_DATABASE"),
     )
 
+def load_mongo_config() -> MongoConfig:
+    return MongoConfig(
+        host=environ.get("MONGO_HOST"),
+        port=environ.get("MONGO_PORT")
+    )
+
+def load_redis_config() -> RedisConfig:
+    return RedisConfig(
+        host=environ.get("REDIS_HOST"),
+        port=environ.get("REDIS_PORT")
+    )
+
+def load_user_name_generator_config() -> UserNameGeneratorConfig:
+    return UserNameGeneratorConfig(
+        prefix=environ.get("USER_NAME_GENERATOR_PREFIX")
+    )
+
 def load_config() -> ConfigFactory:
     return ConfigFactory(
         postgres_config=load_postgres_config(),
         nats_config=load_nats_config(),
         elastic_config=load_elastic_config(),
+        redis_config=load_redis_config(),
+        mongo_config=load_mongo_config(),
+        user_name_generator_config=load_user_name_generator_config()
     )
