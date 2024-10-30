@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from faststream.asgi import AsgiFastStream
 from faststream.nats.annotations import NatsBroker
-from dishka import FromDishka
 from typing import AsyncGenerator
 from contextlib import asynccontextmanager
 
