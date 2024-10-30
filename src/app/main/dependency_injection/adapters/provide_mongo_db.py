@@ -1,6 +1,7 @@
 from typing import AsyncGenerator, Self
 from dishka import Provider, provide, Scope
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorClientSession
+from pymongo.errors import PyMongoError
 
 from src.app.infrastructure.database.mongo.config import MongoConfig
 from src.app.infrastructure.database.mongo.main import mongo_client, mongo_session
@@ -22,8 +23,8 @@ class MongoProvider(Provider):
             try:
                 await session.commit_transaction()
                 yield session
-            except Exception:
+            except PyMongoError:
                 await session.abort_transaction()
             finally:
                 await session.end_session()
-           
+
