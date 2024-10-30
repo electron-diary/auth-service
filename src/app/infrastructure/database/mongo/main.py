@@ -1,10 +1,16 @@
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorClientSession
+import logging
+from logging import Logger
 
 from src.app.infrastructure.database.mongo.config import MongoConfig
 
 
+logger: Logger = logging.getLogger(__name__)
+
+
 def mongo_client(config: MongoConfig) -> AsyncIOMotorClient:
     client: AsyncIOMotorClient = AsyncIOMotorClient(host=config.host, port=config.port)
+    logger.info('connected to mongo')
     return client
 
 

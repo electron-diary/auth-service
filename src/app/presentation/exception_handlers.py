@@ -1,9 +1,14 @@
 from fastapi import Request, status, responses
 from typing import cast
+import logging
+from logging import Logger
 
 from src.app.presentation.api.responses.error_response import ErorrResponse
 from src.app.domain.exceptions.user_exceptions import UserAlreadyExistsError, UserNotFoundError
 from src.app.domain.common.exceptions import DomainValidationError
+
+
+logger: Logger = logging.getLogger(__name__)
 
 
 async def user_already_exists_exception_handler(
@@ -32,6 +37,7 @@ async def domain_validation_exception_handler(
 async def internal_server_error_exception_handler(
     request: Request | None, exc: Exception
 ) -> responses.JSONResponse:
+    logger.error(exc)
     return responses.JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={"message": "Internal Server Error"}
@@ -58,6 +64,7 @@ async def faststream_domain_validation_exception_handler(exc: DomainValidationEr
     )
 
 async def faststream_internal_server_error_exception_handler(exc: Exception) -> ErorrResponse:
+    logger.error(exc)
     return ErorrResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         eror={"message": "Internal Server Error"}

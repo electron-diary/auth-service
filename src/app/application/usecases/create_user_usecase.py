@@ -1,6 +1,8 @@
 from typing import Self
 from datetime import datetime
 from uuid import UUID
+import logging
+from logging import Logger
 
 from src.app.application.dto.request_dto import CreateUserRequest
 from src.app.application.dto.response_dto import CreateUserResponse
@@ -37,4 +39,5 @@ class CreateUserUseCase(Interactor[CreateUserRequest, CreateUserResponse]):
                 user_updated_at=UserUpdatedAt(datetime_now)
             )
         )
+        logging.info
         return CreateUserResponse.from_entity(user_uuid=user_uuid)

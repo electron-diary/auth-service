@@ -1,6 +1,8 @@
 from typing import Self
 from datetime import datetime
 from uuid import UUID
+import logging
+from logging import Logger
 
 from src.app.application.dto.request_dto import AuthentificateUserRequest
 from src.app.application.dto.response_dto import AuthentificationResponse
@@ -16,6 +18,9 @@ from src.app.application.interfaces.uuid_generator import UUIDGeneratorInterface
 from src.app.domain.value_objects.user_status_value_object import UserStatus
 from src.app.domain.entities.user_entities import UserEntity
 from src.app.domain.value_objects.user_uuid_value_object import UserUUID
+
+
+logger: Logger = logging.getLogger(__name__)
 
 
 class AuthentificateUserUseCase(Interactor[AuthentificateUserRequest, AuthentificationResponse]):
@@ -48,6 +53,7 @@ class AuthentificateUserUseCase(Interactor[AuthentificateUserRequest, Authentifi
                     is_active=user_status
                 )
             )
+        logger.info(f"User {user_uuid.to_raw()} authentificated, confirmation-code sended")
         return AuthentificationResponse.from_entity(user_uuid=user_uuid, user_status=user_status)
         
         

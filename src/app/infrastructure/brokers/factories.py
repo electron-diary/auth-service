@@ -1,9 +1,13 @@
 from typing import Self
 import logging
+from logging import Logger
 from faststream.nats.annotations import NatsBroker as Broker, Client
 from faststream.nats.broker import NatsBroker
 
 from src.app.infrastructure.brokers.config import NatsConfig
+
+
+logger: Logger = logging.getLogger(__name__)
 
 
 class BrokerFactory:
@@ -22,4 +26,5 @@ class BrokerConnection:
         self.broker: Broker = broker
 
     async def connect(self: Self) -> Client:
+        logger.info(f"Broker connected to {self.config.nats_uri}")
         return await self.broker.connect()

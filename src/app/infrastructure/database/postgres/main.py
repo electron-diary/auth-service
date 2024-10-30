@@ -1,8 +1,12 @@
 from typing import AsyncGenerator
-import json
+import logging
+from logging import Logger
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, AsyncEngine, async_sessionmaker
 
 from src.app.infrastructure.database.postgres.config import PostgresConfig
+
+
+logger: Logger = logging.getLogger(__name__)
 
 
 def postgres_engine(config: PostgresConfig) -> AsyncEngine:
@@ -12,6 +16,7 @@ def postgres_engine(config: PostgresConfig) -> AsyncEngine:
         echo_pool=config.echo,
         pool_size=50
     )
+    logger.info("Postgres engine created")
     return engine
 
 

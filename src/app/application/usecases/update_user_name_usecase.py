@@ -1,5 +1,7 @@
 from typing import Self
 from datetime import datetime
+import logging
+from logging import Logger
 
 from src.app.application.dto.request_dto import UpdateUserNameRequest
 from src.app.application.dto.response_dto import UpdateUserNameResponse
@@ -8,6 +10,9 @@ from src.app.domain.value_objects.user_name_value_object import UserName
 from src.app.domain.value_objects.user_updated_at_value_object import UserUpdatedAt
 from src.app.domain.value_objects.user_uuid_value_object import UserUUID
 from src.app.application.interfaces.interactor import Interactor
+
+
+logger: Logger = logging.getLogger(__name__)
 
 
 class UpdateUserNameUseCase(Interactor[UpdateUserNameRequest, UpdateUserNameResponse]):
@@ -21,4 +26,5 @@ class UpdateUserNameUseCase(Interactor[UpdateUserNameRequest, UpdateUserNameResp
             user_name=UserName(request.user_name),
             user_updated_at=UserUpdatedAt(datetime_now),
         )
+        logger.info(f"Updated user name: {request.user_name} for user {request.user_uuid}")
         return UpdateUserNameResponse.from_entity(user_name=new_user_name)
