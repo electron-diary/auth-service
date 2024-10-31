@@ -1,8 +1,15 @@
 services:
-  fastapi:
+
+  fastapi-app:
     container_name: fastapi-app
+    image: fastapi_app
     build: 
       context: .
       dockerfile: Dockerfile
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -fsSL http://127.0.0.1:8000/healthcheck']
+      interval: 15s
+      retries: 6
+      start_period: 15s
     ports:
       - '8000:8000'

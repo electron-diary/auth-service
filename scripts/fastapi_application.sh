@@ -17,12 +17,11 @@ if [ ! -f "$GUNICORN_CONFIG" ]; then
     exit 1
 fi
 
-# Function to handle cleanup on exit
-cleanup() {
-    echo "Shutting down Gunicorn server..."
-    kill -TERM $PID 2>/dev/null
-}
-
+if ! command -v gunicorn &> /dev/null; then
+    echo "Error: gunicorn is not installed"
+    echo "Please install it using: pip install gunicorn"
+    exit 1
+fi
 
 # Print startup message
 echo "Starting Gunicorn server..."
@@ -30,10 +29,4 @@ echo "Using config: ${GUNICORN_CONFIG}"
 echo "Application factory: ${APP_FACTORY}"
 
 # Start Gunicorn
-gunicorn -c ../gunicorn/config.py "app.main.factories:fastapi_app_factory"
-
-# Store PID of gunicorn
-PID=$!
-
-# Wait for gunicorn to exit
-wait $PID
+gunicorn -c gunicorn -c "$GUNICORN_CONFIG" "$APP_FACTORY"
