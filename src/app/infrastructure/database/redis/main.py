@@ -3,7 +3,7 @@ from redis.cluster import ClusterNode
 import logging
 from logging import Logger
 
-from src.app.infrastructure.database.redis.config import RedisConfig
+from app.infrastructure.database.redis.config import RedisConfig
 
 
 logger: Logger = logging.getLogger(__name__)

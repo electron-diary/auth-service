@@ -4,7 +4,7 @@ from logging import Logger
 from faststream.nats.annotations import NatsBroker as Broker, Client
 from faststream.nats.broker import NatsBroker
 
-from src.app.infrastructure.brokers.config import NatsConfig
+from app.infrastructure.brokers.config import NatsConfig
 
 
 logger: Logger = logging.getLogger(__name__)

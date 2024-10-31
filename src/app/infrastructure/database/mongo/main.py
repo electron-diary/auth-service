@@ -2,7 +2,7 @@ from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorClientSession
 import logging
 from logging import Logger
 
-from src.app.infrastructure.database.mongo.config import MongoConfig
+from app.infrastructure.database.mongo.config import MongoConfig
 
 
 logger: Logger = logging.getLogger(__name__)

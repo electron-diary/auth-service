@@ -5,10 +5,10 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from src.app.infrastructure.database.postgres.config import PostgresConfig
-from src.app.infrastructure.database.postgres.models.declarative import Base
-from src.app.infrastructure.database.postgres.models.user import UserModel
-from src.app.main.config_loader import load_config
+from app.infrastructure.database.postgres.config import PostgresConfig
+from app.infrastructure.database.postgres.models.declarative import Base
+from app.infrastructure.database.postgres.models.user import UserModel
+from app.main.config_loader import load_config
 
 config_factory = load_config()
 

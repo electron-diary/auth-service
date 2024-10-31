@@ -3,18 +3,18 @@ from uuid import UUID
 from sqlalchemy import select, update, delete, insert
 from sqlalchemy.exc import IntegrityError
 
-from src.app.domain.entities.user_entities import UserEntity
-from src.app.domain.value_objects.user_status_value_object import UserStatus
-from src.app.domain.value_objects.user_contact_value_object import UserContact
-from src.app.domain.value_objects.user_created_at_value_object import UserCreatedAt
-from src.app.domain.value_objects.user_name_value_object import UserName
-from src.app.domain.value_objects.user_updated_at_value_object import UserUpdatedAt
-from src.app.domain.value_objects.user_uuid_value_object import UserUUID
-from src.app.domain.repositories.user_repository import UserRepositoryInterface
-from src.app.infrastructure.database.postgres.models.user import UserModel
-from src.app.infrastructure.database.postgres.repositories.common_repo import CommonSqlaRepo
-from src.app.domain.exceptions.user_exceptions import UserNotFoundError, UserAlreadyExistsError
-from src.app.infrastructure.database.postgres.mappers import user_model_to_entity, user_entity_to_model
+from app.domain.entities.user_entities import UserEntity
+from app.domain.value_objects.user_status_value_object import UserStatus
+from app.domain.value_objects.user_contact_value_object import UserContact
+from app.domain.value_objects.user_created_at_value_object import UserCreatedAt
+from app.domain.value_objects.user_name_value_object import UserName
+from app.domain.value_objects.user_updated_at_value_object import UserUpdatedAt
+from app.domain.value_objects.user_uuid_value_object import UserUUID
+from app.domain.repositories.user_repository import UserRepositoryInterface
+from app.infrastructure.database.postgres.models.user import UserModel
+from app.infrastructure.database.postgres.repositories.common_repo import CommonSqlaRepo
+from app.domain.exceptions.user_exceptions import UserNotFoundError, UserAlreadyExistsError
+from app.infrastructure.database.postgres.mappers import user_model_to_entity, user_entity_to_model
 
 
 class UserRepositoryImpl(CommonSqlaRepo, UserRepositoryInterface):

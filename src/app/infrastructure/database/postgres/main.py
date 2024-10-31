@@ -3,7 +3,7 @@ import logging
 from logging import Logger
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, AsyncEngine, async_sessionmaker
 
-from src.app.infrastructure.database.postgres.config import PostgresConfig
+from app.infrastructure.database.postgres.config import PostgresConfig
 
 
 logger: Logger = logging.getLogger(__name__)

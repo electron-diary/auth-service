@@ -1,7 +1,7 @@
 from typing import Self, Protocol
 from abc import abstractmethod
 
-from src.app.infrastructure.brokers.message import Message
+from app.infrastructure.brokers.message import Message
 
 
 class BrokerInterface(Protocol):

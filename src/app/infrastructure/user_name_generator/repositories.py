@@ -1,9 +1,9 @@
 from typing import Self
 from random import randint
 
-from src.app.domain.value_objects.user_name_value_object import UserName
-from src.app.application.interfaces.user_name_generator import UserNameGeneratorInterface
-from src.app.infrastructure.user_name_generator.config import UserNameGeneratorConfig
+from app.domain.value_objects.user_name_value_object import UserName
+from app.application.interfaces.user_name_generator import UserNameGeneratorInterface
+from app.infrastructure.user_name_generator.config import UserNameGeneratorConfig
 
 
 class UserNameGeneratorRepository(UserNameGeneratorInterface):

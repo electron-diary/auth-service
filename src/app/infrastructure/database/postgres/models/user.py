@@ -4,7 +4,7 @@ from datetime import datetime
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import Integer, String, DateTime, UUID as SQLUUID, Boolean
 
-from src.app.infrastructure.database.postgres.models.declarative import Base
+from app.infrastructure.database.postgres.models.declarative import Base
 
 
 class UserModel(Base):

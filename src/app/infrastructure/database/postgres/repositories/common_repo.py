@@ -1,5 +1,5 @@
 from typing import Self
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class CommonSqlaRepo:
