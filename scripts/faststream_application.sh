@@ -3,11 +3,8 @@
 # Exit on any error
 set -e
 
-# Get the directory where the script is located
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
 # Define the path to gunicorn config
-GUNICORN_CONFIG="${SCRIPT_DIR}/../gunicorn/config.py"
+GUNICORN_CONFIG="../gunicorn/config.py"
 
 # Define the application factory path
 APP_FACTORY="app.main.factories:faststream_app_factory"
