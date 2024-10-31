@@ -1,8 +1,9 @@
-version: "3.3"
-
 services:
-  fastapi-application:
-    build: .
-    command: /bin/sh -c ""../scripts/fastapi_application.sh"
+  fastapi:
+    container_name: fastapi-app
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    command: /bin/sh -c '../scripts/fastapi_application.sh'
     ports:
       - '8000:8000'

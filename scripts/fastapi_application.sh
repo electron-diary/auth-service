@@ -19,7 +19,7 @@ if [ ! -f "$GUNICORN_CONFIG" ]; then
 fi
 
 # Check if gunicorn is installed
-if ! command -v gunicorn &> /dev/null; then
+if ! command -v poetry run gunicorn &> /dev/null; then
     echo "Error: gunicorn is not installed"
     echo "Please install it using: pip install gunicorn"
     exit 1
@@ -40,7 +40,7 @@ echo "Using config: ${GUNICORN_CONFIG}"
 echo "Application factory: ${APP_FACTORY}"
 
 # Start Gunicorn
-gunicorn -c "$GUNICORN_CONFIG" "$APP_FACTORY"
+poetry run gunicorn -c "$GUNICORN_CONFIG" "$APP_FACTORY"
 
 # Store PID of gunicorn
 PID=$!

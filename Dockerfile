@@ -4,8 +4,13 @@ WORKDIR .
 
 COPY . ./
 
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN pip install poetry && poetry install --no-dev
 RUN chmod +x scripts/run_migrations.sh
 RUN chmod +x scripts/fastapi_application.sh
 RUN chmod +x scripts/faststream_application.sh
-RUN cd /src/
+
+WORKDIR /src
