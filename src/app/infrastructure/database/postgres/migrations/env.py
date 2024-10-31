@@ -5,9 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from app.infrastructure.database.postgres.config import PostgresConfig
 from app.infrastructure.database.postgres.models.declarative import Base
-from app.infrastructure.database.postgres.models.user import UserModel
 from app.main.config_loader import load_config
 
 config_factory = load_config()
