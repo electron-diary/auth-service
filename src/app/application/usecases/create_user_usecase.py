@@ -35,8 +35,8 @@ class CreateUserUseCase(Interactor[CreateUserRequest, CreateUserResponse]):
         user_uuid: UserUUID = await self.user_interface.create_user(
             user=UserEntity(
                 uuid=UserUUID(generated_uuid),
-                user_name=UserName(request.name),
-                user_contact=UserContact(request.contact),              
+                user_name=UserName(request.user_name),
+                user_contact=UserContact(request.user_contact),              
                 is_active=UserStatus(False),
                 user_created_at=UserCreatedAt(datetime_now),
                 user_updated_at=UserUpdatedAt(datetime_now)

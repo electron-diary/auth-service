@@ -11,4 +11,4 @@ RUN pip install poetry \
 
 WORKDIR /src
 
-ENTRYPOINT ["../scripts/fastapi_application.sh"]
+ENTRYPOINT ["../scripts/fastapi_application.sh", "../scripts/run_migrations.sh"]
