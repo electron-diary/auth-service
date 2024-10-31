@@ -1,9 +1,9 @@
 from typing import Self
 from dishka import Provider, Scope, provide
 
-from src.app.application.usecases.create_user_usecase import CreateUserUseCase
-from src.app.domain.repositories.user_repository import UserRepositoryInterface
-from src.app.application.interfaces.uuid_generator import UUIDGeneratorInterface
+from app.application.usecases.create_user_usecase import CreateUserUseCase
+from app.domain.repositories.user_repository import UserRepositoryInterface
+from app.application.interfaces.uuid_generator import UUIDGeneratorInterface
 
 
 class CreateUserUseCaseProvider(Provider):

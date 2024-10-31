@@ -1,13 +1,13 @@
 from os import environ
 from dotenv import load_dotenv
 
-from src.app.main.config import ConfigFactory
-from src.app.infrastructure.database.postgres.config import PostgresConfig
-from src.app.infrastructure.brokers.config import NatsConfig
-from src.app.infrastructure.database.elastic.config import ElasticConfig
-from src.app.infrastructure.database.mongo.config import MongoConfig
-from src.app.infrastructure.database.redis.config import RedisConfig
-from src.app.infrastructure.user_name_generator.config import UserNameGeneratorConfig
+from app.main.config import ConfigFactory
+from app.infrastructure.database.postgres.config import PostgresConfig
+from app.infrastructure.brokers.config import NatsConfig
+from app.infrastructure.database.elastic.config import ElasticConfig
+from app.infrastructure.database.mongo.config import MongoConfig
+from app.infrastructure.database.redis.config import RedisConfig
+from app.infrastructure.user_name_generator.config import UserNameGeneratorConfig
 
 load_dotenv()
 

@@ -1,8 +1,8 @@
 from typing import Self
 from dishka import Provider, Scope, provide
 
-from src.app.application.usecases.edit_user_status import EditUserStatusUseCase
-from src.app.domain.repositories.user_repository import UserRepositoryInterface
+from app.application.usecases.edit_user_status import EditUserStatusUseCase
+from app.domain.repositories.user_repository import UserRepositoryInterface
 
 
 class EditUserStatusUseCaseProvider(Provider):

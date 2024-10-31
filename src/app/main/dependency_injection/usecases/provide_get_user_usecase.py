@@ -1,8 +1,8 @@
 from typing import Self
 from dishka import Provider, Scope, provide
 
-from src.app.application.usecases.get_user_usecase import GetUserUseCase
-from src.app.domain.repositories.user_repository import UserRepositoryInterface
+from app.application.usecases.get_user_usecase import GetUserUseCase
+from app.domain.repositories.user_repository import UserRepositoryInterface
 
 
 class GetUserUseCaseProvider(Provider):

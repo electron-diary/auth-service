@@ -1,8 +1,8 @@
 from typing import Self
 from dishka import Provider, Scope, provide
 
-from src.app.application.usecases.update_user_contact_usecase import UpdateUserContactUseCase
-from src.app.domain.repositories.user_repository import UserRepositoryInterface
+from app.application.usecases.update_user_contact_usecase import UpdateUserContactUseCase
+from app.domain.repositories.user_repository import UserRepositoryInterface
 
 
 class UpdateUserContactUseCaseProvider(Provider):

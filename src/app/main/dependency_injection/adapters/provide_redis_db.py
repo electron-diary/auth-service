@@ -2,9 +2,9 @@ from typing import Self, AsyncGenerator
 from dishka import Provider, provide, Scope
 from redis.asyncio import RedisCluster, Redis
 
-from src.app.main.config import ConfigFactory
-from src.app.infrastructure.database.redis.config import RedisConfig
-from src.app.infrastructure.database.redis.main import redis_client
+from app.main.config import ConfigFactory
+from app.infrastructure.database.redis.config import RedisConfig
+from app.infrastructure.database.redis.main import redis_client
 
 
 class RedisProvider(Provider):

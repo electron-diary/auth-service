@@ -1,10 +1,10 @@
 from typing import Self
 from dishka import Provider, Scope, provide
 
-from src.app.application.interfaces.user_name_generator import UserNameGeneratorInterface
-from src.app.main.config import ConfigFactory
-from src.app.infrastructure.user_name_generator.config import UserNameGeneratorConfig
-from src.app.infrastructure.user_name_generator.repositories import UserNameGeneratorRepository
+from app.application.interfaces.user_name_generator import UserNameGeneratorInterface
+from app.main.config import ConfigFactory
+from app.infrastructure.user_name_generator.config import UserNameGeneratorConfig
+from app.infrastructure.user_name_generator.repositories import UserNameGeneratorRepository
 
 
 class UserNameGeneratorProvider(Provider):

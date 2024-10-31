@@ -3,7 +3,7 @@ from faststream import FastStream
 from dishka.integrations.fastapi import setup_dishka as setup_dishka_fastapi
 from dishka.integrations.faststream import setup_dishka as setup_dishka_faststream
 
-from src.app.main.dependency_injection.factories import container_factory
+from app.main.dependency_injection.factories import container_factory
 
 
 def init_di_fastapi(app: FastAPI) -> None:

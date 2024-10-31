@@ -1,11 +1,11 @@
 from dataclasses import dataclass, field
 
-from src.app.infrastructure.database.postgres.config import PostgresConfig
-from src.app.infrastructure.brokers.config import NatsConfig
-from src.app.infrastructure.database.elastic.config import ElasticConfig
-from src.app.infrastructure.user_name_generator.config import UserNameGeneratorConfig
-from src.app.infrastructure.database.mongo.config import MongoConfig
-from src.app.infrastructure.database.redis.config import RedisConfig
+from app.infrastructure.database.postgres.config import PostgresConfig
+from app.infrastructure.brokers.config import NatsConfig
+from app.infrastructure.database.elastic.config import ElasticConfig
+from app.infrastructure.user_name_generator.config import UserNameGeneratorConfig
+from app.infrastructure.database.mongo.config import MongoConfig
+from app.infrastructure.database.redis.config import RedisConfig
 
 
 @dataclass

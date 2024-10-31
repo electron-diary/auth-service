@@ -1,14 +1,13 @@
 from typing import Self, AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, AsyncSession
 from dishka import Provider, Scope, provide, AnyOf
-import logging
 
-from src.app.infrastructure.database.postgres.config import PostgresConfig
-from src.app.infrastructure.database.postgres.main import postgres_engine, postgres_session_factory
-from src.app.infrastructure.database.postgres.repositories.common_repo import CommonSqlaRepo
-from src.app.infrastructure.database.postgres.repositories.user_repo import UserRepositoryImpl
-from src.app.domain.repositories.user_repository import UserRepositoryInterface
-from src.app.main.config import ConfigFactory
+from app.infrastructure.database.postgres.config import PostgresConfig
+from app.infrastructure.database.postgres.main import postgres_engine, postgres_session_factory
+from app.infrastructure.database.postgres.repositories.common_repo import CommonSqlaRepo
+from app.infrastructure.database.postgres.repositories.user_repo import UserRepositoryImpl
+from app.domain.repositories.user_repository import UserRepositoryInterface
+from app.main.config import ConfigFactory
 
 
 class SqlaProvider(Provider):

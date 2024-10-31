@@ -4,12 +4,12 @@ from faststream.nats.annotations import NatsBroker
 from typing import AsyncGenerator
 from contextlib import asynccontextmanager
 
-from src.app.main.dependency_injection.main import init_di_fastapi, init_di_faststream
-from src.app.presentation.main import nats_controllers_factory, http_controllers_factory
-from src.app.infrastructure.brokers.factories import BrokerFactory
-from src.app.main.config_loader import load_nats_config
-from src.app.infrastructure.brokers.config import NatsConfig
-from src.app.infrastructure.logger.main import configure_logging
+from app.main.dependency_injection.main import init_di_fastapi, init_di_faststream
+from app.presentation.main import nats_controllers_factory, http_controllers_factory
+from app.infrastructure.brokers.factories import BrokerFactory
+from app.main.config_loader import load_nats_config
+from app.infrastructure.brokers.config import NatsConfig
+from app.infrastructure.logger.main import configure_logging
 
 @asynccontextmanager
 async def lifespan(app: FastAPI | AsgiFastStream) -> AsyncGenerator[None, None]:

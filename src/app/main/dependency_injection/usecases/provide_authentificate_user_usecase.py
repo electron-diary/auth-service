@@ -1,10 +1,10 @@
 from typing import Self
 from dishka import Provider, Scope, provide
 
-from src.app.application.usecases.authentificate_user import AuthentificateUserUseCase
-from src.app.application.interfaces.user_name_generator import UserNameGeneratorInterface
-from src.app.domain.repositories.user_repository import UserRepositoryInterface
-from src.app.application.interfaces.uuid_generator import UUIDGeneratorInterface
+from app.application.usecases.authentificate_user import AuthentificateUserUseCase
+from app.application.interfaces.user_name_generator import UserNameGeneratorInterface
+from app.domain.repositories.user_repository import UserRepositoryInterface
+from app.application.interfaces.uuid_generator import UUIDGeneratorInterface
 
 
 class AuthentificateeUserUseCaseProvider(Provider):

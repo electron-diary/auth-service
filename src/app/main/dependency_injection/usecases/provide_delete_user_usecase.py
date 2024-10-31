@@ -1,8 +1,8 @@
 from typing import Self
 from dishka import Provider, Scope, provide
 
-from src.app.application.usecases.delete_user_usecase import DeleteUserUseCase
-from src.app.domain.repositories.user_repository import UserRepositoryInterface
+from app.application.usecases.delete_user_usecase import DeleteUserUseCase
+from app.domain.repositories.user_repository import UserRepositoryInterface
 
 
 class DeleteUserUseCaseProvider(Provider):

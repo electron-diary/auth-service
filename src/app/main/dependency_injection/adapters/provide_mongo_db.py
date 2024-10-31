@@ -3,9 +3,9 @@ from dishka import Provider, provide, Scope
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorClientSession
 from pymongo.errors import PyMongoError
 
-from src.app.infrastructure.database.mongo.config import MongoConfig
-from src.app.infrastructure.database.mongo.main import mongo_client, mongo_session
-from src.app.main.config import ConfigFactory
+from app.infrastructure.database.mongo.config import MongoConfig
+from app.infrastructure.database.mongo.main import mongo_client, mongo_session
+from app.main.config import ConfigFactory
 
 
 class MongoProvider(Provider):
