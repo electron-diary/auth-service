@@ -2,13 +2,13 @@ from typing import Self
 import logging
 from logging import Logger
 
-from src.app.application.dto.request_dto import GetUserRequest
-from src.app.application.dto.response_dto import GetUserResponse
-from src.app.application.interfaces.interactor import Interactor
-from src.app.domain.value_objects.user_uuid_value_object import UserUUID
-from src.app.application.interfaces.interactor import Interactor
-from src.app.domain.repositories.user_repository import UserRepositoryInterface
-from src.app.domain.entities.user_entities import UserEntity
+from app.application.dto.request_dto import GetUserRequest
+from app.application.dto.response_dto import GetUserResponse
+from app.application.interfaces.interactor import Interactor
+from app.domain.value_objects.user_uuid_value_object import UserUUID
+from app.application.interfaces.interactor import Interactor
+from app.domain.repositories.user_repository import UserRepositoryInterface
+from app.domain.entities.user_entities import UserEntity
 
 logger: Logger = logging.getLogger(__name__)
 

@@ -3,11 +3,11 @@ from datetime import datetime
 from uuid import UUID
 
 
-from src.app.domain.value_objects.user_uuid_value_object import UserUUID
-from src.app.domain.value_objects.user_contact_value_object import UserContact
-from src.app.domain.value_objects.user_name_value_object import UserName
-from src.app.domain.value_objects.user_status_value_object import UserStatus
-from src.app.domain.entities.user_entities import UserEntity
+from app.domain.value_objects.user_uuid_value_object import UserUUID
+from app.domain.value_objects.user_contact_value_object import UserContact
+from app.domain.value_objects.user_name_value_object import UserName
+from app.domain.value_objects.user_status_value_object import UserStatus
+from app.domain.entities.user_entities import UserEntity
 
 
 @dataclass(frozen=True)

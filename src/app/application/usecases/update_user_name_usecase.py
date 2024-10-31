@@ -3,13 +3,13 @@ from datetime import datetime
 import logging
 from logging import Logger
 
-from src.app.application.dto.request_dto import UpdateUserNameRequest
-from src.app.application.dto.response_dto import UpdateUserNameResponse
-from src.app.domain.repositories.user_repository import UserRepositoryInterface
-from src.app.domain.value_objects.user_name_value_object import UserName
-from src.app.domain.value_objects.user_updated_at_value_object import UserUpdatedAt
-from src.app.domain.value_objects.user_uuid_value_object import UserUUID
-from src.app.application.interfaces.interactor import Interactor
+from app.application.dto.request_dto import UpdateUserNameRequest
+from app.application.dto.response_dto import UpdateUserNameResponse
+from app.domain.repositories.user_repository import UserRepositoryInterface
+from app.domain.value_objects.user_name_value_object import UserName
+from app.domain.value_objects.user_updated_at_value_object import UserUpdatedAt
+from app.domain.value_objects.user_uuid_value_object import UserUUID
+from app.application.interfaces.interactor import Interactor
 
 
 logger: Logger = logging.getLogger(__name__)

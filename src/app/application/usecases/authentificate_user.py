@@ -4,20 +4,20 @@ from uuid import UUID
 import logging
 from logging import Logger
 
-from src.app.application.dto.request_dto import AuthentificateUserRequest
-from src.app.application.dto.response_dto import AuthentificationResponse
-from src.app.application.interfaces.interactor import Interactor
-from src.app.domain.repositories.user_repository import UserRepositoryInterface
-from src.app.application.interfaces.user_name_generator import UserNameGeneratorInterface
-from src.app.domain.value_objects.user_uuid_value_object import UserUUID
-from src.app.domain.value_objects.user_contact_value_object import UserContact
-from src.app.domain.value_objects.user_name_value_object import UserName
-from src.app.domain.value_objects.user_created_at_value_object import UserCreatedAt
-from src.app.domain.value_objects.user_updated_at_value_object import UserUpdatedAt
-from src.app.application.interfaces.uuid_generator import UUIDGeneratorInterface
-from src.app.domain.value_objects.user_status_value_object import UserStatus
-from src.app.domain.entities.user_entities import UserEntity
-from src.app.domain.value_objects.user_uuid_value_object import UserUUID
+from app.application.dto.request_dto import AuthentificateUserRequest
+from app.application.dto.response_dto import AuthentificationResponse
+from app.application.interfaces.interactor import Interactor
+from app.domain.repositories.user_repository import UserRepositoryInterface
+from app.application.interfaces.user_name_generator import UserNameGeneratorInterface
+from app.domain.value_objects.user_uuid_value_object import UserUUID
+from app.domain.value_objects.user_contact_value_object import UserContact
+from app.domain.value_objects.user_name_value_object import UserName
+from app.domain.value_objects.user_created_at_value_object import UserCreatedAt
+from app.domain.value_objects.user_updated_at_value_object import UserUpdatedAt
+from app.application.interfaces.uuid_generator import UUIDGeneratorInterface
+from app.domain.value_objects.user_status_value_object import UserStatus
+from app.domain.entities.user_entities import UserEntity
+from app.domain.value_objects.user_uuid_value_object import UserUUID
 
 
 logger: Logger = logging.getLogger(__name__)

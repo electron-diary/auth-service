@@ -2,11 +2,11 @@ from typing import Self
 import logging
 from logging import Logger
 
-from src.app.application.dto.request_dto import EditUserStatusRequest
-from src.app.domain.value_objects.user_uuid_value_object import UserUUID
-from src.app.application.interfaces.interactor import Interactor
-from src.app.domain.repositories.user_repository import UserRepositoryInterface
-from src.app.domain.value_objects.user_status_value_object import UserStatus
+from app.application.dto.request_dto import EditUserStatusRequest
+from app.domain.value_objects.user_uuid_value_object import UserUUID
+from app.application.interfaces.interactor import Interactor
+from app.domain.repositories.user_repository import UserRepositoryInterface
+from app.domain.value_objects.user_status_value_object import UserStatus
 
 
 logger: Logger = logging.getLogger(__name__)
