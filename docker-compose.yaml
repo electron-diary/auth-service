@@ -2,14 +2,45 @@ services:
 
   fastapi-app:
     container_name: fastapi-app
-    image: fastapi_app
+    image: user_service
     build: 
       context: .
       dockerfile: Dockerfile
+    depends_on:
+      postgres-database:
+        condition: service_started
+    env_file: '.env.non.dev'
     healthcheck:
       test: ['CMD-SHELL', 'curl -fsSL http://127.0.0.1:8000/healthcheck']
       interval: 15s
+      timeout: 120s
       retries: 6
       start_period: 15s
     ports:
       - '8000:8000'
+
+  postgres-migration:
+    container_name: postgres-migrations
+    image: user_service
+    build:
+      context: .
+    depends_on:
+      postgres-database:
+        condition: service_started
+    command: bin/sh -c "../scripts/run_migrations.sh"
+
+  postgres-database:
+    container_name: postgres-database
+    image: 'postgres:16-alpine'
+    restart: unless-stopped
+    expose:
+      - '5432'
+    ports:
+      - '5432:5432'
+    env_file: '.env.non.dev'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 60s
+      retries: 5
+      start_period: 10s

@@ -3,11 +3,8 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
-# Get the directory where the script is located
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
 # Define the path to alembic.ini
-ALEMBIC_CONFIG="${SCRIPT_DIR}/../alembic.ini"
+ALEMBIC_CONFIG="../alembic.ini"
 
 # Check if alembic.ini exists
 if [ ! -f "$ALEMBIC_CONFIG" ]; then
