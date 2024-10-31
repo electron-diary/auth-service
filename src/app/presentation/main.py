@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 from faststream.nats.annotations import NatsBroker
 
-from src.app.presentation.api.controllers.nats import user_routers as nats_users, health_check_router as nats_health
-from src.app.presentation.api.controllers.http import user_routers as http_users, health_check_router as http_health
-from src.app.presentation.api.controllers.http import user_authentification as http_auth
-from src.app.presentation.exception_factories import nats_exceptions_factory
-from src.app.presentation.exception_factories import fastapi_exceptions_factory
+from app.presentation.api.controllers.nats import user_routers as nats_users, health_check_router as nats_health
+from app.presentation.api.controllers.http import user_routers as http_users, health_check_router as http_health
+from app.presentation.api.controllers.http import user_authentification as http_auth
+from app.presentation.exception_factories import nats_exceptions_factory
+from app.presentation.exception_factories import fastapi_exceptions_factory
 
 
 def nats_controllers_factory(broker: NatsBroker) -> None:

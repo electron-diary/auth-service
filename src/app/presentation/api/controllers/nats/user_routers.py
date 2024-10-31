@@ -1,17 +1,16 @@
 from faststream.nats.router import NatsRouter
-from faststream.nats import JStream
 from dishka.integrations.faststream import inject, FromDishka
 
-from src.app.application.dto.request_dto import CreateUserRequest, GetUserRequest, UpdateUserContactRequest
-from src.app.application.dto.request_dto import UpdateUserNameRequest, DeleteUserRequest
-from src.app.application.dto.response_dto import CreateUserResponse, GetUserResponse
-from src.app.application.dto.response_dto import UpdateUserContactResponse, UpdateUserNameResponse
-from src.app.application.usecases.create_user_usecase import CreateUserUseCase
-from src.app.application.usecases.get_user_usecase import GetUserUseCase
-from src.app.presentation.api.responses.successful_response import SuccessfullResponse
-from src.app.application.usecases.update_user_contact_usecase import UpdateUserContactUseCase
-from src.app.application.usecases.update_user_name_usecase import UpdateUserNameUseCase
-from src.app.application.usecases.delete_user_usecase import DeleteUserUseCase
+from app.application.dto.request_dto import CreateUserRequest, GetUserRequest, UpdateUserContactRequest
+from app.application.dto.request_dto import UpdateUserNameRequest, DeleteUserRequest
+from app.application.dto.response_dto import CreateUserResponse, GetUserResponse
+from app.application.dto.response_dto import UpdateUserContactResponse, UpdateUserNameResponse
+from app.application.usecases.create_user_usecase import CreateUserUseCase
+from app.application.usecases.get_user_usecase import GetUserUseCase
+from app.presentation.api.responses.successful_response import SuccessfullResponse
+from app.application.usecases.update_user_contact_usecase import UpdateUserContactUseCase
+from app.application.usecases.update_user_name_usecase import UpdateUserNameUseCase
+from app.application.usecases.delete_user_usecase import DeleteUserUseCase
 
 
 router: NatsRouter = NatsRouter(prefix='/users')

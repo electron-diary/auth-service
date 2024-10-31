@@ -2,9 +2,9 @@ from fastapi import APIRouter
 from starlette import status
 from dishka.integrations.fastapi import inject, FromDishka
 
-from src.app.application.dto.response_dto import AuthentificationResponse
-from src.app.application.dto.request_dto import AuthentificateUserRequest
-from src.app.application.usecases.authentificate_user import AuthentificateUserUseCase
+from app.application.dto.response_dto import AuthentificationResponse
+from app.application.dto.request_dto import AuthentificateUserRequest
+from app.application.usecases.authentificate_user import AuthentificateUserUseCase
 
 router: APIRouter = APIRouter(prefix='/users/authentification', tags=['Authentification'])
 

@@ -2,16 +2,16 @@ from uuid import UUID
 from fastapi import APIRouter, status
 from dishka.integrations.fastapi import inject, FromDishka
 
-from src.app.application.dto.request_dto import CreateUserRequest, GetUserRequest, UpdateUserContactRequest, EditUserStatusRequest
-from src.app.application.dto.request_dto import UpdateUserNameRequest, DeleteUserRequest
-from src.app.application.dto.response_dto import CreateUserResponse, GetUserResponse
-from src.app.application.dto.response_dto import UpdateUserContactResponse, UpdateUserNameResponse
-from src.app.application.usecases.create_user_usecase import CreateUserUseCase
-from src.app.application.usecases.get_user_usecase import GetUserUseCase
-from src.app.application.usecases.update_user_contact_usecase import UpdateUserContactUseCase
-from src.app.application.usecases.update_user_name_usecase import UpdateUserNameUseCase
-from src.app.application.usecases.delete_user_usecase import DeleteUserUseCase
-from src.app.application.usecases.edit_user_status import EditUserStatusUseCase
+from app.application.dto.request_dto import CreateUserRequest, GetUserRequest, UpdateUserContactRequest, EditUserStatusRequest
+from app.application.dto.request_dto import UpdateUserNameRequest, DeleteUserRequest
+from app.application.dto.response_dto import CreateUserResponse, GetUserResponse
+from app.application.dto.response_dto import UpdateUserContactResponse, UpdateUserNameResponse
+from app.application.usecases.create_user_usecase import CreateUserUseCase
+from app.application.usecases.get_user_usecase import GetUserUseCase
+from app.application.usecases.update_user_contact_usecase import UpdateUserContactUseCase
+from app.application.usecases.update_user_name_usecase import UpdateUserNameUseCase
+from app.application.usecases.delete_user_usecase import DeleteUserUseCase
+from app.application.usecases.edit_user_status import EditUserStatusUseCase
 
 
 router: APIRouter = APIRouter(prefix='/users', tags=['Users'])

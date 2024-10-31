@@ -3,9 +3,9 @@ from typing import cast
 import logging
 from logging import Logger
 
-from src.app.presentation.api.responses.error_response import ErorrResponse
-from src.app.domain.exceptions.user_exceptions import UserAlreadyExistsError, UserNotFoundError
-from src.app.domain.common.exceptions import DomainValidationError
+from app.presentation.api.responses.error_response import ErorrResponse
+from app.domain.exceptions.user_exceptions import UserAlreadyExistsError, UserNotFoundError
+from app.domain.common.exceptions import DomainValidationError
 
 
 logger: Logger = logging.getLogger(__name__)
