@@ -1,4 +1,4 @@
-from src.app.domain.common.exceptions import DomainException
+from app.domain.common.exceptions import DomainException
 
 
 class UserNotFoundError(DomainException):

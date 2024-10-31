@@ -1,12 +1,8 @@
 from typing import Self
 from dataclasses import dataclass
-from uuid import UUID
-import ipaddress
-from datetime import datetime
-import base64
 
-from src.app.domain.common.value_objects import DomainValueObject
-from src.app.domain.common.exceptions import DomainValidationError
+from app.domain.common.value_objects import DomainValueObject
+from app.domain.common.exceptions import DomainValidationError
         
 @dataclass(frozen=True)
 class UserContact(DomainValueObject[str | int]):
