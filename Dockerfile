@@ -10,5 +10,3 @@ RUN pip install poetry \
     && chmod +x scripts/faststream_application.sh
 
 WORKDIR /src
-
-ENTRYPOINT ["../scripts/fastapi_application.sh", "../scripts/run_migrations.sh"]
