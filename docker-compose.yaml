@@ -34,3 +34,38 @@ services:
       timeout: 60s
       retries: 5
       start_period: 10s
+
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
+    networks:
+      - grafana
+    volumes:
+      - ./grafana:/etc/grafana/provisioning:rw
+    expose:
+      - '3100'
+    ports:
+      - '3000:3000'
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    expose:
+      - '3100'
+    volumes:
+      - ./loki/loki-config.yaml:/etc/loki/local-config.yaml:ro
+    command: -config.file=/etc/loki/local-config.yaml
+    restart: unless-stopped
+    networks: 
+      - grafana
+    ports:
+      - '3100:3100'
+
+  promtail:
+    
+
+
+networks:
+  grafana: {}
+
