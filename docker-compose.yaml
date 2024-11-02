@@ -63,7 +63,20 @@ services:
       - '3100:3100'
 
   promtail:
-    
+    image: grafana/promtail:latest
+    container_name: promtail
+    restart: unless-stopped
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./promtail/promtail-config.yaml:/etc/promtail/promtail-config.yaml:ro
+    command:
+      - '-config.file=/etc/promtail/promtail-config.yaml'
+    depends_on:
+      loki:
+        condition: service_started
+    networks:
+      - grafana
+
 
 
 networks:
