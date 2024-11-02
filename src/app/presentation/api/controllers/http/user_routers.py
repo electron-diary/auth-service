@@ -12,6 +12,7 @@ from app.application.usecases.update_user_contact_usecase import UpdateUserConta
 from app.application.usecases.update_user_name_usecase import UpdateUserNameUseCase
 from app.application.usecases.delete_user_usecase import DeleteUserUseCase
 from app.application.usecases.edit_user_status import EditUserStatusUseCase
+from app.infrastructure.metrics.decorators import measure_time
 
 
 router: APIRouter = APIRouter(prefix='/users', tags=['Users'])
@@ -21,6 +22,7 @@ router: APIRouter = APIRouter(prefix='/users', tags=['Users'])
     '/create-user', status_code=status.HTTP_201_CREATED, response_model= CreateUserResponse
 )
 @inject
+@measure_time
 async def create_user(
     user_shema: CreateUserRequest, interactor: FromDishka[CreateUserUseCase]
 ) -> CreateUserResponse:
@@ -31,6 +33,7 @@ async def create_user(
     '/get-user', status_code=status.HTTP_200_OK, response_model=GetUserResponse
 )
 @inject
+@measure_time
 async def get_user(
     user_uuid: UUID, interactor: FromDishka[GetUserUseCase]
 ) -> GetUserResponse:
@@ -41,6 +44,7 @@ async def get_user(
     '/update-user-contact', status_code=status.HTTP_200_OK, response_model=UpdateUserContactResponse
 )
 @inject
+@measure_time
 async def update_user_contact(
     user_shema: UpdateUserContactRequest, interactor: FromDishka[UpdateUserContactUseCase]
 ) -> UpdateUserContactResponse:
@@ -51,6 +55,7 @@ async def update_user_contact(
     '/update-user-name', status_code=status.HTTP_200_OK, response_model=UpdateUserNameResponse
 )
 @inject
+@measure_time
 async def update_user_name(
     user_shema: UpdateUserNameRequest, interactor: FromDishka[UpdateUserNameUseCase]
 ) -> UpdateUserNameResponse:
@@ -61,6 +66,7 @@ async def update_user_name(
     '/delete-user', status_code=status.HTTP_200_OK
 )
 @inject
+@measure_time
 async def delete_user(
     user_shema: DeleteUserRequest, interactor: FromDishka[DeleteUserUseCase]
 ) -> None:
@@ -71,6 +77,7 @@ async def delete_user(
     '/edit-user-status', status_code=status.HTTP_200_OK, response_model=None
 )
 @inject
+@measure_time
 async def edit_user_status(
     user_shema: EditUserStatusRequest, interactor: FromDishka[EditUserStatusUseCase]
 ) -> None:

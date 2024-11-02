@@ -11,6 +11,7 @@ from app.presentation.api.responses.successful_response import SuccessfullRespon
 from app.application.usecases.update_user_contact_usecase import UpdateUserContactUseCase
 from app.application.usecases.update_user_name_usecase import UpdateUserNameUseCase
 from app.application.usecases.delete_user_usecase import DeleteUserUseCase
+from app.infrastructure.metrics.decorators import measure_time
 
 
 router: NatsRouter = NatsRouter(prefix='/users')
@@ -18,6 +19,7 @@ router: NatsRouter = NatsRouter(prefix='/users')
 
 @router.subscriber('/create-user')
 @inject
+@measure_time
 async def create_user(
     user_shema: CreateUserRequest, interactor: FromDishka[CreateUserUseCase]
 ) -> CreateUserResponse:
@@ -27,6 +29,7 @@ async def create_user(
 
 @router.subscriber('/get-user')
 @inject
+@measure_time
 async def get_user(
     user_shema: GetUserRequest, interactor: FromDishka[GetUserUseCase]
 ) -> GetUserResponse:
@@ -36,6 +39,7 @@ async def get_user(
 
 @router.subscriber('/update-user-contact')
 @inject
+@measure_time
 async def update_user_contact(
     user_shema: UpdateUserContactRequest, interactor: FromDishka[UpdateUserContactUseCase]
 ) -> UpdateUserContactResponse:
@@ -45,6 +49,7 @@ async def update_user_contact(
 
 @router.subscriber('/update-user-name')
 @inject
+@measure_time
 async def update_user_name(
     user_shema: UpdateUserNameRequest, interactor: FromDishka[UpdateUserNameUseCase]
 ) -> UpdateUserNameResponse:
@@ -54,6 +59,7 @@ async def update_user_name(
 
 @router.subscriber('/delete-user')
 @inject
+@measure_time
 async def delete_user(
     user_shema: DeleteUserRequest, interactor: FromDishka[DeleteUserUseCase]
 ) -> None:
