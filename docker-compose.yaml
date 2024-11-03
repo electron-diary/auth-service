@@ -1,5 +1,4 @@
 services:
-
   fastapi-app:
     container_name: fastapi-app
     image: user_service
@@ -10,14 +9,24 @@ services:
       postgres-database:
         condition: service_started
     env_file: '.env.non.dev'
+    command: /bin/sh -c "../scripts/fastapi_application.sh"
     healthcheck:
       test: ['CMD-SHELL', 'curl -fsSL http://127.0.0.1:8000/healthcheck']
       interval: 15s
-      timeout: 120s
-      retries: 6
-      start_period: 15s
+      timeout: 60s
+      retries: 15
     ports:
       - '8000:8000'
+
+  postgres-migration:
+    container_name: postgres_migration
+    build: 
+      context: .
+    depends_on:
+      postgres-database:
+        condition: service_started
+    env_file: '.env.non.dev'
+    command: /bin/sh -c "../scripts/run_migrations.sh"
 
   postgres-database:
     container_name: postgres-database
