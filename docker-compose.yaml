@@ -85,6 +85,22 @@ services:
         condition: service_started
     networks:
       - grafana
+  
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus/prometheus-config.yaml:/etc/prometheus/prometheus-config.yaml:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus-config.yaml'
+    restart: unless-stopped
+    expose:
+      - 9090
+    networks:
+      - grafana
+    ports: 
+      - '9090:9090'
 
 
 
