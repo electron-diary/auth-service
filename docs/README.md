@@ -1,1 +1,0 @@
-# Example of simple REST service based on faststream + fastapi
