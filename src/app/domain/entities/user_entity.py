@@ -24,7 +24,6 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
     user_created_at: TimestampValueObject
     user_updated_at: TimestampValueObject
 
-    @property
     def create_user(
         self: Self,
         user_uuid: UUIDValueObject,
@@ -45,7 +44,6 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
 
         return event
 
-    @property
     def update_user_email(self: Self, user_uuid: UUIDValueObject, user_email: UserEmailValueObject) -> UpdateUserEmailEvent:
         timestamp: datetime = datetime.now()
         timestamp_value_object: TimestampValueObject = TimestampValueObject(timestamp)
@@ -57,7 +55,6 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
 
         return event
 
-    @property
     def update_user_name(self: Self, user_uuid: UUIDValueObject, new_user_name: UserNameValueObject) -> UpdateUserNameEvent:
         timestamp: datetime = datetime.now()
         timestamp_value_object: TimestampValueObject = TimestampValueObject(timestamp)
@@ -69,7 +66,6 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
 
         return event
 
-    @property
     def update_user_phone(self: Self, user_uuid: UUIDValueObject, user_phone: UserPhoneValueObject) -> UpdateUserPhoneEvent:
         timestamp: datetime = datetime.now()
         timestamp_value_object: TimestampValueObject = TimestampValueObject(timestamp)
@@ -81,7 +77,6 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
 
         return event
 
-    @property
     def delete_user(self: Self, user_uuid: UUIDValueObject) -> DeleteUserEvent:
         event: DeleteUserEvent = DeleteUserEvent(
             user_uuid=user_uuid,
