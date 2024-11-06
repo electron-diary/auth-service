@@ -1,6 +1,5 @@
 target-version = 'py312'
 line-length = 100
-src = ['src']
 
 [lint]
 select = ['ALL']
