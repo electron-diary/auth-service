@@ -30,7 +30,7 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
         user_email: UserEmailValueObject,
         user_phone: UserPhoneValueObject,
         user_name: UserNameValueObject,
-    ) -> CreateUserEvent:
+    ) -> None:
         timestamp: datetime = datetime.now()
         timestamp_value_object: TimestampValueObject = TimestampValueObject(timestamp)
         event: CreateUserEvent = CreateUserEvent(
@@ -42,9 +42,7 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
             user_updated_at=timestamp_value_object,
         )
 
-        return event
-
-    def update_user_email(self: Self, user_uuid: UUIDValueObject, user_email: UserEmailValueObject) -> UpdateUserEmailEvent:
+    def update_user_email(self: Self, user_uuid: UUIDValueObject, user_email: UserEmailValueObject) -> None:
         timestamp: datetime = datetime.now()
         timestamp_value_object: TimestampValueObject = TimestampValueObject(timestamp)
         event: UpdateUserEmailEvent = UpdateUserEmailEvent(
@@ -53,9 +51,7 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
             user_uuid=user_uuid,
         )
 
-        return event
-
-    def update_user_name(self: Self, user_uuid: UUIDValueObject, new_user_name: UserNameValueObject) -> UpdateUserNameEvent:
+    def update_user_name(self: Self, user_uuid: UUIDValueObject, new_user_name: UserNameValueObject) -> None:
         timestamp: datetime = datetime.now()
         timestamp_value_object: TimestampValueObject = TimestampValueObject(timestamp)
         event: UpdateUserNameEvent = UpdateUserNameEvent(
@@ -64,9 +60,7 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
             user_uuid=user_uuid,
         )
 
-        return event
-
-    def update_user_phone(self: Self, user_uuid: UUIDValueObject, user_phone: UserPhoneValueObject) -> UpdateUserPhoneEvent:
+    def update_user_phone(self: Self, user_uuid: UUIDValueObject, user_phone: UserPhoneValueObject) -> None:
         timestamp: datetime = datetime.now()
         timestamp_value_object: TimestampValueObject = TimestampValueObject(timestamp)
         event: UpdateUserPhoneEvent = UpdateUserPhoneEvent(
@@ -75,14 +69,10 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
             user_uuid=user_uuid,
         )
 
-        return event
-
-    def delete_user(self: Self, user_uuid: UUIDValueObject) -> DeleteUserEvent:
+    def delete_user(self: Self, user_uuid: UUIDValueObject) -> None:
         event: DeleteUserEvent = DeleteUserEvent(
             user_uuid=user_uuid,
         )
-
-        return event
 
     def __post_init__(self: Self) -> None:
         if self.user_email.to_raw() is None and self.user_phone.to_raw() is None:
