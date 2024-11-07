@@ -8,11 +8,11 @@ from app.domain.common.common_value_object import CommonDomainValueObject
 @dataclass(frozen=True)
 class UserEmailValueObject(CommonDomainValueObject[str | None]):
     def __post_init__(self: Self) -> None:
-        if not isinstance(self.to_raw(), (str, None)):
+        if not isinstance(self.to_raw(), str) or not self.to_raw():
             raise DomainValidationError(
-                "User email must be an integer or None",
+                "User email must be an string or None",
             )
-        if isinstance(self.to_raw(), str) and len(self.to_raw()) > 30:
+        if isinstance(self.to_raw(), str) and len(self.to_raw()) > 20:
             raise DomainValidationError(
                 "User email must be less than 20 characters long",
             )

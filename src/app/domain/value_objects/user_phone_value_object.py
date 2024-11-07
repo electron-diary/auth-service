@@ -8,7 +8,7 @@ from app.domain.common.common_value_object import CommonDomainValueObject
 @dataclass(frozen=True)
 class UserPhoneValueObject(CommonDomainValueObject[int | None]):
     def __post_init__(self: Self) -> None:
-        if not isinstance(self.to_raw(), (int, None)):
+        if not isinstance(self.to_raw(), int) or not self.to_raw():
             raise DomainValidationError(
                 "User phone must be an integer or None",
             )
