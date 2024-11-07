@@ -1,15 +1,14 @@
 from typing import Self
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from app.domain.common.common_event import CommonDomainEvent
 from app.domain.exceptions.events_exception import EventValidationError
 from app.domain.exceptions.events_exception import EventsNotFoundError
+from app.domain.common.common_events_strorage import TemporaryEventStorage
 
 
 @dataclass
-class EventsAgregator:
-    def __init__(self: Self) -> None:
-        self.events: list[CommonDomainEvent] = []
+class EventsAgregator(TemporaryEventStorage):
 
     def add_event(self: Self, event: CommonDomainEvent) -> None:
         if not isinstance(event, CommonDomainEvent):
@@ -24,7 +23,7 @@ class EventsAgregator:
     def remove_events(self: Self) -> None:
         if len(self.events) == 0:
             raise EventsNotFoundError("No events to remove")
-        self.events = []
+        self.events.clear()
 
     def send_events(self: Self) -> list[CommonDomainEvent]:
         if len(self.events) == 0:
