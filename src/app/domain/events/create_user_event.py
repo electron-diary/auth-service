@@ -10,8 +10,6 @@ from app.domain.value_objects.uuid_value_object import UUIDValueObject
 
 @dataclass(frozen=True)
 class CreateUserEvent(CommonDomainEvent[UUIDValueObject, TimestampValueObject]):
-    event_uuid: UUIDValueObject
-    event_start_execution_time: TimestampValueObject
     user_uuid: UUIDValueObject
     user_name: UserNameValueObject
     user_email: UserEmailValueObject
