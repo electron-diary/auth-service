@@ -1,10 +1,12 @@
 from typing import Self
+from dataclasses import dataclass
 
 from app.domain.common.common_event import CommonDomainEvent
 from app.domain.exceptions.events_exception import EventValidationError
 from app.domain.exceptions.events_exception import EventsNotFoundError
 
 
+@dataclass
 class EventsAgregator:
     def __init__(self: Self) -> None:
         self.events: list[CommonDomainEvent] = []
