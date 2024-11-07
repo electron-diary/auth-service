@@ -7,7 +7,7 @@ from app.domain.common.common_value_object import CommonDomainValueObject
 
 @dataclass(frozen=True)
 class UserNameValueObject(CommonDomainValueObject[str]):
-    def validate(self: Self) -> None:
+    def __post_init__(self: Self) -> None:
         if not self.to_raw():
             raise DomainValidationError(
                 "User name cannot be empty",

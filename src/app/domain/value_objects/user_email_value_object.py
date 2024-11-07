@@ -7,7 +7,7 @@ from app.domain.common.common_value_object import CommonDomainValueObject
 
 @dataclass(frozen=True)
 class UserEmailValueObject(CommonDomainValueObject[str | None]):
-    def validate(self: Self) -> None:
+    def __post_init__(self: Self) -> None:
         if not isinstance(self.to_raw(), (str, None)):
             raise DomainValidationError(
                 "User email must be an integer or None",

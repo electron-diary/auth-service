@@ -9,8 +9,3 @@ class CommonDomainValueObject[ObjectType]:
     def to_raw(self: Self) -> ObjectType:
         return self.object
 
-    def validate(self: Self) -> None:
-        ...
-
-    def __post_init__(self: Self) -> None:
-        self.validate()
