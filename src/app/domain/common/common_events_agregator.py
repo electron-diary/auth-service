@@ -1,10 +1,9 @@
+from dataclasses import dataclass
 from typing import Self
-from dataclasses import dataclass, field
 
 from app.domain.common.common_event import CommonDomainEvent
-from app.domain.exceptions.events_exception import EventValidationError
-from app.domain.exceptions.events_exception import EventsNotFoundError
 from app.domain.common.common_events_strorage import TemporaryEventStorage
+from app.domain.exceptions.events_exception import EventsNotFoundError, EventValidationError
 
 
 @dataclass
@@ -19,7 +18,7 @@ class EventsAgregator(TemporaryEventStorage):
         if len(self.events) == 0:
             raise EventsNotFoundError("No events to get")
         return self.events
-    
+
     def remove_events(self: Self) -> None:
         if len(self.events) == 0:
             raise EventsNotFoundError("No events to remove")

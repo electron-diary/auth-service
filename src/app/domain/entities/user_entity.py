@@ -3,8 +3,8 @@ from datetime import datetime
 from typing import Self
 
 from app.domain.common.common_entity import CommonDomainEntity
-from app.domain.common.common_exceptions import DomainValidationError
 from app.domain.common.common_events_agregator import EventsAgregator
+from app.domain.common.common_exceptions import DomainValidationError
 from app.domain.events.create_user_event import CreateUserEvent
 from app.domain.events.delete_user_event import DeleteUserEvent
 from app.domain.events.update_user_email_event import UpdateUserEmailEvent
