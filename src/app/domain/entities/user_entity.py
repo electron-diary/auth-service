@@ -4,6 +4,7 @@ from typing import Self
 
 from app.domain.common.common_entity import CommonDomainEntity
 from app.domain.common.common_exceptions import DomainValidationError
+from app.domain.common.common_events_agregator import EventsAgregator
 from app.domain.events.create_user_event import CreateUserEvent
 from app.domain.events.delete_user_event import DeleteUserEvent
 from app.domain.events.update_user_email_event import UpdateUserEmailEvent
@@ -17,7 +18,7 @@ from app.domain.value_objects.uuid_value_object import UUIDValueObject
 
 
 @dataclass
-class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
+class UserDomainEntity(CommonDomainEntity[UUIDValueObject], EventsAgregator):
     user_name: UserNameValueObject
     user_email: UserEmailValueObject
     user_phone: UserPhoneValueObject
@@ -41,6 +42,7 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
             user_created_at=timestamp_value_object,
             user_updated_at=timestamp_value_object,
         )
+        self.add_event(event=event)
 
     def update_user_email(self: Self, user_uuid: UUIDValueObject, user_email: UserEmailValueObject) -> None:
         timestamp: datetime = datetime.now()
@@ -50,6 +52,7 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
             user_updated_at=timestamp_value_object,
             user_uuid=user_uuid,
         )
+        self.add_event(event=event)
 
     def update_user_name(self: Self, user_uuid: UUIDValueObject, new_user_name: UserNameValueObject) -> None:
         timestamp: datetime = datetime.now()
@@ -59,6 +62,7 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
             user_updated_at=timestamp_value_object,
             user_uuid=user_uuid,
         )
+        self.add_event(event=event)
 
     def update_user_phone(self: Self, user_uuid: UUIDValueObject, user_phone: UserPhoneValueObject) -> None:
         timestamp: datetime = datetime.now()
@@ -68,11 +72,13 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject]):
             user_updated_at=timestamp_value_object,
             user_uuid=user_uuid,
         )
+        self.add_event(event=event)
 
     def delete_user(self: Self, user_uuid: UUIDValueObject) -> None:
         event: DeleteUserEvent = DeleteUserEvent(
             user_uuid=user_uuid,
         )
+        self.add_event(event=event)
 
     def __post_init__(self: Self) -> None:
         if self.user_email.to_raw() is None and self.user_phone.to_raw() is None:
