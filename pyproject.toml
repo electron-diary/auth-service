@@ -1,9 +1,18 @@
-[project]
-name = 'user-service'
-requires-python = '>=3.12'
-version = '0.1.0'
-dependencies = [
-    "asyncpg>=0.30.0",
-    "nats-py>=2.9.0",
-    "sqlalchemy>=2.0.36",
-]
+[tool.poetry]
+name = "user-service"
+version = "0.1.0"
+description = ""
+authors = ["NxtaSunstrike <unixalle765@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+SQLAlchemy = "^2.0.36"
+asyncpg = "^0.30.0"
+nats-py = "^2.9.0"
+aiokafka = "^0.12.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
