@@ -81,7 +81,7 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject], EventsAgregator):
         self.add_event(event=event)
 
     def __post_init__(self: Self) -> None:
-        if self.user_email.to_raw() is None or self.user_phone.to_raw() is None:
+        if self.user_email.to_raw() is None and self.user_phone.to_raw() is None:
             raise DomainValidationError(
                 "User must have at least one contact information",
             )

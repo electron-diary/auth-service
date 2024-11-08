@@ -16,3 +16,4 @@ class UserPhoneValueObject(CommonDomainValueObject[int | None]):
             raise DomainValidationError(
                 "User phone must be less than 20 characters long",
             )
+        

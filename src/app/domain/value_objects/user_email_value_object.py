@@ -16,3 +16,4 @@ class UserEmailValueObject(CommonDomainValueObject[str | None]):
             raise DomainValidationError(
                 "User email must be less than 20 characters long",
             )
+        
