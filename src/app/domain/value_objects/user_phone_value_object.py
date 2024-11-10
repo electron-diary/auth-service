@@ -3,6 +3,7 @@ from typing import Self
 
 from app.domain.common.common_exceptions import DomainValidationError
 from app.domain.common.common_value_object import CommonDomainValueObject
+from app.domain.enums.user_contact_enum import UserContactEnums
 
 
 @dataclass(frozen=True)
@@ -11,10 +12,14 @@ class UserPhoneValueObject(CommonDomainValueObject[int | None]):
         if self.to_raw():
             if not isinstance(self.to_raw(), int):
                 raise DomainValidationError(
-                    "User phone must be an integer",
+                    f"User phone must be an integer, get {type(self.to_raw())}",
                 )
-            if len(str(self.to_raw())) > 20:
+            if len(str(self.to_raw())) < UserContactEnums.user_phone_min_lenght:
                 raise DomainValidationError(
-                    "User phone must be less than 20 characters long",
+                    f"User phone must be more than {UserContactEnums.user_phone_min_lenght} characters long",
+                )
+            if len(str(self.to_raw())) > UserContactEnums.user_phone_max_lenght:
+                raise DomainValidationError(
+                    f"User phone must be less than {UserContactEnums.user_phone_max_lenght} characters long",
                 )
 

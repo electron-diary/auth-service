@@ -3,6 +3,7 @@ from typing import Self
 
 from app.domain.common.common_exceptions import DomainValidationError
 from app.domain.common.common_value_object import CommonDomainValueObject
+from app.domain.enums.user_fullname_enum import UserFullnameEnums
 
 
 @dataclass(frozen=True)
@@ -14,13 +15,13 @@ class UserFirstNameValueObject(CommonDomainValueObject[str]):
             )
         if not isinstance(self.to_raw(), str):
             raise DomainValidationError(
-                "User first name must be a string",
+                f"User first name must be a string, get {type(self.to_raw())}",
             )
-        if len(self.to_raw()) < 3:
+        if len(self.to_raw()) < UserFullnameEnums.user_first_name_min_length:
             raise DomainValidationError(
-                "User first name must be at least 3 characters long",
+                f"User first name must be at least {UserFullnameEnums.user_first_name_min_length} characters long",
             )
-        if len(self.to_raw()) > 20:
+        if len(self.to_raw()) > UserFullnameEnums.user_first_name_max_length:
             raise DomainValidationError(
-                "User first name must be less than 50 characters long",
+                f"User first name must be less than {UserFullnameEnums.user_first_name_max_length} characters long",
             )
