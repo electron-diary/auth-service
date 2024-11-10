@@ -6,15 +6,18 @@ from app.domain.common.common_value_object import CommonDomainValueObject
 
 
 @dataclass(frozen=True)
-class UserEmailValueObject(CommonDomainValueObject[str | None]):
+class UserMiddleNameValueObject(CommonDomainValueObject[str | None]):
     def __post_init__(self: Self) -> None:
         if self.to_raw():
             if not isinstance(self.to_raw(), str):
                 raise DomainValidationError(
-                    "User email must be a string",
+                    "User first name must be a string",
+                )
+            if len(self.to_raw()) < 3:
+                raise DomainValidationError(
+                    "User Last name must be at least 3 characters long",
                 )
             if len(self.to_raw()) > 20:
                 raise DomainValidationError(
-                    "User email must be less than 20 characters long",
+                    "User Middle name must be less than 50 characters long",
                 )
-        
