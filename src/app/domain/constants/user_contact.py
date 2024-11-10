@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 from typing import Self
 
-from app.domain.value_objects.user_phone_value_object import UserPhoneValueObject
-from app.domain.value_objects.user_email_value_object import UserEmailValueObject
 from app.domain.common.common_exceptions import DomainValidationError
+from app.domain.value_objects.user_email_value_object import UserEmailValueObject
+from app.domain.value_objects.user_phone_value_object import UserPhoneValueObject
 
 
 @dataclass(frozen=True)
@@ -15,4 +15,3 @@ class UserContact:
         if not self.user_email.to_raw() and not self.user_phone.to_raw():
             raise DomainValidationError("At least one of user_email or user_phone must be provided.")
 
-    
