@@ -11,13 +11,13 @@ class UserMiddleNameValueObject(CommonDomainValueObject[str | None]):
         if self.to_raw():
             if not isinstance(self.to_raw(), str):
                 raise DomainValidationError(
-                    "User first name must be a string",
+                    "User middle name must be a string",
                 )
             if len(self.to_raw()) < 3:
                 raise DomainValidationError(
-                    "User Last name must be at least 3 characters long",
+                    "User middle name must be at least 3 characters long",
                 )
             if len(self.to_raw()) > 20:
                 raise DomainValidationError(
-                    "User Middle name must be less than 50 characters long",
+                    "User middle name must be less than 50 characters long",
                 )
