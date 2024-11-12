@@ -20,7 +20,8 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject], EventsAgregator):
     user_contact: UserContact
     user_created_at: TimestampValueObject
     user_updated_at: TimestampValueObject
-
+    
+    @staticmethod
     def create_user(
         self: Self,
         user_uuid: UUIDValueObject,
@@ -38,6 +39,7 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject], EventsAgregator):
         )
         self.add_event(event=event)
 
+    @staticmethod
     def update_user_fullname(
         self: Self, user_uuid: UUIDValueObject, new_user_fullname: UserFullName,
     ) -> None:
@@ -50,6 +52,7 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject], EventsAgregator):
         )
         self.add_event(event=event)
 
+    @staticmethod
     def update_user_contact(
         self: Self, user_uuid: UUIDValueObject, new_user_contact: UserContact,
     ) -> None:
@@ -61,7 +64,7 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject], EventsAgregator):
             user_uuid=user_uuid,
         )
         self.add_event(event=event)
-
+    
     def delete_user(
         self: Self, user_uuid: UUIDValueObject,
     ) -> None:

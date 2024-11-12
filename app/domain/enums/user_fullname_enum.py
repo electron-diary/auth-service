@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import IntEnum
 
 
-class UserFullnameEnums(Enum):
+class UserFullnameEnums(IntEnum):
     user_middle_name_max_lenght: int = 50
     user_first_name_max_length: int = 50
     user_last_name_max_length: int = 50

@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import IntEnum
 
 
-class UserContactEnums(Enum):
+class UserContactEnums(IntEnum):
     user_phone_max_lenght: int = 20
     user_email_max_lenght: int  = 250
     user_phone_min_lenght: int  = 10
