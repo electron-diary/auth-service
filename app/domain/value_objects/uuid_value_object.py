@@ -2,7 +2,8 @@ from dataclasses import dataclass
 from typing import Self
 from uuid import UUID
 
-from app.domain.common.common_exceptions import DomainValidationError
+from app.domain.exceptions.value_objects_exceptions import UUIDRequiredError
+from app.domain.exceptions.value_objects_exceptions import UUIDTypeError
 from app.domain.common.common_value_object import CommonDomainValueObject
 
 
@@ -10,10 +11,10 @@ from app.domain.common.common_value_object import CommonDomainValueObject
 class UUIDValueObject(CommonDomainValueObject[UUID]):
     def __post_init__(self: Self) -> None:
         if not self.to_raw():
-            raise DomainValidationError(
+            raise UUIDRequiredError(
                 "UUID cannot be empty",
             )
         if not isinstance(self.object, UUID):
-            raise DomainValidationError(
+            raise UUIDTypeError(
                 "UUID must be a valid UUID",
             )
