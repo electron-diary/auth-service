@@ -3,9 +3,11 @@ from uuid import UUID
 from typing import Optional
 from datetime import datetime
 
+from app.application.dto.base_dto import BaseDto
+
 
 @dataclass(frozen=True)
-class UserDto:
+class UserDto(BaseDto):
     user_uuid: UUID
     user_first_name: str
     user_last_name: str
