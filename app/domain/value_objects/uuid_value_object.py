@@ -2,12 +2,12 @@ from dataclasses import dataclass
 from typing import Self
 from uuid import UUID, uuid4
 
-from app.domain.common.common_value_object import CommonDomainValueObject
+from app.domain.base.base_value_object import BaseDomainValueObject
 from app.domain.exceptions.value_objects_exceptions import UUIDRequiredError, UUIDTypeError
 
 
 @dataclass(frozen=True)
-class UUIDValueObject(CommonDomainValueObject[UUID]):
+class UUIDValueObject(BaseDomainValueObject[UUID]):
     @staticmethod
     def set_default() -> "UUIDValueObject":
         return UUIDValueObject(uuid4())

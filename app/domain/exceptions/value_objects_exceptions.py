@@ -1,68 +1,68 @@
-from app.domain.common.common_exceptions import CommonDomainError
+from app.domain.base.base_exception import BaseDomainError
 
 
-class TimestampTypeError(CommonDomainError):
+class TimestampTypeError(BaseDomainError):
     ...
 
-class TimestampRequiredError(CommonDomainError):
+class TimestampRequiredError(BaseDomainError):
     ...
 
-class UserEmailTypeError(CommonDomainError):
+class UserEmailTypeError(BaseDomainError):
     ...
 
-class MinimalLenghtEmailError(CommonDomainError):
+class MinimalLenghtEmailError(BaseDomainError):
     ...
 
-class MaximalLenghtEmailError(CommonDomainError):
+class MaximalLenghtEmailError(BaseDomainError):
     ...
 
-class FirstNameRequiredError(CommonDomainError):
+class FirstNameRequiredError(BaseDomainError):
     ...
 
-class FirstNameTypeError(CommonDomainError):
+class FirstNameTypeError(BaseDomainError):
     ...
 
-class MinimalLenghtFirstNameError(CommonDomainError):
+class MinimalLenghtFirstNameError(BaseDomainError):
     ...
 
-class MaximalLenghtFirstNameError(CommonDomainError):
+class MaximalLenghtFirstNameError(BaseDomainError):
     ...
 
-class LastNameRequiredError(CommonDomainError):
+class LastNameRequiredError(BaseDomainError):
     ...
 
-class LastNameTypeError(CommonDomainError):
+class LastNameTypeError(BaseDomainError):
     ...
 
-class MinimalLenghtLastNameError(CommonDomainError):
+class MinimalLenghtLastNameError(BaseDomainError):
     ...
 
-class MaximalLenghtLastNameError(CommonDomainError):
+class MaximalLenghtLastNameError(BaseDomainError):
     ...
 
-class MiddleNameTypeError(CommonDomainError):
+class MiddleNameTypeError(BaseDomainError):
     ...
 
-class MinimalLenghtMiddleNameError(CommonDomainError):
+class MinimalLenghtMiddleNameError(BaseDomainError):
     ...
 
-class MaximalLenghtMiddleNameError(CommonDomainError):
+class MaximalLenghtMiddleNameError(BaseDomainError):
     ...
 
-class UserPhoneTypeError(CommonDomainError):
+class UserPhoneTypeError(BaseDomainError):
     ...
 
-class MinimalLenghtUserPhoneError(CommonDomainError):
+class MinimalLenghtUserPhoneError(BaseDomainError):
     ...
 
-class MaximalLenghtUserPhoneError(CommonDomainError):
+class MaximalLenghtUserPhoneError(BaseDomainError):
     ...
 
-class UUIDTypeError(CommonDomainError):
+class UUIDTypeError(BaseDomainError):
     ...
 
-class UUIDRequiredError(CommonDomainError):
+class UUIDRequiredError(BaseDomainError):
     ...
 
-class ContactsRequiredError(CommonDomainError):
+class ContactsRequiredError(BaseDomainError):
     ...

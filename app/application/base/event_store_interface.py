@@ -1,12 +1,13 @@
-from typing import Protocol, Self, Sequence
 from abc import abstractmethod
+from collections.abc import Sequence
+from typing import Protocol, Self
 
-from app.domain.common.common_event import CommonDomainEvent
+from app.domain.base.base_event import BaseDomainEvent
 
 
 class EventStoreInterface(Protocol):
     @abstractmethod
-    async def save_event(self: Self, event: Sequence[CommonDomainEvent]) -> None:
+    async def save_event(self: Self, event: Sequence[BaseDomainEvent]) -> None:
         raise NotImplementedError(
-            'Method must be implemented by subclasses'
+            "Method must be implemented by subclasses",
         )

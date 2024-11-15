@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Self
 
-from app.domain.common.common_value_object import CommonDomainValueObject
+from app.domain.base.base_value_object import BaseDomainValueObject
 from app.domain.enums.user_fullname_enum import UserFullnameEnums
 from app.domain.exceptions.value_objects_exceptions import (
     FirstNameRequiredError,
@@ -12,7 +12,7 @@ from app.domain.exceptions.value_objects_exceptions import (
 
 
 @dataclass(frozen=True)
-class UserFirstNameValueObject(CommonDomainValueObject[str]):
+class UserFirstNameValueObject(BaseDomainValueObject[str]):
     def __post_init__(self: Self) -> None:
         if not self.to_raw():
             raise FirstNameRequiredError(

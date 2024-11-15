@@ -2,12 +2,12 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Self
 
-from app.domain.common.common_value_object import CommonDomainValueObject
+from app.domain.base.base_value_object import BaseDomainValueObject
 from app.domain.exceptions.value_objects_exceptions import TimestampRequiredError, TimestampTypeError
 
 
 @dataclass(frozen=True)
-class TimestampValueObject(CommonDomainValueObject[datetime]):
+class TimestampValueObject(BaseDomainValueObject[datetime]):
     def set_default() -> "TimestampValueObject":
         return TimestampValueObject(datetime.now())
 

@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 from typing import Self
 
-from app.domain.common.common_value_object import CommonDomainValueObject
+from app.domain.base.base_value_object import BaseDomainValueObject
 from app.domain.enums.user_contact_enum import UserContactEnums
 from app.domain.exceptions.value_objects_exceptions import MaximalLenghtEmailError, MinimalLenghtEmailError, UserEmailTypeError
 
 
 @dataclass(frozen=True)
-class UserEmailValueObject(CommonDomainValueObject[str | None]):
+class UserEmailValueObject(BaseDomainValueObject[str | None]):
     def __post_init__(self: Self) -> None:
         if self.to_raw():
             if not isinstance(self.to_raw(), str):

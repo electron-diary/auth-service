@@ -3,9 +3,12 @@ from typing import Self
 
 
 @dataclass(frozen=True)
-class CommonDomainValueObject[ObjectType]:
+class BaseDomainValueObject[ObjectType]:
     object: ObjectType
 
     def to_raw(self: Self) -> ObjectType:
         return self.object
+
+    def __post_init__(self: Self) -> None:
+        ...
 

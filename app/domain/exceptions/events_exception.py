@@ -1,8 +1,8 @@
-from app.domain.common.common_exceptions import CommonDomainError
+from app.domain.base.base_exception import BaseDomainError
 
 
-class EventValidationError(CommonDomainError):
+class EventValidationError(BaseDomainError):
     ...
 
-class EventsNotFoundError(CommonDomainError):
+class EventsNotFoundError(BaseDomainError):
     ...

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Self
 
-from app.domain.common.common_value_object import CommonDomainValueObject
+from app.domain.base.base_value_object import BaseDomainValueObject
 from app.domain.enums.user_contact_enum import UserContactEnums
 from app.domain.exceptions.value_objects_exceptions import (
     MaximalLenghtUserPhoneError,
@@ -10,7 +10,7 @@ from app.domain.exceptions.value_objects_exceptions import (
 
 
 @dataclass(frozen=True)
-class UserPhoneValueObject(CommonDomainValueObject[int | None]):
+class UserPhoneValueObject(BaseDomainValueObject[int | None]):
     def __post_init__(self: Self) -> None:
         if self.to_raw():
             if not isinstance(self.to_raw(), int):
