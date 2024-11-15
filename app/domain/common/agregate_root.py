@@ -1,13 +1,13 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Self
 
 from app.domain.common.common_event import CommonDomainEvent
-from app.domain.common.common_events_strorage import TemporaryEventStorage
 from app.domain.exceptions.events_exception import EventsNotFoundError, EventValidationError
 
 
 @dataclass
-class EventsAgregator(TemporaryEventStorage):
+class AgregateRoot:
+    events: list[CommonDomainEvent] = field(default_factory=list, init=False)
 
     def add_event(self: Self, event: CommonDomainEvent) -> None:
         if not isinstance(event, CommonDomainEvent):

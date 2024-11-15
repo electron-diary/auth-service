@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Self
 
 from app.domain.common.common_entity import CommonDomainEntity
-from app.domain.common.common_events_agregator import EventsAgregator
+from app.domain.common.agregate_root import AgregateRoot
 from app.domain.constants.user_contact import UserContact
 from app.domain.constants.user_fullname import UserFullName
 from app.domain.events.create_user_event import CreateUserEvent
@@ -15,7 +15,7 @@ from app.domain.value_objects.uuid_value_object import UUIDValueObject
 
 
 @dataclass
-class UserDomainEntity(CommonDomainEntity[UUIDValueObject], EventsAgregator):
+class UserDomainEntity(CommonDomainEntity[UUIDValueObject], AgregateRoot):
     user_full_name: UserFullName
     user_contact: UserContact
     user_created_at: TimestampValueObject
