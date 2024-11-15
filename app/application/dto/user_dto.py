@@ -1,7 +1,6 @@
 from dataclasses import dataclass
-from uuid import UUID
-from typing import Optional
 from datetime import datetime
+from uuid import UUID
 
 from app.application.base.base_dto import BaseDto
 
@@ -11,9 +10,9 @@ class UserDto(BaseDto):
     user_uuid: UUID
     user_first_name: str
     user_last_name: str
-    user_middle_name: Optional[str]
-    user_email: Optional[str]
-    user_phone: Optional[str]
+    user_middle_name: str | None
+    user_email: str | None
+    user_phone: str | None
     user_created_at: datetime
     user_updated_at: datetime
 

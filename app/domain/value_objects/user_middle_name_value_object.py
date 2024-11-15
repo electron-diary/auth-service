@@ -1,11 +1,13 @@
 from dataclasses import dataclass
 from typing import Self
 
-from app.domain.exceptions.value_objects_exceptions import MiddleNameTypeError
-from app.domain.exceptions.value_objects_exceptions import MinimalLenghtMiddleNameError
-from app.domain.exceptions.value_objects_exceptions import MaximalLenghtMiddleNameError
 from app.domain.common.common_value_object import CommonDomainValueObject
 from app.domain.enums.user_fullname_enum import UserFullnameEnums
+from app.domain.exceptions.value_objects_exceptions import (
+    MaximalLenghtMiddleNameError,
+    MiddleNameTypeError,
+    MinimalLenghtMiddleNameError,
+)
 
 
 @dataclass(frozen=True)

@@ -2,14 +2,13 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Self
 
-from app.domain.exceptions.value_objects_exceptions import TimestampTypeError
-from app.domain.exceptions.value_objects_exceptions import TimestampRequiredError
 from app.domain.common.common_value_object import CommonDomainValueObject
+from app.domain.exceptions.value_objects_exceptions import TimestampRequiredError, TimestampTypeError
 
 
 @dataclass(frozen=True)
 class TimestampValueObject(CommonDomainValueObject[datetime]):
-    def set_default() -> 'TimestampValueObject':
+    def set_default() -> "TimestampValueObject":
         return TimestampValueObject(datetime.now())
 
     def __post_init__(self: Self) -> None:

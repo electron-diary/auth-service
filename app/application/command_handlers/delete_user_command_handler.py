@@ -1,10 +1,10 @@
 from typing import Self
 
 from app.application.base.base_command_handler import BaseCommandHandler
-from app.domain.entities.user_entity import UserDomainEntity
-from app.application.interfaces.user_commands_repository import UserCommandsRepository
 from app.application.base.uow_interface import UnitOfWorkInterface
 from app.application.commands.delete_user_commands import DeleteUserCommand
+from app.application.interfaces.user_commands_repository import UserCommandsRepository
+from app.domain.entities.user_entity import UserDomainEntity
 from app.domain.value_objects.uuid_value_object import UUIDValueObject
 
 

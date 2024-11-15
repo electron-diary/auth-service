@@ -1,16 +1,16 @@
-from typing import Protocol, Self
 from abc import abstractmethod
+from typing import Protocol, Self
 
 
 class UnitOfWorkInterface(Protocol):
     @abstractmethod
     async def commit(self: Self) -> None:
         raise NotImplementedError(
-            'method must be implemented by subclasses'
+            "method must be implemented by subclasses",
         )
-    
+
     @abstractmethod
     async def rollback(self: Self) -> None:
         raise NotImplementedError(
-            'method must be implemented by subclasses'
+            "method must be implemented by subclasses",
         )

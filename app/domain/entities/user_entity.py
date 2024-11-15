@@ -1,9 +1,8 @@
 from dataclasses import dataclass, field
-from datetime import datetime
 from typing import Self
 
-from app.domain.common.common_entity import CommonDomainEntity
 from app.domain.common.agregate_root import AgregateRoot
+from app.domain.common.common_entity import CommonDomainEntity
 from app.domain.constants.user_contact import UserContact
 from app.domain.constants.user_fullname import UserFullName
 from app.domain.events.create_user_event import CreateUserEvent
@@ -20,12 +19,12 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject], AgregateRoot):
     user_contact: UserContact
     user_created_at: TimestampValueObject = field(default=TimestampValueObject.set_default())
     user_updated_at: TimestampValueObject = field(default=TimestampValueObject.set_default())
-    
+
     @staticmethod
     def create_user(
-        user_uuid: UUIDValueObject, 
-        user_contact: UserContact, user_fullname: UserFullName
-    ) -> 'UserDomainEntity':
+        user_uuid: UUIDValueObject,
+        user_contact: UserContact, user_fullname: UserFullName,
+    ) -> "UserDomainEntity":
         user_entity: UserDomainEntity = UserDomainEntity(
             user_uuid=user_uuid,
             user_contact=user_contact,
@@ -56,7 +55,7 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject], AgregateRoot):
             user_uuid=user_uuid,
         )
         self.add_event(event=event)
-    
+
     def delete_user(
         self: Self, user_uuid: UUIDValueObject,
     ) -> None:

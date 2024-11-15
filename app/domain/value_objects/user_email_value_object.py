@@ -1,11 +1,9 @@
 from dataclasses import dataclass
 from typing import Self
 
-from app.domain.exceptions.value_objects_exceptions import UserEmailTypeError
-from app.domain.exceptions.value_objects_exceptions import MaximalLenghtEmailError
-from app.domain.exceptions.value_objects_exceptions import MinimalLenghtEmailError
 from app.domain.common.common_value_object import CommonDomainValueObject
 from app.domain.enums.user_contact_enum import UserContactEnums
+from app.domain.exceptions.value_objects_exceptions import MaximalLenghtEmailError, MinimalLenghtEmailError, UserEmailTypeError
 
 
 @dataclass(frozen=True)

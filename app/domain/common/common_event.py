@@ -4,7 +4,6 @@ from app.domain.value_objects.timestamp_value_object import TimestampValueObject
 from app.domain.value_objects.uuid_value_object import UUIDValueObject
 
 
-
 @dataclass(frozen=True)
 class CommonDomainEvent:
     event_uuid: UUIDValueObject = field(default=UUIDValueObject.set_default(), init=False)

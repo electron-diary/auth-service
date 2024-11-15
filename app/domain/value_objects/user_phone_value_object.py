@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 from typing import Self
 
-from app.domain.exceptions.value_objects_exceptions import UserPhoneTypeError
-from app.domain.exceptions.value_objects_exceptions import MinimalLenghtUserPhoneError
-from app.domain.exceptions.value_objects_exceptions import MaximalLenghtUserPhoneError
 from app.domain.common.common_value_object import CommonDomainValueObject
 from app.domain.enums.user_contact_enum import UserContactEnums
+from app.domain.exceptions.value_objects_exceptions import (
+    MaximalLenghtUserPhoneError,
+    MinimalLenghtUserPhoneError,
+)
 
 
 @dataclass(frozen=True)

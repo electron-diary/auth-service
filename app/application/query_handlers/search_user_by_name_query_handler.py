@@ -1,8 +1,8 @@
 from typing import Self
 
 from app.application.base.base_query_handler import BaseQueryHandler
-from app.application.interfaces.user_queries_repository import SearchUserQueriesRepository
 from app.application.dto.user_dto import UserDto
+from app.application.interfaces.user_queries_repository import SearchUserQueriesRepository
 from app.application.queries.search_user_by_name_query import SearchUserByNameQuery
 
 
