@@ -8,7 +8,9 @@ from app.application.queries.search_user_by_name_query import SearchUserByNameQu
 
 class SearchUserByNameQueryHandler(BaseQueryHandler[SearchUserByNameQuery, UserDto]):
     def __init__(self: Self, search_user_queries_repository: SearchUserQueriesRepository) -> None:
-        self.searc_user_queries_repository: SearchUserQueriesRepository = search_user_queries_repository
+        self.search_user_queries_repository: SearchUserQueriesRepository = search_user_queries_repository
 
     async def __call__(self: Self, request: SearchUserByNameQuery) -> None:
-        ...
+        user: UserDto = await self.search_user_queries_repository.search_user_by_name(user_fullname=request.user_name)
+
+        return user

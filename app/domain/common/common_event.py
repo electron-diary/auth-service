@@ -1,9 +1,11 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
-from app.domain.common.common_value_object import CommonDomainValueObject
+from app.domain.value_objects.timestamp_value_object import TimestampValueObject
+from app.domain.value_objects.uuid_value_object import UUIDValueObject
+
 
 
 @dataclass(frozen=True)
-class CommonDomainEvent[EventUUID: CommonDomainValueObject, EventDate: CommonDomainValueObject]:
-    event_uuid: EventUUID
-    event_start_execution_time: EventDate
+class CommonDomainEvent:
+    event_uuid: UUIDValueObject = field(default=UUIDValueObject.set_default(), init=False)
+    event_start_execution_time: TimestampValueObject = field(default=TimestampValueObject.set_default(), init=False)

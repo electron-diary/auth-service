@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Self
 
@@ -18,34 +18,32 @@ from app.domain.value_objects.uuid_value_object import UUIDValueObject
 class UserDomainEntity(CommonDomainEntity[UUIDValueObject], AgregateRoot):
     user_full_name: UserFullName
     user_contact: UserContact
-    user_created_at: TimestampValueObject
-    user_updated_at: TimestampValueObject
+    user_created_at: TimestampValueObject = field(default=TimestampValueObject.set_default())
+    user_updated_at: TimestampValueObject = field(default=TimestampValueObject.set_default())
     
+    @staticmethod
     def create_user(
-        self: Self,
-        user_uuid: UUIDValueObject,
-        user_contact: UserContact,
-        user_fullname: UserFullName,
-    ) -> None:
-        timestamp: datetime = datetime.now()
-        timestamp_value_object: TimestampValueObject = TimestampValueObject(timestamp)
-        event: CreateUserEvent = CreateUserEvent(
+        user_uuid: UUIDValueObject, 
+        user_contact: UserContact, user_fullname: UserFullName
+    ) -> 'UserDomainEntity':
+        user_entity: UserDomainEntity = UserDomainEntity(
             user_uuid=user_uuid,
             user_contact=user_contact,
-            user_fullname=user_fullname,
-            user_created_at=timestamp_value_object,
-            user_updated_at=timestamp_value_object,
+            user_full_name=user_fullname,
         )
-        self.add_event(event=event)
+        event: CreateUserEvent = CreateUserEvent(
+            user_uuid=user_entity.user_uuid,
+            user_contact=user_entity.self.user_contact,
+            user_fullname=user_entity.user_fullname,
+        )
+        user_entity.add_event(event=event)
+        return user_entity
 
     def update_user_fullname(
         self: Self, user_uuid: UUIDValueObject, new_user_fullname: UserFullName,
     ) -> None:
-        timestamp: datetime = datetime.now()
-        timestamp_value_object: TimestampValueObject = TimestampValueObject(timestamp)
         event: UpdateUserFullNameEvent = UpdateUserFullNameEvent(
             new_user_fullname=new_user_fullname,
-            user_updated_at=timestamp_value_object,
             user_uuid=user_uuid,
         )
         self.add_event(event=event)
@@ -53,11 +51,8 @@ class UserDomainEntity(CommonDomainEntity[UUIDValueObject], AgregateRoot):
     def update_user_contact(
         self: Self, user_uuid: UUIDValueObject, new_user_contact: UserContact,
     ) -> None:
-        timestamp: datetime = datetime.now()
-        timestamp_value_object: TimestampValueObject = TimestampValueObject(timestamp)
         event: UpdateUserContactEvent = UpdateUserContactEvent(
             new_user_contact=new_user_contact,
-            user_updated_at=timestamp_value_object,
             user_uuid=user_uuid,
         )
         self.add_event(event=event)

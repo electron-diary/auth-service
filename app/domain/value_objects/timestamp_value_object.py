@@ -9,6 +9,9 @@ from app.domain.common.common_value_object import CommonDomainValueObject
 
 @dataclass(frozen=True)
 class TimestampValueObject(CommonDomainValueObject[datetime]):
+    def set_default() -> 'TimestampValueObject':
+        return TimestampValueObject(datetime.now())
+
     def __post_init__(self: Self) -> None:
         if not self.to_raw():
             raise TimestampRequiredError(

@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from app.domain.common.common_event import CommonDomainEvent
 from app.domain.constants.user_fullname import UserFullName
@@ -7,7 +7,7 @@ from app.domain.value_objects.uuid_value_object import UUIDValueObject
 
 
 @dataclass(frozen=True)
-class UpdateUserFullNameEvent(CommonDomainEvent[UUIDValueObject, TimestampValueObject]):
+class UpdateUserFullNameEvent(CommonDomainEvent):
     user_uuid: UUIDValueObject
     new_user_fullname: UserFullName
-    user_updated_at: TimestampValueObject
+    user_updated_at: TimestampValueObject = field(default=TimestampValueObject.set_default(), init=False)

@@ -6,5 +6,5 @@ from app.domain.value_objects.uuid_value_object import UUIDValueObject
 
 
 @dataclass(frozen=True)
-class DeleteUserEvent(CommonDomainEvent[UUIDValueObject, TimestampValueObject]):
+class DeleteUserEvent(CommonDomainEvent):
     user_uuid: UUIDValueObject

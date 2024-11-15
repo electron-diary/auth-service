@@ -27,6 +27,6 @@ class AgregateRoot:
     def send_events(self: Self) -> list[CommonDomainEvent]:
         if len(self.events) == 0:
             raise EventsNotFoundError("No events to send")
-        events: list[CommonDomainEvent] = self.get_events()
+        events: list[CommonDomainEvent] = self.get_events().copy()
         self.remove_events()
         return events
