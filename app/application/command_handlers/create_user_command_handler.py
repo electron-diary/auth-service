@@ -15,17 +15,21 @@ from app.domain.value_objects.user_last_name_value_object import UserLastNameVal
 from app.domain.value_objects.user_middle_name_value_object import UserMiddleNameValueObject
 from app.domain.value_objects.user_phone_value_object import UserPhoneValueObject
 from app.domain.value_objects.uuid_value_object import UUIDValueObject
-from app.application.base.event_publisher_interface import EventPublisherInterface
+from app.domain.common.common_event import CommonDomainEvent
+from app.application.base.event_bus_interface import EventBusInterface
+from app.application.base.event_store_interface import EventStoreInterface
 
 
 class CreateUserCommandHandler(BaseCommandHandler[CreateUserCommand, UUID]):
     def __init__(
         self: Self, user_commands_repository: UserCommandsRepository, 
-        uow: UnitOfWorkInterface, event_publisher: EventPublisherInterface
+        uow: UnitOfWorkInterface, event_bus: EventBusInterface,
+        event_store: EventStoreInterface
     ) -> None:
         self.user_commands_repository: UserCommandsRepository = user_commands_repository
         self.unit_of_work: UnitOfWorkInterface = uow
-        self.event_publisher: EventPublisherInterface = event_publisher
+        self.event_bus: EventBusInterface = event_bus
+        self.event_store: EventStoreInterface = event_store
 
     async def __call__(self: Self, request: CreateUserCommand) -> UUID:
         user_fullname: UserFullName = UserFullName(
@@ -42,9 +46,11 @@ class CreateUserCommandHandler(BaseCommandHandler[CreateUserCommand, UUID]):
             user_contact=user_contact,
             user_fullname=user_fullname,
         )
+        events: Sequence[CommonDomainEvent] = new_user.send_events()
 
         await self.user_commands_repository.create_user(user=new_user)
-        await self.event_publisher.apply(event=new_user.send_events())
+        await self.event_store.save_event(event=events)
+        await self.event_bus.send_event(event=events)
         await self.unit_of_work.commit()
         return request.user_uuid
 

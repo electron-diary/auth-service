@@ -1,4 +1,4 @@
-from typing import Self
+from typing import Self, Sequence
 
 from app.application.base.base_command_handler import BaseCommandHandler
 from app.application.commands.update_user_fullname_command import UpdateUserFullNameCommand
@@ -8,17 +8,21 @@ from app.domain.entities.user_entity import UserDomainEntity
 from app.domain.value_objects.user_first_name_value_object import UserFirstNameValueObject
 from app.domain.value_objects.user_last_name_value_object import UserLastNameValueObject
 from app.domain.value_objects.user_middle_name_value_object import UserMiddleNameValueObject
-from app.application.base.event_publisher_interface import EventPublisherInterface
+from app.application.base.event_bus_interface import EventBusInterface
+from app.application.base.event_store_interface import EventStoreInterface
+from app.domain.common.common_event import CommonDomainEvent
 from app.application.base.uow_interface import UnitOfWorkInterface
 
 
 class UpdateUserFullnameCommandHandler(BaseCommandHandler[UpdateUserFullNameCommand, None]):
     def __init__(
         self: Self, user_commands_repository: UserCommandsRepository, 
-        event_publisher: EventPublisherInterface, uow: UnitOfWorkInterface
+        event_bus: EventBusInterface, uow: UnitOfWorkInterface,
+        event_store: EventStoreInterface
     ) -> None:
         self.user_commands_repository: UserCommandsRepository = user_commands_repository
-        self.event_publisher: EventPublisherInterface = event_publisher
+        self.event_bus: EventBusInterface = event_bus
+        self.event_store: EventStoreInterface = event_store
         self.unit_of_work: UnitOfWorkInterface = uow
 
     async def __call__(self: Self, request: UpdateUserFullNameCommand) -> None:
@@ -28,8 +32,10 @@ class UpdateUserFullnameCommandHandler(BaseCommandHandler[UpdateUserFullNameComm
             user_middle_name=UserMiddleNameValueObject(request.new_user_middle_name),
         )
         user: UserDomainEntity = UserDomainEntity()
+        events: Sequence[CommonDomainEvent] = user.send_events()
 
         await self.user_commands_repository.update_user_fullname(user=user)
         user.update_user_fullname(user_uuid=user.user_uuid, new_user_fullname=user_fullname)
-        await self.event_publisher.apply(event=user.send_events())
+        await self.event_store.save_event(event=events)
+        await self.event_bus.send_event(event=events)
         await self.unit_of_work.commit()
