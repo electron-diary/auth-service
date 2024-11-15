@@ -1,6 +1,5 @@
 from typing import Self
 from uuid import UUID
-import didiator
 
 from app.domain.entities.user_entity import UserDomainEntity
 from app.domain.value_objects.user_email_value_object import UserEmailValueObject
