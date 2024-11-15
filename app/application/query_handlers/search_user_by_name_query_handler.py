@@ -10,7 +10,7 @@ class SearchUserByNameQueryHandler(BaseQueryHandler[SearchUserByNameQuery, UserD
     def __init__(self: Self, search_user_queries_repository: SearchUserQueriesRepository) -> None:
         self.search_user_queries_repository: SearchUserQueriesRepository = search_user_queries_repository
 
-    async def __call__(self: Self, request: SearchUserByNameQuery) -> None:
+    async def __call__(self: Self, request: SearchUserByNameQuery) -> UserDto:
         user: UserDto = await self.search_user_queries_repository.search_user_by_name(user_fullname=request.user_name)
 
         return user
