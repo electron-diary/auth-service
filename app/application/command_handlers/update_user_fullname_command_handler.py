@@ -8,11 +8,18 @@ from app.domain.entities.user_entity import UserDomainEntity
 from app.domain.value_objects.user_first_name_value_object import UserFirstNameValueObject
 from app.domain.value_objects.user_last_name_value_object import UserLastNameValueObject
 from app.domain.value_objects.user_middle_name_value_object import UserMiddleNameValueObject
+from app.application.base.event_publisher_interface import EventPublisherInterface
+from app.application.base.uow_interface import UnitOfWorkInterface
 
 
 class UpdateUserFullnameCommandHandler(BaseCommandHandler[UpdateUserFullNameCommand, None]):
-    def __init__(self: Self, user_commands_repository: UserCommandsRepository) -> None:
+    def __init__(
+        self: Self, user_commands_repository: UserCommandsRepository, 
+        event_publisher: EventPublisherInterface, uow: UnitOfWorkInterface
+    ) -> None:
         self.user_commands_repository: UserCommandsRepository = user_commands_repository
+        self.event_publisher: EventPublisherInterface = event_publisher
+        self.unit_of_work: UnitOfWorkInterface = uow
 
     async def __call__(self: Self, request: UpdateUserFullNameCommand) -> None:
         user_fullname: UserFullName = UserFullName(
@@ -24,3 +31,5 @@ class UpdateUserFullnameCommandHandler(BaseCommandHandler[UpdateUserFullNameComm
 
         await self.user_commands_repository.update_user_fullname(user=user)
         user.update_user_fullname(user_uuid=user.user_uuid, new_user_fullname=user_fullname)
+        await self.event_publisher.apply(event=user.send_events())
+        await self.unit_of_work.commit()

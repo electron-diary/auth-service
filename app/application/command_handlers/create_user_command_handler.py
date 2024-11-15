@@ -1,5 +1,6 @@
 from typing import Self
 from uuid import UUID
+from collections.abc import Sequence
 
 from app.application.base.base_command_handler import BaseCommandHandler
 from app.application.base.uow_interface import UnitOfWorkInterface
@@ -14,12 +15,17 @@ from app.domain.value_objects.user_last_name_value_object import UserLastNameVal
 from app.domain.value_objects.user_middle_name_value_object import UserMiddleNameValueObject
 from app.domain.value_objects.user_phone_value_object import UserPhoneValueObject
 from app.domain.value_objects.uuid_value_object import UUIDValueObject
+from app.application.base.event_publisher_interface import EventPublisherInterface
 
 
 class CreateUserCommandHandler(BaseCommandHandler[CreateUserCommand, UUID]):
-    def __init__(self: Self, user_commands_repository: UserCommandsRepository, uow: UnitOfWorkInterface) -> None:
+    def __init__(
+        self: Self, user_commands_repository: UserCommandsRepository, 
+        uow: UnitOfWorkInterface, event_publisher: EventPublisherInterface
+    ) -> None:
         self.user_commands_repository: UserCommandsRepository = user_commands_repository
         self.unit_of_work: UnitOfWorkInterface = uow
+        self.event_publisher: EventPublisherInterface = event_publisher
 
     async def __call__(self: Self, request: CreateUserCommand) -> UUID:
         user_fullname: UserFullName = UserFullName(
@@ -38,7 +44,7 @@ class CreateUserCommandHandler(BaseCommandHandler[CreateUserCommand, UUID]):
         )
 
         await self.user_commands_repository.create_user(user=new_user)
-        print(new_user.send_events())
+        await self.event_publisher.apply(event=new_user.send_events())
         await self.unit_of_work.commit()
         return request.user_uuid
 
