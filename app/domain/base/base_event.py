@@ -1,10 +1,9 @@
 from dataclasses import dataclass, field
-
-from app.domain.value_objects.timestamp_value_object import TimestampValueObject
-from app.domain.value_objects.uuid_value_object import UUIDValueObject
+from datetime import datetime
+from uuid import UUID, uuid4
 
 
 @dataclass(frozen=True)
 class BaseDomainEvent:
-    event_uuid: UUIDValueObject = field(default=UUIDValueObject.set_default(), init=False)
-    event_start_execution_time: TimestampValueObject = field(default=TimestampValueObject.set_default(), init=False)
+    event_uuid: UUID = field(default=uuid4(), init=False)
+    event_start_execution_time: datetime = field(default=datetime.now(), init=False)
