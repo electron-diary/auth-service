@@ -12,6 +12,7 @@ from app.domain.constants.user_contact import UserContact
 from app.domain.entities.user_entity import UserDomainEntity
 from app.domain.value_objects.user_email_value_object import UserEmailValueObject
 from app.domain.value_objects.user_phone_value_object import UserPhoneValueObject
+from app.domain.value_objects.uuid_value_object import UUIDValueObject
 
 
 class UpdateUserContactCommandHandler(BaseCommandHandler[UpdateUserContactCommand, None]):
@@ -26,15 +27,16 @@ class UpdateUserContactCommandHandler(BaseCommandHandler[UpdateUserContactComman
         self.event_store: EventStoreInterface = event_store
 
     async def __call__(self: Self, request: UpdateUserContactCommand) -> None:
+        uuid: UUIDValueObject = UUIDValueObject(request.user_uuid)
         user_contact: UserContact = UserContact(
             user_email=UserEmailValueObject(request.new_user_email),
             user_phone=UserPhoneValueObject(request.new_user_phone),
         )
-        user: UserDomainEntity = UserDomainEntity()
-        events: Sequence[BaseDomainEvent] = user.send_events()
+        user: UserDomainEntity = await self.event_store.get_current_state(uuid=uuid)
 
         await self.user_commands_repository.update_user_contact(user=UserDomainEntity)
         user.update_user_contact(user_uuid=user.user_uuid, new_user_contact=user_contact)
+        events: Sequence[BaseDomainEvent] = user.send_events()
         await self.event_store.save_event(event=events)
         await self.event_bus.send_event(event=events)
         await self.unit_of_work.commit()

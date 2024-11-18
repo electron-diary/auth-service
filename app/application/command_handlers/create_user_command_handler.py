@@ -41,14 +41,13 @@ class CreateUserCommandHandler(BaseCommandHandler[CreateUserCommand, UUID]):
             user_email=UserEmailValueObject(request.user_email),
             user_phone=UserPhoneValueObject(request.user_phone),
         )
+        await self.user_commands_repository.create_user(user=new_user)
         new_user: UserDomainEntity = UserDomainEntity.create_user(
             user_uuid=UUIDValueObject(request.user_uuid),
             user_contact=user_contact,
             user_fullname=user_fullname,
         )
         events: Sequence[BaseDomainEvent] = new_user.send_events()
-
-        await self.user_commands_repository.create_user(user=new_user)
         await self.event_store.save_event(event=events)
         await self.event_bus.send_event(event=events)
         await self.unit_of_work.commit()
