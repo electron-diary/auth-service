@@ -35,7 +35,8 @@ class UpdateUserFullnameCommandHandler(BaseCommandHandler[UpdateUserFullNameComm
             user_last_name=UserLastNameValueObject(request.new_user_last_name),
             user_middle_name=UserMiddleNameValueObject(request.new_user_middle_name),
         )
-        user: UserDomainEntity = await self.event_store.get_current_state(uuid=uuid)
+        events_to_replay: Sequence[BaseDomainEvent] = await self.event_store.get_events(uuid=uuid)
+        user: UserDomainEntity = UserDomainEntity.replay_events(events=events_to_replay)
 
         await self.user_commands_repository.update_user_fullname(user=user)
         user.update_user_fullname(user_uuid=user.uuid, new_user_fullname=user_fullname)

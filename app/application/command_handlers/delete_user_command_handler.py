@@ -26,8 +26,8 @@ class DeleteUserCommandHandler(BaseCommandHandler[DeleteUserCommand, None]):
 
     async def __call__(self: Self, request: DeleteUserCommand) -> None:
         uuid: UUIDValueObject = UUIDValueObject(request.user_uuid)
-        await self.event_store.get_events(uuid=uuid)
-        user: UserDomainEntity = UserDomainEntity.replay_events()
+        events_to_replay: Sequence[BaseDomainEvent] = await self.event_store.get_events(uuid=uuid)
+        user: UserDomainEntity = UserDomainEntity.replay_events(events=events_to_replay)
 
         await self.user_commands_repository.delete_user(user_uuid=user.uuid)
         user.delete_user(uuid=user.uuid)

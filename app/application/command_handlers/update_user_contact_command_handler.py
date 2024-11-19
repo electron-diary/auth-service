@@ -33,7 +33,8 @@ class UpdateUserContactCommandHandler(BaseCommandHandler[UpdateUserContactComman
             user_email=UserEmailValueObject(request.new_user_email),
             user_phone=UserPhoneValueObject(request.new_user_phone),
         )
-        user: UserDomainEntity = await self.event_store.get_current_state(uuid=uuid)
+        events_to_replay: Sequence[BaseDomainEvent] = await self.event_store.get_events(uuid=uuid)
+        user: UserDomainEntity = UserDomainEntity.replay_events(events=events_to_replay)
 
         await self.user_commands_repository.update_user_contact(user=UserDomainEntity)
         user.update_user_contact(user_uuid=user.uuid, new_user_contact=user_contact)
