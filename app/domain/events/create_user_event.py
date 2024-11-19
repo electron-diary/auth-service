@@ -11,4 +11,3 @@ class CreateUserEvent(BaseDomainEvent):
     user_first_name: str
     user_last_name: str
     user_middle_name: str | None
-    event_start_execution_time: datetime = field(default=datetime.now().isoformat(), init=False)

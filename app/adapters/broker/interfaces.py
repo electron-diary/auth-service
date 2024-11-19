@@ -1,20 +1,17 @@
-from abc import abstractmethod
 from typing import Protocol, Self
+from abc import abstractmethod
 
-from app.adapters.broker.message import Message
+from app.domain.base.base_event import BaseDomainEvent
 
-
-class KafkaBrokerInterface(Protocol):
+class AioKafkaInterface(Protocol):
     @abstractmethod
-    def produce_messages(self: Self, topic: str, message: Message) -> None:
-        msg = "method must be implemented by subclasses"
+    async def recieve_message(self: Self) -> dict[str]:
         raise NotImplementedError(
-            msg,
+            'method must be implemented by subclasses'
         )
 
     @abstractmethod
-    def consume_messages(self: Self, topic: str) -> None:
-        msg = "method must be implemented by subclasses"
+    async def send_message(self: Self, message: dict[str]) -> None:
         raise NotImplementedError(
-            msg,
+            'method must be implemented by subclasses'
         )
