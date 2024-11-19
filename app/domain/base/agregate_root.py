@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Self
+from typing import Any, Self
 
 from app.domain.base.base_event import BaseDomainEvent
 from app.domain.exceptions.events_exception import EventsNotFoundError, EventValidationError
@@ -20,3 +20,9 @@ class AgregateRoot:
         events: list[BaseDomainEvent] = self.events.copy()
         self.events.clear()
         return events
+
+    def _apply(self: Self, event: BaseDomainEvent) -> None:
+        ...
+
+    def replay_events(self: Self, events: list[BaseDomainEvent]) -> Any:
+        ...

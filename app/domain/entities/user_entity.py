@@ -10,13 +10,14 @@ from app.domain.events.create_user_event import CreateUserEvent
 from app.domain.events.delete_user_event import DeleteUserEvent
 from app.domain.events.update_user_contact import UpdateUserContactEvent
 from app.domain.events.update_user_fullname import UpdateUserFullNameEvent
+from app.domain.exceptions.events_exception import EventsConsistencyError
+from app.domain.exceptions.user_exceptions import UserDeletedError
 from app.domain.value_objects.user_email_value_object import UserEmailValueObject
 from app.domain.value_objects.user_first_name_value_object import UserFirstNameValueObject
 from app.domain.value_objects.user_last_name_value_object import UserLastNameValueObject
 from app.domain.value_objects.user_middle_name_value_object import UserMiddleNameValueObject
 from app.domain.value_objects.user_phone_value_object import UserPhoneValueObject
 from app.domain.value_objects.uuid_value_object import UUIDValueObject
-from app.domain.exceptions.events_exception import EventsConsistencyError
 
 
 @dataclass
@@ -78,6 +79,8 @@ class UserDomainEntity(BaseDomainEntity[UUIDValueObject], AgregateRoot):
         self.add_event(event=event)
 
     def _apply(self: Self, event: BaseDomainEvent) -> None:
+        if isinstance(event, DeleteUserEvent):
+            raise UserDeletedError("User already deleted")
         if isinstance(event, UpdateUserFullNameEvent):
             self.user_full_name = UserFullName(
                 user_first_name=UserFirstNameValueObject(event.new_user_first_name),
