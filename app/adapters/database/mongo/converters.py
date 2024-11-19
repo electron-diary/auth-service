@@ -1,5 +1,5 @@
-from json import dumps, loads
 from dataclasses import asdict
+from json import dumps
 
 from app.adapters.database.mongo.payloads import MongoEvent
 from app.domain.base.base_event import BaseDomainEvent
@@ -18,7 +18,7 @@ def convert_domain_event_to_mongo_event(event: BaseDomainEvent) -> MongoEvent:
     )
     return mongo_event
 
-        
+
 
 
 

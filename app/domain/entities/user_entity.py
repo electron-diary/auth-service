@@ -10,12 +10,12 @@ from app.domain.events.create_user_event import CreateUserEvent
 from app.domain.events.delete_user_event import DeleteUserEvent
 from app.domain.events.update_user_contact import UpdateUserContactEvent
 from app.domain.events.update_user_fullname import UpdateUserFullNameEvent
-from app.domain.value_objects.uuid_value_object import UUIDValueObject
-from app.domain.value_objects.user_phone_value_object import UserPhoneValueObject
 from app.domain.value_objects.user_email_value_object import UserEmailValueObject
 from app.domain.value_objects.user_first_name_value_object import UserFirstNameValueObject
 from app.domain.value_objects.user_last_name_value_object import UserLastNameValueObject
 from app.domain.value_objects.user_middle_name_value_object import UserMiddleNameValueObject
+from app.domain.value_objects.user_phone_value_object import UserPhoneValueObject
+from app.domain.value_objects.uuid_value_object import UUIDValueObject
 
 
 @dataclass
@@ -72,7 +72,7 @@ class UserDomainEntity(BaseDomainEntity[UUIDValueObject], AgregateRoot):
             uuid=uuid.to_raw(),
         )
         self.add_event(event=event)
-    
+
     def _apply(self: Self, event: BaseDomainEvent) -> None:
         if isinstance(event, UpdateUserFullNameEvent):
             self.user_full_name = UserFullName(
@@ -85,21 +85,23 @@ class UserDomainEntity(BaseDomainEntity[UUIDValueObject], AgregateRoot):
                 user_email=UserEmailValueObject(event.new_user_email),
                 user_phone=UserPhoneValueObject(event.new_user_phone),
             )
+
     @staticmethod
-    def replay_events(events: list[BaseDomainEvent]) -> 'UserDomainEntity':
-        for event in events:
-            if isinstance(event, CreateUserEvent):
-                user: UserDomainEntity = UserDomainEntity(
-                    uuid=UUIDValueObject(event.uuid),
-                    user_contact=UserContact(
-                        user_email=UserEmailValueObject(event.user_email),
-                        user_phone=UserPhoneValueObject(event.user_phone),
-                    ),
-                    user_full_name=UserFullName(
-                        user_first_name=UserFirstNameValueObject(event.user_first_name),
-                        user_middle_name=UserMiddleNameValueObject(event.user_middle_name),
-                        user_last_name=UserLastNameValueObject(event.user_last_name),
-                    ),
-                )
+    def replay_events(events: list[BaseDomainEvent]) -> "UserDomainEntity":
+        if not isinstance(events[0], CreateUserEvent):
+            raise ValueError("First event must be CreateUserEvent")
+        user: UserDomainEntity = UserDomainEntity(
+            uuid=UUIDValueObject(event.uuid),
+            user_contact=UserContact(
+                user_email=UserEmailValueObject(event.user_email),
+                user_phone=UserPhoneValueObject(event.user_phone),
+            ),
+            user_full_name=UserFullName(
+                user_first_name=UserFirstNameValueObject(event.user_first_name),
+                user_middle_name=UserMiddleNameValueObject(event.user_middle_name),
+                user_last_name=UserLastNameValueObject(event.user_last_name),
+            ),
+        )
+        for event in events[1:]:
             user._apply(event)
         return user

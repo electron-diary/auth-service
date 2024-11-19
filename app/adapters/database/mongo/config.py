@@ -12,4 +12,4 @@ class MongoConfig:
 
     @property
     def get_connection_uri(self):
-        return f'mongodb://{self.username}:{self.password}@{self.host}:{self.port}/'
+        return f"mongodb://{self.username}:{self.password}@{self.host}:{self.port}/"

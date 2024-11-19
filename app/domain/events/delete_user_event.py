@@ -1,6 +1,5 @@
-from dataclasses import dataclass, field
-from uuid import UUID, uuid4
-from datetime import datetime
+from dataclasses import dataclass
+from uuid import UUID
 
 from app.domain.base.base_event import BaseDomainEvent
 

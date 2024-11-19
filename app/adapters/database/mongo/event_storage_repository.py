@@ -1,14 +1,14 @@
-from typing import Self, Sequence
+from collections.abc import Sequence
 from dataclasses import asdict
-from motor.motor_asyncio import AsyncIOMotorClientSession, AsyncIOMotorCollection, AsyncIOMotorCursor
+from typing import Self
 
-from app.application.base.event_store_interface import EventStoreInterface
-from app.domain.base.base_event import BaseDomainEvent
-from app.domain.entities.user_entity import UserDomainEntity
-from app.domain.value_objects.uuid_value_object import UUIDValueObject
+from motor.motor_asyncio import AsyncIOMotorClientSession, AsyncIOMotorCollection
+
 from app.adapters.database.mongo.converters import convert_domain_event_to_mongo_event
 from app.adapters.database.mongo.payloads import MongoEvent
-
+from app.application.base.event_store_interface import EventStoreInterface
+from app.domain.base.base_event import BaseDomainEvent
+from app.domain.value_objects.uuid_value_object import UUIDValueObject
 
 
 class EventSoreRepository(EventStoreInterface):

@@ -1,7 +1,8 @@
-from typing import Self, Sequence
+from collections.abc import Sequence
+from typing import Self
 
-from app.application.base.event_bus_interface import EventBusInterface
 from app.adapters.broker.interfaces import KafkaBrokerInterface
+from app.application.base.event_bus_interface import EventBusInterface
 from app.domain.base.base_event import BaseDomainEvent
 
 
@@ -12,5 +13,5 @@ class EventBusRepository(EventBusInterface):
     async def send_event(self: Self, event: Sequence[BaseDomainEvent]) -> None:
         for domain_event in event:
             await self.broker.produce_messages(
-                
+
             )
