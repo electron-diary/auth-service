@@ -1,8 +1,6 @@
 from abc import abstractmethod
 from typing import Protocol, Self
 
-from app.domain.base.base_event import BaseDomainEvent
-
 
 class EventHandlerInterface(Protocol):
     @abstractmethod

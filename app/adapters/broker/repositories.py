@@ -1,14 +1,14 @@
 from typing import Self
+
 import aiokafka
 
-from app.adapters.broker.interfaces import AioKafkaInterface
 from app.adapters.broker.config import KafkaConfig
-from app.application.base.integration_event import IntegrationEvent
+from app.adapters.broker.interfaces import AioKafkaInterface
 
 
 class KafkaRepositoryIml(AioKafkaInterface):
     def __init__(
-        self, consumer: aiokafka.AIOKafkaConsumer, producer: aiokafka.AIOKafkaProducer, config: KafkaConfig
+        self, consumer: aiokafka.AIOKafkaConsumer, producer: aiokafka.AIOKafkaProducer, config: KafkaConfig,
     ) -> None:
         self.consumer: aiokafka.AIOKafkaConsumer = consumer
         self.producer: aiokafka.AIOKafkaProducer = producer
@@ -20,3 +20,4 @@ class KafkaRepositoryIml(AioKafkaInterface):
     async def recieve_message(self: Self) -> dict[str]:
         async for message in self.consumer:
             return message.value
+        return None

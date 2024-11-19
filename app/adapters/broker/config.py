@@ -6,7 +6,7 @@ from typing import Self
 class KafkaConfig:
     host: str = "localhost"
     port: int = 9092
-    topic: str = 'kafka'
+    topic: str = "kafka"
 
     @property
     def get_connection_uri(self: Self) -> str:

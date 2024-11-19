@@ -1,11 +1,11 @@
-from typing import Self, Sequence
+from collections.abc import Sequence
 from dataclasses import asdict
+from typing import Self
 
-from app.application.base.event_bus_interface import EventBusInterface
 from app.adapters.broker.interfaces import AioKafkaInterface
-from app.domain.base.base_event import BaseDomainEvent
+from app.application.base.event_bus_interface import EventBusInterface
 from app.application.base.integration_event import IntegrationEvent
-
+from app.domain.base.base_event import BaseDomainEvent
 
 
 class EventBusRepository(EventBusInterface):

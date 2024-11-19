@@ -1,4 +1,5 @@
 from typing import Self
+
 from sqlalchemy import UUID, Column, Integer, String
 
 from app.adapters.database.postgres.tables.base import Base

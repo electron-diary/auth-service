@@ -1,12 +1,12 @@
 from typing import Self
 
+from app.application.base.integration_event import IntegrationEvent
+from app.application.base.projector_interface import ProjectorInterface
+from app.application.interfaces.user_projections_repository import UserProjectionsRepository
 from app.domain.events.create_user_event import CreateUserEvent
 from app.domain.events.delete_user_event import DeleteUserEvent
 from app.domain.events.update_user_contact import UpdateUserContactEvent
 from app.domain.events.update_user_fullname import UpdateUserFullNameEvent
-from app.application.base.projector_interface import ProjectorInterface
-from app.application.base.integration_event import IntegrationEvent
-from app.application.interfaces.user_projections_repository import UserProjectionsRepository
 
 
 class EventsProjector(ProjectorInterface):

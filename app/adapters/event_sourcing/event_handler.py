@@ -1,10 +1,9 @@
 from typing import Self
 
-from app.application.base.projector_interface import ProjectorInterface
-from app.application.base.event_handler_Interface import EventHandlerInterface
 from app.adapters.broker.interfaces import AioKafkaInterface
+from app.application.base.event_handler_Interface import EventHandlerInterface
 from app.application.base.integration_event import IntegrationEvent
-
+from app.application.base.projector_interface import ProjectorInterface
 
 
 class EventHandlerRepository(EventHandlerInterface):
@@ -16,4 +15,4 @@ class EventHandlerRepository(EventHandlerInterface):
         async for message in self.broker_repository.recieve_message():
             event: IntegrationEvent = IntegrationEvent(**message)
             await self.projector.project(event=event)
-                
+

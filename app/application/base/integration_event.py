@@ -1,4 +1,4 @@
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from datetime import datetime
 from uuid import UUID
 
@@ -18,6 +18,6 @@ class IntegrationEvent:
             uuid=event.uuid,
             event_name=event.__class__.__name__,
             event_data=asdict(obj=event),
-            event_timestamp=event.event_timestamp
+            event_timestamp=event.event_timestamp,
         )
         return integration_event

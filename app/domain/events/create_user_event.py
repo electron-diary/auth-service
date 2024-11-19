@@ -1,5 +1,4 @@
-from dataclasses import dataclass, field
-from datetime import datetime
+from dataclasses import dataclass
 
 from app.domain.base.base_event import BaseDomainEvent
 

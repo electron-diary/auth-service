@@ -1,7 +1,8 @@
-from typing import Self, Protocol
 from abc import abstractmethod
+from typing import Protocol, Self
 
 from app.application.base.integration_event import IntegrationEvent
+
 
 class ProjectorInterface(Protocol):
     @abstractmethod

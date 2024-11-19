@@ -1,15 +1,15 @@
 from typing import Self
 
+from sqlalchemy import delete, insert, update
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import update, delete, insert
 
+from app.adapters.database.postgres.mappers import convert_user_create_event_to_table
+from app.adapters.database.postgres.tables.user_table import UserTable
+from app.application.interfaces.user_projections_repository import UserProjectionsRepository
 from app.domain.events.create_user_event import CreateUserEvent
 from app.domain.events.delete_user_event import DeleteUserEvent
 from app.domain.events.update_user_contact import UpdateUserContactEvent
 from app.domain.events.update_user_fullname import UpdateUserFullNameEvent
-from app.adapters.database.postgres.tables.user_table import UserTable
-from app.adapters.database.postgres.mappers import convert_user_create_event_to_table
-from app.application.interfaces.user_projections_repository import UserProjectionsRepository
 
 
 class UserProjectionsRepositoryImpl(UserProjectionsRepository):
