@@ -6,3 +6,6 @@ class EventValidationError(BaseDomainError):
 
 class EventsNotFoundError(BaseDomainError):
     ...
+
+class EventsConsistencyError(BaseDomainError):
+    ...

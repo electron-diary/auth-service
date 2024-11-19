@@ -16,6 +16,7 @@ from app.domain.value_objects.user_last_name_value_object import UserLastNameVal
 from app.domain.value_objects.user_middle_name_value_object import UserMiddleNameValueObject
 from app.domain.value_objects.user_phone_value_object import UserPhoneValueObject
 from app.domain.value_objects.uuid_value_object import UUIDValueObject
+from app.domain.exceptions.events_exception import EventsConsistencyError
 
 
 @dataclass
@@ -53,6 +54,7 @@ class UserDomainEntity(BaseDomainEntity[UUIDValueObject], AgregateRoot):
             new_user_middle_name=new_user_fullname.user_middle_name.to_raw(),
             new_user_last_name=new_user_fullname.user_last_name.to_raw(),
         )
+        self._apply(event=event)
         self.add_event(event=event)
 
     def update_user_contact(
@@ -63,6 +65,7 @@ class UserDomainEntity(BaseDomainEntity[UUIDValueObject], AgregateRoot):
             new_user_email=new_user_contact.user_email.to_raw(),
             new_user_phone=new_user_contact.user_phone.to_raw(),
         )
+        self._apply(event=event)
         self.add_event(event=event)
 
     def delete_user(
@@ -71,6 +74,7 @@ class UserDomainEntity(BaseDomainEntity[UUIDValueObject], AgregateRoot):
         event: DeleteUserEvent = DeleteUserEvent(
             uuid=uuid.to_raw(),
         )
+        self._apply(event=event)
         self.add_event(event=event)
 
     def _apply(self: Self, event: BaseDomainEvent) -> None:
@@ -89,7 +93,7 @@ class UserDomainEntity(BaseDomainEntity[UUIDValueObject], AgregateRoot):
     @staticmethod
     def replay_events(events: list[BaseDomainEvent]) -> "UserDomainEntity":
         if not isinstance(events[0], CreateUserEvent):
-            raise ValueError("First event must be CreateUserEvent")
+            raise EventsConsistencyError("First event must be CreateUserEvent")
         user: UserDomainEntity = UserDomainEntity(
             uuid=UUIDValueObject(event.uuid),
             user_contact=UserContact(
