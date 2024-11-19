@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from datetime import datetime
 from uuid import UUID
 
 from app.application.base.base_dto import BaseDto
@@ -13,6 +12,4 @@ class UserDto(BaseDto):
     user_middle_name: str | None
     user_email: str | None
     user_phone: str | None
-    user_created_at: datetime
-    user_updated_at: datetime
 
