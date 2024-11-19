@@ -1,16 +1,15 @@
 from collections.abc import Sequence
 from dataclasses import asdict
-from typing import TYPE_CHECKING, Self
+from typing import Self
 
-from motor.motor_asyncio import AsyncIOMotorClientSession, AsyncIOMotorCollection
+from motor.motor_asyncio import AsyncIOMotorClientSession, AsyncIOMotorCollection, AsyncIOMotorCursor
 
-from app.adapters.database.mongo.converters import convert_domain_event_to_mongo_event
 from app.application.base.event_store_interface import EventStoreInterface
+from app.application.base.integration_event import IntegrationEvent
 from app.domain.base.base_event import BaseDomainEvent
 from app.domain.value_objects.uuid_value_object import UUIDValueObject
+from app.adapters.database.mongo.converters import convert_integartion_event_to_domain_event
 
-if TYPE_CHECKING:
-    from app.adapters.database.mongo.payloads import MongoEvent
 
 
 class EventSoreRepository(EventStoreInterface):
@@ -20,14 +19,15 @@ class EventSoreRepository(EventStoreInterface):
 
     async def save_event(self: Self, event: Sequence[BaseDomainEvent]) -> None:
         for domain_event in event:
-            mongo_event: MongoEvent = convert_domain_event_to_mongo_event(event=domain_event)
-            await self.collection.insert_one(asdict(mongo_event), session=self.session)
+            integration_event: IntegrationEvent = IntegrationEvent.from_domain_to_integration_event(event=domain_event)
+            await self.collection.insert_one(asdict(integration_event), session=self.session)
 
-    async def get_current_state(self: Self, uuid: UUIDValueObject) -> Sequence[BaseDomainEvent]:
-        # list_events: list[BaseDomainEvent] = []
-        # cursor: AsyncIOMotorCursor = self.collection.find({"uuid": str(uuid.to_raw())})
-        # result: Sequence[MongoEvent] = await cursor.to_list()
-        # for mongo_event in result:
-        #     list_events.append(mongo_event)
-        # return list_events
-        ...
+    async def get_events(self: Self, uuid: UUIDValueObject) -> Sequence[BaseDomainEvent]:
+        list_events: list[BaseDomainEvent] = []
+        cursor: AsyncIOMotorCursor = self.collection.find({"uuid": str(uuid.to_raw())})
+        result: list[IntegrationEvent] = await cursor.to_list()
+        for integration_event in result:
+            domain_event: BaseDomainEvent = convert_integartion_event_to_domain_event(integration_event=integration_event)
+            list_events.append(domain_event)
+        return list_events
+
