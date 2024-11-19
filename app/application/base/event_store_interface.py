@@ -15,7 +15,7 @@ class EventStoreInterface(Protocol):
         )
     
     @abstractmethod
-    async def get_current_state(self: Self, uuid: UUIDValueObject) -> UserDomainEntity:
+    async def get_events(self: Self, uuid: UUIDValueObject) -> Sequence[BaseDomainEvent]:
         raise NotImplementedError(
             "Method must be implemented by subclasses",
         )

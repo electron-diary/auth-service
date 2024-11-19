@@ -43,7 +43,7 @@ class CreateUserCommandHandler(BaseCommandHandler[CreateUserCommand, UUID]):
         )
         await self.user_commands_repository.create_user(user=new_user)
         new_user: UserDomainEntity = UserDomainEntity.create_user(
-            user_uuid=UUIDValueObject(request.user_uuid),
+            uuid=UUIDValueObject(request.user_uuid),
             user_contact=user_contact,
             user_fullname=user_fullname,
         )

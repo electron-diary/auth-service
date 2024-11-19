@@ -35,7 +35,7 @@ class UpdateUserContactCommandHandler(BaseCommandHandler[UpdateUserContactComman
         user: UserDomainEntity = await self.event_store.get_current_state(uuid=uuid)
 
         await self.user_commands_repository.update_user_contact(user=UserDomainEntity)
-        user.update_user_contact(user_uuid=user.user_uuid, new_user_contact=user_contact)
+        user.update_user_contact(user_uuid=user.uuid, new_user_contact=user_contact)
         events: Sequence[BaseDomainEvent] = user.send_events()
         await self.event_store.save_event(event=events)
         await self.event_bus.send_event(event=events)

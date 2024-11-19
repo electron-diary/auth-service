@@ -1,9 +1,12 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass, fields, asdict
+from abc import ABC
+from typing import Any, Self
+from json import dumps
+from uuid import UUID
 from datetime import datetime
-from uuid import UUID, uuid4
 
 
 @dataclass(frozen=True)
-class BaseDomainEvent:
-    event_uuid: UUID = field(default=uuid4(), init=False)
-    event_start_execution_time: datetime = field(default=datetime.now(), init=False)
+class BaseDomainEvent(ABC):
+    uuid: UUID
+                

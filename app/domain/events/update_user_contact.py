@@ -1,11 +1,12 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from uuid import UUID
+from datetime import datetime
 
 from app.domain.base.base_event import BaseDomainEvent
 
 
 @dataclass(frozen=True)
 class UpdateUserContactEvent(BaseDomainEvent):
-    user_uuid: UUID
+    uuid: UUID
     new_user_email: str | None
     new_user_phone:int | None
