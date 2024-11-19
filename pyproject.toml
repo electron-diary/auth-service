@@ -15,6 +15,7 @@ sqlalchemy = "^2.0.36"
 starlette = "^0.41.3"
 gunicorn = "^23.0.0"
 alembic = "^1.14.0"
+dishka = "^1.4.1"
 
 
 [build-system]
