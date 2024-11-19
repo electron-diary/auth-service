@@ -14,10 +14,12 @@ class UUIDValueObject(BaseDomainValueObject[UUID]):
 
     def __post_init__(self: Self) -> None:
         if not self.to_raw():
+            msg = "UUID cannot be empty"
             raise UUIDRequiredError(
-                "UUID cannot be empty",
+                msg,
             )
         if not isinstance(self.object, UUID):
+            msg = "UUID must be a valid UUID"
             raise UUIDTypeError(
-                "UUID must be a valid UUID",
+                msg,
             )

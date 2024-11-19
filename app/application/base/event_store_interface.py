@@ -9,12 +9,14 @@ from app.domain.value_objects.uuid_value_object import UUIDValueObject
 class EventStoreInterface(Protocol):
     @abstractmethod
     async def save_event(self: Self, event: Sequence[BaseDomainEvent]) -> None:
+        msg = "Method must be implemented by subclasses"
         raise NotImplementedError(
-            "Method must be implemented by subclasses",
+            msg,
         )
 
     @abstractmethod
     async def get_events(self: Self, uuid: UUIDValueObject) -> Sequence[BaseDomainEvent]:
+        msg = "Method must be implemented by subclasses"
         raise NotImplementedError(
-            "Method must be implemented by subclasses",
+            msg,
         )

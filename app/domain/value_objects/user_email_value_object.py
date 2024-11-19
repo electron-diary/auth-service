@@ -11,15 +11,18 @@ class UserEmailValueObject(BaseDomainValueObject[str | None]):
     def __post_init__(self: Self) -> None:
         if self.to_raw():
             if not isinstance(self.to_raw(), str):
+                msg = f"User email must be a string, get {type(self.to_raw())}"
                 raise UserEmailTypeError(
-                    f"User email must be a string, get {type(self.to_raw())}",
+                    msg,
                 )
             if len(self.to_raw()) < UserContactEnums.user_email_min_lenght:
+                msg = f"User email must be at least {UserContactEnums.user_email_min_lenght} characters long"
                 raise MinimalLenghtEmailError(
-                    f"User email must be at least {UserContactEnums.user_email_min_lenght} characters long",
+                    msg,
                 )
             if len(self.to_raw()) > UserContactEnums.user_email_max_lenght:
+                msg = f"User email must be less than {UserContactEnums.user_email_max_lenght} characters long"
                 raise MaximalLenghtEmailError(
-                    f"User email must be less than {UserContactEnums.user_email_max_lenght} characters long",
+                    msg,
                 )
 

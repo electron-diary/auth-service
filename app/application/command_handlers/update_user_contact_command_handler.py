@@ -1,5 +1,4 @@
-from collections.abc import Sequence
-from typing import Self
+from typing import TYPE_CHECKING, Self
 
 from app.application.base.base_command_handler import BaseCommandHandler
 from app.application.base.event_bus_interface import EventBusInterface
@@ -7,12 +6,16 @@ from app.application.base.event_store_interface import EventStoreInterface
 from app.application.base.uow_interface import UnitOfWorkInterface
 from app.application.commands.update_user_conact_command import UpdateUserContactCommand
 from app.application.interfaces.user_commands_repository import UserCommandsRepository
-from app.domain.base.base_event import BaseDomainEvent
 from app.domain.constants.user_contact import UserContact
 from app.domain.entities.user_entity import UserDomainEntity
 from app.domain.value_objects.user_email_value_object import UserEmailValueObject
 from app.domain.value_objects.user_phone_value_object import UserPhoneValueObject
 from app.domain.value_objects.uuid_value_object import UUIDValueObject
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from app.domain.base.base_event import BaseDomainEvent
 
 
 class UpdateUserContactCommandHandler(BaseCommandHandler[UpdateUserContactCommand, None]):

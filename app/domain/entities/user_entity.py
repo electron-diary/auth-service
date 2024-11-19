@@ -80,7 +80,8 @@ class UserDomainEntity(BaseDomainEntity[UUIDValueObject], AgregateRoot):
 
     def _apply(self: Self, event: BaseDomainEvent) -> None:
         if isinstance(event, DeleteUserEvent):
-            raise UserDeletedError("User already deleted")
+            msg = "User already deleted"
+            raise UserDeletedError(msg)
         if isinstance(event, UpdateUserFullNameEvent):
             self.user_full_name = UserFullName(
                 user_first_name=UserFirstNameValueObject(event.new_user_first_name),
@@ -96,7 +97,8 @@ class UserDomainEntity(BaseDomainEntity[UUIDValueObject], AgregateRoot):
     @staticmethod
     def replay_events(events: list[BaseDomainEvent]) -> "UserDomainEntity":
         if not isinstance(events[0], CreateUserEvent):
-            raise EventsConsistencyError("First event must be CreateUserEvent")
+            msg = "First event must be CreateUserEvent"
+            raise EventsConsistencyError(msg)
         user: UserDomainEntity = UserDomainEntity(
             uuid=UUIDValueObject(event.uuid),
             user_contact=UserContact(

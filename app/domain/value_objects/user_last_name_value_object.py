@@ -14,18 +14,22 @@ from app.domain.exceptions.value_objects_exceptions import (
 class UserLastNameValueObject(BaseDomainValueObject[str]):
     def __post_init__(self: Self) -> None:
         if not self.to_raw():
+            msg = "User last name cannot be empty"
             raise LastNameRequiredError(
-                "User last name cannot be empty",
+                msg,
             )
         if not isinstance(self.to_raw(), str):
+            msg = f"User last name must be a string, get {type(self.to_raw())}"
             raise LastNameTypeError(
-                f"User last name must be a string, get {type(self.to_raw())}",
+                msg,
             )
         if len(self.to_raw()) < UserFullnameEnums.user_last_name_min_length:
+            msg = f"User last name must be at least {UserFullnameEnums.user_last_name_min_length} characters long"
             raise MaximalLenghtLastNameError(
-                f"User last name must be at least {UserFullnameEnums.user_last_name_min_length} characters long",
+                msg,
             )
         if len(self.to_raw()) > UserFullnameEnums.user_last_name_max_length:
+            msg = f"User last name must be less than {UserFullnameEnums.user_last_name_max_length} characters long"
             raise MaximalLenghtLastNameError(
-                f"User last name must be less than {UserFullnameEnums.user_last_name_max_length} characters long",
+                msg,
             )

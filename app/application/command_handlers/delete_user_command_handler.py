@@ -1,5 +1,4 @@
-from collections.abc import Sequence
-from typing import Self
+from typing import TYPE_CHECKING, Self
 
 from app.application.base.base_command_handler import BaseCommandHandler
 from app.application.base.event_bus_interface import EventBusInterface
@@ -7,9 +6,13 @@ from app.application.base.event_store_interface import EventStoreInterface
 from app.application.base.uow_interface import UnitOfWorkInterface
 from app.application.commands.delete_user_commands import DeleteUserCommand
 from app.application.interfaces.user_commands_repository import UserCommandsRepository
-from app.domain.base.base_event import BaseDomainEvent
 from app.domain.entities.user_entity import UserDomainEntity
 from app.domain.value_objects.uuid_value_object import UUIDValueObject
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from app.domain.base.base_event import BaseDomainEvent
 
 
 class DeleteUserCommandHandler(BaseCommandHandler[DeleteUserCommand, None]):
@@ -25,7 +28,7 @@ class DeleteUserCommandHandler(BaseCommandHandler[DeleteUserCommand, None]):
 
     async def __call__(self: Self, request: DeleteUserCommand) -> None:
         uuid: UUIDValueObject = UUIDValueObject(request.user_uuid)
-        recent_states: Sequence[UserDomainEntity] = await self.event_store.get_events(uuid=uuid)
+        await self.event_store.get_events(uuid=uuid)
         user: UserDomainEntity = UserDomainEntity.replay_events()
 
         await self.user_commands_repository.delete_user(user_uuid=user.uuid)

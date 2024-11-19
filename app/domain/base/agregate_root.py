@@ -11,12 +11,14 @@ class AgregateRoot:
 
     def add_event(self: Self, event: BaseDomainEvent) -> None:
         if not isinstance(event, BaseDomainEvent):
-            raise EventValidationError("Invalid event type")
+            msg = "Invalid event type"
+            raise EventValidationError(msg)
         self.events.append(event)
 
     def send_events(self: Self) -> list[BaseDomainEvent]:
         if len(self.events) == 0:
-            raise EventsNotFoundError("No events to send")
+            msg = "No events to send"
+            raise EventsNotFoundError(msg)
         events: list[BaseDomainEvent] = self.events.copy()
         self.events.clear()
         return events

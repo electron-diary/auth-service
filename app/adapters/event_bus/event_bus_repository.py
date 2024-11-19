@@ -11,7 +11,7 @@ class EventBusRepository(EventBusInterface):
         self.broker: KafkaBrokerInterface = broker
 
     async def send_event(self: Self, event: Sequence[BaseDomainEvent]) -> None:
-        for domain_event in event:
+        for _domain_event in event:
             await self.broker.produce_messages(
 
             )

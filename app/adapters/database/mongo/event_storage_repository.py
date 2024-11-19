@@ -1,14 +1,16 @@
 from collections.abc import Sequence
 from dataclasses import asdict
-from typing import Self
+from typing import TYPE_CHECKING, Self
 
 from motor.motor_asyncio import AsyncIOMotorClientSession, AsyncIOMotorCollection
 
 from app.adapters.database.mongo.converters import convert_domain_event_to_mongo_event
-from app.adapters.database.mongo.payloads import MongoEvent
 from app.application.base.event_store_interface import EventStoreInterface
 from app.domain.base.base_event import BaseDomainEvent
 from app.domain.value_objects.uuid_value_object import UUIDValueObject
+
+if TYPE_CHECKING:
+    from app.adapters.database.mongo.payloads import MongoEvent
 
 
 class EventSoreRepository(EventStoreInterface):

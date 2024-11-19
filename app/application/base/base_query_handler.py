@@ -7,6 +7,7 @@ from app.application.base.base_query import BaseQuery
 class BaseQueryHandler[Request: BaseQuery, Response](Protocol):
     @abstractmethod
     async def __call__(self: Self, requst: Request) -> Response:
+        msg = "method must be implemented ny subclasses"
         raise NotImplementedError(
-            "method must be implemented ny subclasses",
+            msg,
         )

@@ -5,12 +5,14 @@ from typing import Protocol, Self
 class UnitOfWorkInterface(Protocol):
     @abstractmethod
     async def commit(self: Self) -> None:
+        msg = "method must be implemented by subclasses"
         raise NotImplementedError(
-            "method must be implemented by subclasses",
+            msg,
         )
 
     @abstractmethod
     async def rollback(self: Self) -> None:
+        msg = "method must be implemented by subclasses"
         raise NotImplementedError(
-            "method must be implemented by subclasses",
+            msg,
         )

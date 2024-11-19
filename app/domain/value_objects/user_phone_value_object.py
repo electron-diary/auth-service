@@ -14,15 +14,18 @@ class UserPhoneValueObject(BaseDomainValueObject[int | None]):
     def __post_init__(self: Self) -> None:
         if self.to_raw():
             if not isinstance(self.to_raw(), int):
+                msg = f"User phone must be an integer, get {type(self.to_raw())}"
                 raise TypeError(
-                    f"User phone must be an integer, get {type(self.to_raw())}",
+                    msg,
                 )
             if len(str(self.to_raw())) < UserContactEnums.user_phone_min_lenght:
+                msg = f"User phone must be more than {UserContactEnums.user_phone_min_lenght} characters long"
                 raise MinimalLenghtUserPhoneError(
-                    f"User phone must be more than {UserContactEnums.user_phone_min_lenght} characters long",
+                    msg,
                 )
             if len(str(self.to_raw())) > UserContactEnums.user_phone_max_lenght:
+                msg = f"User phone must be less than {UserContactEnums.user_phone_max_lenght} characters long"
                 raise MaximalLenghtUserPhoneError(
-                    f"User phone must be less than {UserContactEnums.user_phone_max_lenght} characters long",
+                    msg,
                 )
 

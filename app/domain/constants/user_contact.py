@@ -13,5 +13,6 @@ class UserContact:
 
     def __post_init__(self: Self) -> None:
         if not self.user_email.to_raw() and not self.user_phone.to_raw():
-            raise ContactsRequiredError("At least one of user_email or user_phone must be provided.")
+            msg = "At least one of user_email or user_phone must be provided."
+            raise ContactsRequiredError(msg)
 
