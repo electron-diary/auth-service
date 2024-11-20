@@ -8,14 +8,15 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 asyncpg = "^0.30.0"
-aiokafka = "^0.12.0"
 uvicorn = "^0.32.0"
 motor = "^3.6.0"
 sqlalchemy = "^2.0.36"
-starlette = "^0.41.3"
 gunicorn = "^23.0.0"
 alembic = "^1.14.0"
 dishka = "^1.4.1"
+fastapi = "^0.115.5"
+faststream = {extras = ["cli"], version = "^0.5.30"}
+aiokafka = "^0.12.0"
 
 
 [build-system]
