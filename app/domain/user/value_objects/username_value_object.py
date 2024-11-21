@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from typing import Self
 
 from app.domain.common.common_domain_value_object import CommonDomainValueObject
-from app.domain.user.exceptions.user_validation_errors import InvalidUserNameException
 from app.domain.user.enums.username_enums import UsernameEnums
+from app.domain.user.exceptions.user_validation_errors import InvalidUserNameException
 
 
 @dataclass(frozen=True)

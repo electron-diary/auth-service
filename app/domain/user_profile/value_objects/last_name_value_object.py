@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from typing import Self
 
 from app.domain.common.common_domain_value_object import CommonDomainValueObject
-from app.domain.user_profile.exceptions.user_profile_validation_errors import InvalidLastNameException
 from app.domain.user_profile.enums.last_name_enums import LastNameEnums
+from app.domain.user_profile.exceptions.user_profile_validation_errors import InvalidLastNameException
 
 
 @dataclass(frozen=True)

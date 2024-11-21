@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from typing import Self
 
 from app.domain.common.common_domain_value_object import CommonDomainValueObject
-from app.domain.user_profile.exceptions.user_profile_validation_errors import InvalidBioException
 from app.domain.user_profile.enums.bio_enums import BioEnums
+from app.domain.user_profile.exceptions.user_profile_validation_errors import InvalidBioException
 
 
 @dataclass(frozen=True)
