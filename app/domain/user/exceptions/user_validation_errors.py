@@ -1,37 +1,13 @@
 from app.domain.common.common_domain_exception import CommonDomainException
 
 
-class TimeStampRequiredException(CommonDomainException):
+class InvalidTimestampException(CommonDomainException):
     ...
 
-class TimeStampInvalidException(CommonDomainException):
-    ...
-
-class InvalidUserEmailException(CommonDomainException):
-    ...
-
-class EmailSmallerThanAllowedException(CommonDomainException):
-    ...
-
-class EmailLargerThanAllowedException(CommonDomainException):
+class InvalidEmailException(CommonDomainException):
     ...
 
 class InvalidPhoneNumberException(CommonDomainException):
-    ...
-
-class PhoneNumberSmallerThanAllowedException(CommonDomainException):
-    ...
-
-class PhoneNumberLargerThanAllowedException(CommonDomainException):
-    ...
-
-class UserNameRequiredException(CommonDomainException):
-    ...
-
-class UserNameSmallerThanAllowedException(CommonDomainException):
-    ...
-
-class UserNameLargerThanAllowedException(CommonDomainException):
     ...
 
 class InvalidUserNameException(CommonDomainException):
