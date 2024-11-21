@@ -13,10 +13,6 @@ class InterestsValueObject(CommonDomainValueObject[list[str] | None]):
                 raise InvalidInterestsException(
                     message=f"Interests must be a list of strings, not {type(self.to_raw())}",
                 )
-            if len(self.to_raw()) > ...:
-                raise InvalidInterestsException(
-                    message=f"Interests must be less than {...} items",
-                )
             for interest in self.to_raw():
                 if not isinstance(interest, str):
                     raise InvalidInterestsException(

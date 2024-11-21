@@ -3,7 +3,7 @@ from typing import Self
 
 from app.domain.common.common_domain_value_object import CommonDomainValueObject
 from app.domain.user_profile.exceptions.user_profile_validation_errors import InvalidMiddleNameException
-
+from app.domain.user_profile.enums.middle_name_enums import MiddleNameEnums
 
 @dataclass(frozen=True)
 class MiddleNameValueObject(CommonDomainValueObject[str | None]):
@@ -13,11 +13,11 @@ class MiddleNameValueObject(CommonDomainValueObject[str | None]):
                 raise InvalidMiddleNameException(
                     message=f"Middle name must be a string, not {type(self.to_raw())}",
                 )
-            if len(self.to_raw()) > ...:
+            if len(self.to_raw()) > MiddleNameEnums.max_middle_name_characters:
                 raise InvalidMiddleNameException(
-                    message=f"Middle name must be less than {...} characters",
+                    message=f"Middle name must be less than {MiddleNameEnums.max_middle_name_characters} characters",
                 )
-            if len(self.to_raw()) < ...:
+            if len(self.to_raw()) < MiddleNameEnums.min_middle_name_characters:
                 raise InvalidMiddleNameException(
-                    message=f"Middle name must be more than {...} characters",
+                    message=f"Middle name must be more than {MiddleNameEnums.min_middle_name_characters} characters",
                 )

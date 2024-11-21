@@ -14,12 +14,8 @@ class DateOfBirthValueObject(CommonDomainValueObject[date]):
                 raise InvalidDateOfBirthException(
                     message=f"Date of birth must be a date, not {type(self.to_raw())}",
                 )
-            if self.to_raw() > ...:
+            if self.to_raw() > date.today():
                 raise InvalidDateOfBirthException(
-                    message=f"Date of birth must be less than {...}",
+                    message=f"Date of birth must be less than {date.today()}",
                 )
 
-            if self.to_raw() < ...:
-                raise InvalidDateOfBirthException(
-                    message=f"Date of birth must be greater than {...}",
-                )
