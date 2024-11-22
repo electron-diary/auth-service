@@ -6,14 +6,16 @@ from app.domain.user_profile.exceptions.user_profile_validation_errors import In
 
 
 @dataclass(frozen=True)
-class InterestsValueObject(CommonDomainValueObject[list[str] | None]):
+class InterestsValueObject(CommonDomainValueObject):
+    interests: list[str] | None
+
     def __post_init__(self: Self) -> None:
-        if self.to_raw():
-            if not isinstance(self.to_raw(), list):
+        if self.interests:
+            if not isinstance(self.interests, list):
                 raise InvalidInterestsException(
-                    message=f"Interests must be a list of strings, not {type(self.to_raw())}",
+                    message=f"Interests must be a list of strings, not {type(self.interests)}",
                 )
-            for interest in self.to_raw():
+            for interest in self.interests:
                 if not isinstance(interest, str):
                     raise InvalidInterestsException(
                         message=f"Each interest must be a string, not {type(interest)}",

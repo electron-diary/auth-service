@@ -36,3 +36,6 @@ class InvalidProfileTypeException(CommonDomainException):
 
 class InvalidSocialProfileException(CommonDomainException):
     ...
+
+class InvalidUuidException(CommonDomainException):
+    ...

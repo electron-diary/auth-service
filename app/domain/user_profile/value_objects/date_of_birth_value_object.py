@@ -7,14 +7,16 @@ from app.domain.user_profile.exceptions.user_profile_validation_errors import In
 
 
 @dataclass(frozen=True)
-class DateOfBirthValueObject(CommonDomainValueObject[date]):
+class DateOfBirthValueObject(CommonDomainValueObject):
+    birth_date: date | None
+
     def __post_init__(self: Self) -> None:
-        if self.to_raw():
-            if not isinstance(self.to_raw(), date):
+        if self.birth_date:
+            if not isinstance(self.birth_date, date):
                 raise InvalidDateOfBirthException(
-                    message=f"Date of birth must be a date, not {type(self.to_raw())}",
+                    message=f"Date of birth must be a date, not {type(self.birth_date)}",
                 )
-            if self.to_raw() > date.today():
+            if self.birth_date > date.today():
                 raise InvalidDateOfBirthException(
                     message=f"Date of birth must be less than {date.today()}",
                 )

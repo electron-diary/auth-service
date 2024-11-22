@@ -8,13 +8,15 @@ from app.domain.user_profile.exceptions.user_profile_validation_errors import In
 
 @dataclass(frozen=True)
 class BioValueObject(CommonDomainValueObject[str | None]):
+    bio: str | None
+
     def __post_init__(self: Self) -> None:
-        if self.to_raw():
-            if not isinstance(self.to_raw(), str):
+        if self.bio:
+            if not isinstance(self.bio, str):
                 raise InvalidBioException(
-                    message=f"Bio must be a string, not {type(self.to_raw())}",
+                    message=f"Bio must be a string, not {type(self.bio)}",
                 )
-            if len(self.to_raw()) > BioEnums.max_bio_characters:
+            if len(self.bio) > BioEnums.max_bio_characters:
                 raise InvalidBioException(
                     message=f"Bio must be less than {BioEnums.max_bio_characters} characters",
                 )

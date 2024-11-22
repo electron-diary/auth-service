@@ -8,18 +8,20 @@ ProfileT = Literal["verified", "unverified"]
 
 
 @dataclass(frozen=True)
-class ProfileTypeValueObject(CommonDomainValueObject[ProfileT]):
+class ProfileTypeValueObject(CommonDomainValueObject):
+    profile_type: ProfileT
+
     def __post_init__(self: Self) -> None:
-        if not self.to_raw():
+        if not self.profile_type:
             raise InvalidProfileTypeException(
                 message="Profile type must not be None",
             )
-        if not isinstance(self.to_raw(), str):
+        if not isinstance(self.profile_type, str):
             raise InvalidProfileTypeException(
-                message=f"Profile type must be a string, not {type(self.to_raw())}",
+                message=f"Profile type must be a string, not {type(self.profile_type)}",
             )
 
-        if self.to_raw() not in ["verified", "unverified"]:
+        if self.profile_type not in ["verified", "unverified"]:
             raise InvalidProfileTypeException(
                 message="Profile type must be either 'verified' or 'unverified'",
             )

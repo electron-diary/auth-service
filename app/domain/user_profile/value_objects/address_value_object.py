@@ -6,10 +6,12 @@ from app.domain.user_profile.exceptions.user_profile_validation_errors import In
 
 
 @dataclass(frozen=True)
-class AddressValueObject(CommonDomainValueObject[str | None]):
+class AddressValueObject(CommonDomainValueObject):
+    address: str | None
+
     def __post_init__(self: Self) -> None:
-        if self.to_raw():
-            if not isinstance(self.to_raw(), str):
+        if self.address:
+            if not isinstance(self.address, str):
                 raise InvalidAddressException(
-                    message=f"Address must be a string, not {type(self.to_raw())}",
+                    message=f"Address must be a string, not {type(self.address)}",
                 )

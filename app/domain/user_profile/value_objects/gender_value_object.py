@@ -7,14 +7,16 @@ from app.domain.user_profile.exceptions.user_profile_validation_errors import In
 GenderT = Literal["male", "female"]
 
 @dataclass(frozen=True)
-class GenderValueObject(CommonDomainValueObject[GenderT | None]):
+class GenderValueObject(CommonDomainValueObject):
+    gender: GenderT | None
+
     def __post_init__(self: Self) -> None:
         if self.to_raw():
-            if not isinstance(self.to_raw(), str):
+            if not isinstance(self.gender, str):
                 raise InvalidGenderException(
-                    message=f"Gender must be a string, not {type(self.to_raw())}",
+                    message=f"Gender must be a string, not {type(self.gender)}",
                 )
-            if self.to_raw() not in ["male", "female"]:
+            if self.gender not in ["male", "female"]:
                 raise InvalidGenderException(
                     message="Gender must be 'male' or 'female'",
                 )

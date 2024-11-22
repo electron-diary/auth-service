@@ -12,3 +12,9 @@ class InvalidPhoneNumberException(CommonDomainException):
 
 class InvalidUserNameException(CommonDomainException):
     ...
+
+class InvalidUuidException(CommonDomainException):
+    ...
+
+class InvalidContactConfiguration(CommonDomainException):
+    ...
