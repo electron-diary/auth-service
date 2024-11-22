@@ -10,7 +10,7 @@ class AgregateRoot:
 
     def add_event(self: Self, event:CommonDomainEvent) -> None:
         self._events.append(event)
-    
+
     def push_events(self: Self) -> list[CommonDomainEvent]:
         events: list[CommonDomainEvent] = self._events.copy()
         self._events.clear()
