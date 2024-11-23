@@ -1,11 +1,6 @@
 from dataclasses import dataclass
-from typing import Self
 
 from app.domain.common.common_domain_entity import CommonDomainEntity
-from app.domain.common.agregate_root import AgregateRoot
-from app.domain.user_profile.events.create_profile_event import ProfileCreatedEvent
-from app.domain.user_profile.events.delete_profile_event import ProfileDeletedEvent
-from app.domain.user_profile.events.update_profile_event import ProfileUpdatedEvent
 from app.domain.user_profile.value_objects.address_value_object import AddressValueObject
 from app.domain.user_profile.value_objects.bio_value_object import BioValueObject
 from app.domain.user_profile.value_objects.date_of_birth_value_object import DateOfBirthValueObject

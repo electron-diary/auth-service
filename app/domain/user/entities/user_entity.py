@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Self
 
 from app.domain.common.agregate_root import AgregateRoot
