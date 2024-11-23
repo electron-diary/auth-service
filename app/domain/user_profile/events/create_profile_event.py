@@ -17,5 +17,4 @@ class ProfileCreatedEvent(CommonDomainEvent):
     gender: str | None = field(default=None)
     interests: list[str] | None = field(default=None)
     profile_picture: list[str] | None = field(default=None)
-    profile_type: str
     social_profiles: list[str] | None = field(default=None)
