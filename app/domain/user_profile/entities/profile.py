@@ -41,3 +41,6 @@ class Profile(CommonDomainEntity[ProfileUUID]):
             gender=gender, interests=interests, profile_pictures=profile_pictures,
             social_profiles=social_profiles,
         )
+
+    def delete_profile(self: Self) -> None:
+        ...

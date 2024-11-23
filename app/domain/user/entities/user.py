@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Self
 
 from app.domain.common.common_domain_entity import CommonDomainEntity
 from app.domain.user.value_objects.user_contacts import UserContacts
@@ -24,3 +25,7 @@ class User(CommonDomainEntity[UserUUID]):
     ) -> "User":
         profile: Profile= Profile.create_profile(id=id, fullname=fullname)
         return User(id=id, username=username, contacts=contacts, profile=profile)
+    
+    def delete_user(self: Self) -> None:
+        self.profile.delete_profile()
+        ...
