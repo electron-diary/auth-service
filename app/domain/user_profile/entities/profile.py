@@ -14,7 +14,7 @@ from app.domain.user_profile.value_objects.social_profiles import SocialProfiles
 
 
 @dataclass
-class ProfileEntity(CommonDomainEntity[ProfileUUID]):
+class Profile(CommonDomainEntity[ProfileUUID]):
     id: ProfileUUID
     address: Address
     date_of_birth: DateOfBirth
@@ -35,8 +35,8 @@ class ProfileEntity(CommonDomainEntity[ProfileUUID]):
         interests: Interests | None = None, 
         profile_pictures: ProfilePuctures | None = None,
         social_profiles: SocialProfiles | None = None,
-    ) -> "ProfileEntity":
-        return ProfileEntity(
+    ) -> "Profile":
+        return Profile(
             id=id, address=address, date_of_birth=birth_date, bio=bio, fullname=fullname,
             gender=gender, interests=interests, profile_pictures=profile_pictures,
             social_profiles=social_profiles,
