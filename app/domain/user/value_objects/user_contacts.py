@@ -12,7 +12,7 @@ from app.domain.user.exceptions.user_validation_errors import (
 
 
 @dataclass(frozen=True)
-class UserContactsValueObject(CommonDomainValueObject):
+class UserContacts(CommonDomainValueObject):
     email: str | None
     phone: str | None
 

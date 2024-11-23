@@ -8,7 +8,7 @@ SocialProfilesT = Literal["vk", "tg", "inst", "fb", "tw", "ok"]
 
 
 @dataclass(frozen=True)
-class SocialProfilesValueObject(CommonDomainValueObject):
+class SocialProfiles(CommonDomainValueObject):
     social_profiles: dict[SocialProfilesT, Any] | None
 
     def __post_init__(self: Self) -> None:

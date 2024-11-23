@@ -13,7 +13,7 @@ from app.domain.user_profile.exceptions.user_profile_validation_errors import (
 
 
 @dataclass(frozen=True)
-class FullnameValueObject(CommonDomainValueObject):
+class Fullname(CommonDomainValueObject):
     first_name: str
     middle_name: str | None
     last_name: str
@@ -23,7 +23,7 @@ class FullnameValueObject(CommonDomainValueObject):
             raise InvalidFirstNameException(
                 message="First name must not be empty",
             )
-        if not isinstance(self.to_raw(), str):
+        if not isinstance(self.first_name, str):
             raise InvalidFirstNameException(
                 message=f"First name must be a string, not {type(self.first_name)}",
             )

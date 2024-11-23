@@ -7,7 +7,7 @@ from app.domain.user.exceptions.user_validation_errors import InvalidUserNameExc
 
 
 @dataclass(frozen=True)
-class UserNameValueObject(CommonDomainValueObject):
+class UserName(CommonDomainValueObject):
     username: str
 
     def __post_init__(self: Self) -> None:

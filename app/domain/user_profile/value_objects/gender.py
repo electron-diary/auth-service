@@ -7,7 +7,7 @@ from app.domain.user_profile.exceptions.user_profile_validation_errors import In
 GenderT = Literal["male", "female"]
 
 @dataclass(frozen=True)
-class GenderValueObject(CommonDomainValueObject):
+class Gender(CommonDomainValueObject):
     gender: GenderT | None
 
     def __post_init__(self: Self) -> None:

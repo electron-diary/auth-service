@@ -7,7 +7,7 @@ from app.domain.user_profile.exceptions.user_profile_validation_errors import In
 
 
 @dataclass(frozen=True)
-class DateOfBirthValueObject(CommonDomainValueObject):
+class DateOfBirth(CommonDomainValueObject):
     birth_date: date | None
 
     def __post_init__(self: Self) -> None:

@@ -7,7 +7,7 @@ from app.domain.user_profile.exceptions.user_profile_validation_errors import In
 
 
 @dataclass(frozen=True)
-class ProfileUUID(CommonDomainValueObject[UUID]):
+class ProfileUUID(CommonDomainValueObject):
     id: UUID
 
     def __post_init__(self: Self) -> None:
