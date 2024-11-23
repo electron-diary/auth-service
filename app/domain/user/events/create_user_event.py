@@ -10,3 +10,4 @@ class UserCreatedEvent(CommonDomainEvent):
     email: str | None = field(default=None)
     phone: str | None = field(default=None)
     username: str
+

@@ -17,7 +17,7 @@ class UserEntity(CommonDomainEntity[UserUUID], AgregateRoot):
     id: UserUUID
     username: UserNameValueObject
     contacts: UserContactsValueObject
-    profiles: list[ProfileEntity] = field(default_factory=list)
+    profile: ProfileEntity
 
     @staticmethod
     def create_user(
@@ -26,6 +26,7 @@ class UserEntity(CommonDomainEntity[UserUUID], AgregateRoot):
         event: UserCreatedEvent = UserCreatedEvent(
             id = id, email=contacts.email, phone=contacts.phone, username=username.username,
         )
+
 
     def delete_user(self: Self) -> None:
         event: UserDeletedEvent = UserDeletedEvent(self.id)
