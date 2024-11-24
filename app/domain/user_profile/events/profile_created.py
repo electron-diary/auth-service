@@ -6,7 +6,7 @@ from app.domain.common.common_domain_event import CommonDomainEvent
 
 
 @dataclass(frozen=True)
-class ProfileUpdatedEvent(CommonDomainEvent):
+class ProfileCreated(CommonDomainEvent):
     id: UUID
     address: str | None = field(default=None)
     birth_date: date | None = field(default=None)
@@ -17,5 +17,4 @@ class ProfileUpdatedEvent(CommonDomainEvent):
     gender: str | None = field(default=None)
     interests: list[str] | None = field(default=None)
     profile_picture: list[str] | None = field(default=None)
-    profile_type: str
     social_profiles: list[str] | None = field(default=None)

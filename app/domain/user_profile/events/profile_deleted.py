@@ -5,5 +5,5 @@ from app.domain.common.common_domain_event import CommonDomainEvent
 
 
 @dataclass(frozen=True)
-class ProfileDeletedEvent(CommonDomainEvent):
+class ProfileDeleted(CommonDomainEvent):
     id: UUID
