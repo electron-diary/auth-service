@@ -3,6 +3,6 @@ from typing import Self
 
 
 @dataclass(frozen=True)
-class CommonDomainValueObject:
+class DomainVO:
     def __post_init__(self: Self) -> None:
         ...
