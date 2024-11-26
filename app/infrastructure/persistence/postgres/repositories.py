@@ -7,8 +7,8 @@ from app.application.user.repositories import UserReaderRepository, UserWriterRe
 from app.domain.user.value_objects import UserId, Contacts, DeleteDate, CreatedDate, Username
 from app.application.user.dto import UserDTO
 from app.domain.user.user import User
-from app.adapters.persistence.postgres.tables import UserTable
-from app.adapters.persistence.postgres.converters import user_entity_to_table, table_to_dto
+from app.infrastructure.persistence.postgres.tables import UserTable
+from app.infrastructure.persistence.postgres.converters import user_entity_to_table, table_to_dto
 
 
 class UserReaderImpl(UserReaderRepository):

@@ -95,6 +95,17 @@ gssauth = ["gssapi", "sspilib"]
 test = ["distro (>=1.9.0,<1.10.0)", "flake8 (>=6.1,<7.0)", "flake8-pyi (>=24.1.0,<24.2.0)", "gssapi", "k5test", "mypy (>=1.8.0,<1.9.0)", "sspilib", "uvloop (>=0.15.3)"]
 
 [[package]]
+name = "dishka"
+version = "1.4.1"
+description = "Cute DI framework with scopes and agreeable API"
+optional = false
+python-versions = ">=3.10"
+files = [
+    {file = "dishka-1.4.1-py3-none-any.whl", hash = "sha256:75c374b82564186d4df837761e3ae3d7fc61f8572084cbd17744743db80b26e0"},
+    {file = "dishka-1.4.1.tar.gz", hash = "sha256:803ecba302d0551569081c2f174a827635a42426f9ef86ad62b74376d9c6f8cf"},
+]
+
+[[package]]
 name = "dnspython"
 version = "2.7.0"
 description = "DNS toolkit"
@@ -648,4 +659,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "7d968346f96f3721356f6e599f57e8c42ec356151981baa500ff0e17cb529024"
+content-hash = "aae3d45eec3c66c2a267f0c007d4737618f61f6040ac9b09c4b660bd0d3409b0"

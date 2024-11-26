@@ -1,7 +1,7 @@
 from typing import Self
 from dataclasses import dataclass
 
-from app.infrastructure.events.observerable_interface import ObserverableInterfcae
+from app.infrastructure.events.observable_interface import ObservableInterface
 from app.domain.base.domain_event import DomainEvent
 from app.application.base.event_handlers import DomainEventHandler
 
@@ -12,7 +12,7 @@ class Observer:
     event_handler: DomainEventHandler
 
 
-class ObserverableImpl(ObserverableInterfcae):
+class ObservableImpl(ObservableInterface):
     def __init__(self: Self) -> None:
         self.observers: list[Observer] = []
 
