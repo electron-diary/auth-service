@@ -1,21 +1,21 @@
+from datetime import datetime
 from typing import Self
 from uuid import UUID, uuid4
-from datetime import datetime
 
 from app.application.base.command_handler import CommandHandler
 from app.application.base.event_queue import EventBusRepository
 from app.application.base.event_store import EventStoreRepository
+from app.application.user.commands import (
+    CreateUserCommand,
+    DeleteUserCommand,
+    RestoreUserCommand,
+    UpdateContactsCommand,
+    UpdateUsernameCommand,
+)
+from app.domain.base.domain_event import DomainEvent
 from app.domain.user.builder import UserBuilder
 from app.domain.user.user import User
-from app.domain.base.domain_event import DomainEvent
-from app.domain.user.value_objects import UserId, Username, DeleteDate, Contacts, CreatedDate
-from app.application.user.commands import (
-    CreateUserCommand, 
-    DeleteUserCommand, 
-    UpdateContactsCommand, 
-    UpdateUsernameCommand, 
-    RestoreUserCommand
-)
+from app.domain.user.value_objects import Contacts, CreatedDate, DeleteDate, Username
 
 
 class CreateUserCommandHandler(CommandHandler[CreateUserCommand]):

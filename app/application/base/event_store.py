@@ -4,7 +4,6 @@ from uuid import UUID
 
 from app.domain.base.domain_entity import DomainEntity
 from app.domain.base.domain_event import DomainEvent
-from app.domain.user.value_objects import UserId
 
 
 class EventStoreRepository(Protocol):

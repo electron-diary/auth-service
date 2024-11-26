@@ -1,9 +1,9 @@
 from typing import Self
 
-from app.application.user.dto import UserDTO
-from app.application.user.repositories import UserReaderRepository
-from app.application.user.queries import GetUserByIdQuery
 from app.application.base.query_handler import QueryHandler
+from app.application.user.dto import UserDTO
+from app.application.user.queries import GetUserByIdQuery
+from app.application.user.repositories import UserReaderRepository
 
 
 class GetUserByIdQueryHandler(QueryHandler[GetUserByIdQuery, UserDTO]):
