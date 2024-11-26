@@ -1,7 +1,7 @@
 from typing import Self
 from dataclasses import dataclass
 
-from app.adapters.events.mediator_interface import MediatorInterfcae
+from app.adapters.events.observer_interface import ObserverInterfcae
 from app.domain.base.domain_event import DomainEvent
 from app.application.base.event_handlers import DomainEventHandler
 
@@ -12,11 +12,11 @@ class EventListener:
     event_handler: DomainEventHandler
 
 
-class MediatorImpl(MediatorInterfcae):
+class ObserverImpl(ObserverInterfcae):
     def __init__(self: Self) -> None:
         self.listeners: list[EventListener] = []
 
-    def register_event_handler(self: Self, event: DomainEvent, handler: DomainEventHandler):
+    def add_event_handler(self: Self, event: DomainEvent, handler: DomainEventHandler):
         event_listener: EventListener = EventListener(event=event, event_handler=handler)
         self.listeners.append(event_listener)
 
