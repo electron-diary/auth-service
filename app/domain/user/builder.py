@@ -18,5 +18,5 @@ class UserBuilder:
             user_id=id, username=username, email=contacts.email,
             phone_number=contacts.phone, created_at=created_date, deleted_date=delete_date,
         )
-        user._apply(action=action)
+        user.add_action(action=action)
         return user

@@ -33,7 +33,7 @@ class CreateUserCommandHandler(CommandHandler[CreateUserCommand]):
             delete_date=DeleteDate(None),
             created_date=CreatedDate(created_date),
         )
-        events: list[DomainEvent] = ...
+        events: list[DomainEvent] = user.get_actions()
 
         await self.event_store.save_event(events=events)
         await self.event_bus.publish(events=events)
@@ -47,7 +47,7 @@ class UpdateUsernameCommandHandler(CommandHandler[UpdateUsernameCommand]):
     async def __call__(self: Self, command: UpdateUsernameCommand) -> None:
         user: User = await self.event_store.get_current_state(id=command.id)
         user.update_username(username=Username(command.username))
-        events: list[DomainEvent] = ...
+        events: list[DomainEvent] = user.get_actions()
 
         await self.event_store.save_event(events=events)
         await self.event_bus.publish(events=events)
@@ -61,7 +61,7 @@ class UpdateContactsCommandHandler(CommandHandler[UpdateContactsCommand]):
     async def __call__(self: Self, command: UpdateContactsCommand) -> None:
         user: User = await self.event_store.get_current_state(id=command.id)
         user.update_contacts(contacts=Contacts(email=command.email, phone=command.phone_number))
-        events: list[DomainEvent] = ...
+        events: list[DomainEvent] = user.get_actions()
 
         await self.event_store.save_event(events=events)
         await self.event_bus.publish(events=events)
@@ -74,8 +74,8 @@ class DeleteUserCommandHandler(CommandHandler[DeleteUserCommand]):
 
     async def __call__(self: Self, command: DeleteUserCommand) -> None:
         user: User = await self.event_store.get_current_state(id=command.id)
-        user.delete(delete_date=DeleteDate(datetime.now()))
-        events: list[DomainEvent] = ...
+        user.delete_user()
+        events: list[DomainEvent] = user.get_actions()
 
         await self.event_store.save_event(events=events)
         await self.event_bus.publish(events=events)
@@ -88,8 +88,8 @@ class RestoreUserCommandHandler(CommandHandler[RestoreUserCommand]):
 
     async def __call__(self: Self, command: RestoreUserCommand) -> None:
         user: User = await self.event_store.get_current_state(id=command.id)
-        user.restore()
-        events: list[DomainEvent] = ...
+        user.recovery_user()
+        events: list[DomainEvent] = user.get_actions()
 
         await self.event_store.save_event(events=events)
         await self.event_bus.publish(events=events)

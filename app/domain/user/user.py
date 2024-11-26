@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from typing import Self
 
@@ -11,6 +11,7 @@ from app.domain.user.value_objects import Contacts, CreatedDate, DeleteDate, Use
 
 @dataclass
 class User(DomainEntity):
+    _actions: list[DomainEvent] = field(default_factory=list, init=False)
     id: UserId
     username: Username
     contacts: Contacts
@@ -24,6 +25,7 @@ class User(DomainEntity):
             raise UserException("User is not old enough to update username")
         action: UsernameUpdated = UsernameUpdated(user_id=self.id.value, username=username.value)
         self._apply(action=action)
+        self._add_action(action=action)
 
     def update_contacts(self: Self, contacts: Contacts) -> None:
         if self.delete_date.value is None:
@@ -36,6 +38,7 @@ class User(DomainEntity):
             user_id=self.id.value, email=contacts.email, phone_number=contacts.phone,
         )
         self._apply(action=action)
+        self._add_action(action=action)
 
     def delete_user(self: Self) -> None:
         if self.delete_date.value is not None:
@@ -44,6 +47,7 @@ class User(DomainEntity):
             raise UserException("User is not old enough to delete")
         action: UserDeleted = UserDeleted(user_id=self.id.value, deleted_date=datetime.now())
         self._apply(action=action)
+        self._add_action(action=action)
 
     def recovery_user(self: Self) -> None:
         if self.delete_date.value is None:
@@ -52,6 +56,7 @@ class User(DomainEntity):
             raise UserException("Cant't recovery after 30 days")
         action: UserRestored = UserRestored(user_id=self.id.value, deleted_date=None)
         self._apply(action=action)
+        self._add_action(action=action)
 
     def _apply(self: Self, action: DomainEvent) -> None:
         if isinstance(action, UsernameUpdated):
@@ -63,3 +68,11 @@ class User(DomainEntity):
             self.delete_date.value = action.deleted_date
         if isinstance(action, UserRestored):
             self.delete_date.value = action.deleted_date
+
+    def _add_action(self: Self, action: DomainEvent) -> None:
+        self._actions.append(action)
+
+    def get_actions(self: Self) -> list[DomainEvent]:
+        actions: list[DomainEvent] = self._actions.copy()
+        self._actions.clear()
+        return actions
