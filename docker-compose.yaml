@@ -1,23 +1,4 @@
 services:
-  mongo:
-    image: mongo
-    restart: always
-    ports:
-      - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-
-  mongo-express:
-    image: mongo-express
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
-  
   zookeeper:
     image: bitnami/zookeeper:latest
     restart: on-failure
@@ -51,22 +32,3 @@ services:
       ZOOKEEPER_AUTOPURGE_PURGE_INTERVAL: "0"
     depends_on:
       - zookeeper
-
-  postgres-database:
-    container_name: postgres-database
-    image: 'postgres:16-alpine'
-    restart: unless-stopped
-    expose:
-      - '5432'
-    ports:
-      - '5432:5432'
-    environment:
-      POSTGRES_DB: "postgres"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
-      interval: 10s
-      timeout: 60s
-      retries: 5
-      start_period: 10s

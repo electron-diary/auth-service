@@ -10,7 +10,7 @@ python = "^3.12"
 asyncpg = "^0.30.0"
 motor = "^3.6.0"
 fastapi = "^0.115.5"
-aio-pika = "^9.5.0"
+faststream = "^0.5.30"
 
 
 [build-system]

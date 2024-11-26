@@ -14,3 +14,7 @@ class EventStoreRepository(Protocol):
     @abstractmethod
     async def get_current_state(self: Self, id: UUID) -> DomainEntity:
         raise NotImplementedError("method must be implemnted by subclasses")
+
+    @abstractmethod
+    async def get_events(self: Self, id: UUID) -> list[DomainEvent]:
+        raise NotImplementedError("method must be implemnted by subclasses")
