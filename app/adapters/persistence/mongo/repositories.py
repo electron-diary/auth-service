@@ -8,6 +8,7 @@ from app.domain.user.user import User
 from app.application.base.event_store import EventStoreRepository
 from app.adapters.events.converters import domain_event_to_integration, integration_event_to_domain
 from app.adapters.events.integration_event import IntegrationEvent
+from app.adapters.persistence.mongo.converters import events_to_user
 
 
 
@@ -31,5 +32,5 @@ class EventStoreImpl(EventStoreRepository):
     
     async def get_current_state(self: Self, id: UUID) -> User:
         events: list[DomainEvent] = await self.get_events(id=id)
-        ...
-        return ...
+        user: User = events_to_user(events=events)
+        return user
