@@ -1,10 +1,8 @@
 from abc import abstractmethod
 from typing import Protocol, Self
 
-from app.domain.base.domain_event import DomainEvent
 
-
-class EventBusRepository(Protocol):
+class QueryHandler[Query, Response](Protocol):
     @abstractmethod
-    async def publish(self: Self, events: list[DomainEvent]) -> None:
+    async def __call__(self: Self, query: Query) -> Response:
         raise NotImplementedError("method must be implemnted by subclasses")
