@@ -12,4 +12,4 @@ class PostgresConfig:
 
     @property
     def get_connection_uri(self: Self) -> str:
-        return f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
+        return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"

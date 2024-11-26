@@ -1,7 +1,7 @@
-from app.domain.user.user import User
-from app.infrastructure.persistence.postgres.tables import UserTable
 from app.application.user.dto import UserDTO
-from app.domain.user.value_objects import UserId, Username, Contacts, DeleteDate, CreatedDate
+from app.domain.user.user import User
+from app.domain.user.value_objects import Contacts, CreatedDate, DeleteDate, UserId, Username
+from app.infrastructure.persistence.postgres.tables import UserTable
 
 
 def user_entity_to_table(user: User) -> UserTable:
@@ -11,7 +11,7 @@ def user_entity_to_table(user: User) -> UserTable:
         email=user.contacts.email,
         phone_number=user.contacts.phone,
         delete_date=user.delete_date.value,
-        created_date=user.created_at.value
+        created_date=user.created_at.value,
     )
 
 def table_to_user_entity(user: UserTable) -> User:
@@ -20,7 +20,7 @@ def table_to_user_entity(user: UserTable) -> User:
         username=Username(value=user.username),
         contacts=Contacts(email=user.email, phone=user.phone_number),
         delete_date=DeleteDate(value=user.delete_date),
-        created_at=CreatedDate(value=user.created_date)
+        created_at=CreatedDate(value=user.created_date),
     )
 
 def table_to_dto(user: UserTable) -> UserDTO:
@@ -30,5 +30,5 @@ def table_to_dto(user: UserTable) -> UserDTO:
         email=user.email,
         phone=user.phone_number,
         delete_date=user.delete_date,
-        created_at=user.created_date
+        created_at=user.created_date,
     )

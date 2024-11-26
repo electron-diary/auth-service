@@ -1,7 +1,7 @@
 from app.domain.base.domain_event import DomainEvent
-from app.domain.user.user import User
 from app.domain.user.actions import UserCreated
-from app.domain.user.value_objects import UserId, Username, Contacts, DeleteDate, CreatedDate
+from app.domain.user.user import User
+from app.domain.user.value_objects import Contacts, CreatedDate, DeleteDate, UserId, Username
 
 
 def events_to_user(events: list[DomainEvent]) -> User:
@@ -15,5 +15,5 @@ def events_to_user(events: list[DomainEvent]) -> User:
     )
     for event in events[1:]:
         user._apply(action=event)
-    
+
     return user

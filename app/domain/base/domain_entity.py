@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from app.domain.base.base_value_object import BaseValueObject
+from app.domain.base.domain_vo import DomainVO
 
 
 @dataclass
-class DomainEntity[EntityId: BaseValueObject]:
+class DomainEntity[EntityId: DomainVO]:
     id: EntityId

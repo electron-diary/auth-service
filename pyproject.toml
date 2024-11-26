@@ -10,9 +10,11 @@ python = "^3.12"
 asyncpg = "^0.30.0"
 motor = "^3.6.0"
 fastapi = "^0.115.5"
-faststream = "^0.5.30"
 sqlalchemy = "^2.0.36"
 dishka = "^1.4.1"
+aio-pika = "^9.5.0"
+faststream = {extras = ["rabbit"], version = "^0.5.30"}
+uvicorn = "^0.32.1"
 
 
 [build-system]

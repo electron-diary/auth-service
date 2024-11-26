@@ -1,5 +1,6 @@
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorClientSession
-from motor.motor_asyncio import AsyncIOMotorCollection, AsyncIOMotorDatabase
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorClientSession, AsyncIOMotorCollection, AsyncIOMotorDatabase
+from bson.codec_options import CodecOptions
+from bson import UuidRepresentation
 
 from app.infrastructure.persistence.mongo.config import MongoConfig
 
@@ -18,4 +19,4 @@ def get_database(mongo_client: AsyncIOMotorClient, config: MongoConfig) -> Async
 
 def get_collection(database: AsyncIOMotorDatabase, config: MongoConfig) -> AsyncIOMotorCollection:
     collection: AsyncIOMotorCollection = AsyncIOMotorCollection(database=database, name=config.collection)
-    return collection
+    return collection.with_options(codec_options=CodecOptions(uuid_representation=UuidRepresentation.STANDARD))

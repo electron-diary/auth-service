@@ -12,11 +12,11 @@ class UserBuilder:
         if contacts.email is None and contacts.phone is None:
             raise UserException("At least one contact (email or phone) must be provided.")
         user: User = User(
-            id=id, username=username, contacts=contacts, delete_date=delete_date,created_date=created_date,
+            id=id, username=username, contacts=contacts, delete_date=delete_date, created_at=created_date,
         )
         action: UserCreated = UserCreated(
             user_id=id, username=username, email=contacts.email,
             phone_number=contacts.phone, created_at=created_date, deleted_date=delete_date,
         )
-        user.add_action(action=action)
+        user._add_action(action=action)
         return user

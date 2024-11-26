@@ -3,12 +3,12 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class MongoConfig:
-    host: str
-    port: int
-    database: str
-    collection: str
-    username: str
-    password: str
+    host: str = 'localhost'
+    port: int = 27017
+    database: str = 'event_storage'
+    collection: str = 'events'
+    username: str = 'admin'
+    password: str = 'admin'
 
     @property
     def get_connection_uri(self) -> str:
