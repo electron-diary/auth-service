@@ -4,7 +4,7 @@ from uuid import UUID
 
 from app.application.user.dto import UserDTO
 from app.domain.user.user import User
-from app.domain.user.value_objects import UserId
+from app.domain.user.value_objects import UserId, Contacts, Username, DeleteDate
 
 
 class UserWriterRepository(Protocol):
@@ -13,17 +13,20 @@ class UserWriterRepository(Protocol):
         raise NotImplementedError("method must be implemnted by subclasses")
 
     @abstractmethod
-    async def delete_user(self: Self, user_id: UserId) -> None:
+    async def update_contacts(self: Self, user_id: UserId, contacts: Contacts) -> None:
         raise NotImplementedError("method must be implemnted by subclasses")
 
     @abstractmethod
-    async def restore_user(self: Self, user_id: UserId) -> None:
+    async def restore_user(self: Self, user_id: UserId, delete_date: DeleteDate) -> None:
         raise NotImplementedError("method must be implemnted by subclasses")
 
     @abstractmethod
-    async def update_user(self: Self, user: User) -> None:
+    async def delete_user(self: Self, user_id: UserId, delete_date: DeleteDate) -> None:
         raise NotImplementedError("method must be implemnted by subclasses")
 
+    @abstractmethod
+    async def update_username(self: Self, user_id: UserId, username: Username) -> None:
+        raise NotImplementedError("method must be implemnted by subclasses")
 
 class UserReaderRepository(Protocol):
     @abstractmethod

@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete, insert
 
 from app.application.user.repositories import UserReaderRepository, UserWriterRepository
+from app.domain.user.value_objects import UserId, Contacts, DeleteDate, CreatedDate, Username
 from app.application.user.dto import UserDTO
 from app.domain.user.user import User
 from app.adapters.persistence.postgres.tables import UserTable
@@ -40,11 +41,20 @@ class UserWriterImpl(UserWriterRepository):
         stmt = insert(UserTable).values(**user_table.dict())
         await self.session.execute(stmt)
     
-    async def update_user(self: Self, user: User) -> UserDTO:
-        user_table = user_entity_to_table(user=user)
-        stmt = update(UserTable).where(UserTable.id == user.id.value).values(**user_table.dict())
+    async def delete_user(self: Self, user_id: UserId, delete_date: DeleteDate) -> None:
+        stmt = update(UserTable).where(UserTable.id == user_id).values(delete_date=delete_date.value)
         await self.session.execute(stmt)
 
-    async def delete_user(self: Self, user_id: UUID) -> None:
-        stmt = delete(UserTable).where(UserTable.id == user_id)
+    async def restore_user(self, user_id: User, delete_date: DeleteDate) -> None:
+        stmt = update(UserTable).where(UserTable.id == user_id).values(delete_date=delete_date.value)
+        await self.session.execute(stmt)
+
+    async def update_contacts(self, user_id: UserId, contacts: Contacts) -> None:
+        stmt = update(UserTable).where(UserTable.id == user_id).values(
+            email=contacts.email, phone=contacts.phone
+        )
+        await self.session.execute(stmt)
+
+    async def update_username(self, user_id: UserId, username: Username) -> None:
+        stmt = update(UserTable).where(UserTable.id == user_id).values(username=username.value)
         await self.session.execute(stmt)
