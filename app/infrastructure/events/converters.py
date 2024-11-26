@@ -1,6 +1,6 @@
 from dataclasses import asdict
 
-from app.adapters.events.integration_event import IntegrationEvent
+from app.infrastructure.events.integration_event import IntegrationEvent
 from app.domain.user.actions import UserCreated, UserDeleted, UsernameUpdated, UserRestored, ContactsUpdated
 from app.domain.base.domain_event import DomainEvent
 

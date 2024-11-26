@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker, create_async_engine
 
-from app.adapters.persistence.postgres.config import PostgresConfig
+from app.infrastructure.persistence.postgres.config import PostgresConfig
 
 
 def postgres_engine(config: PostgresConfig) -> AsyncEngine:

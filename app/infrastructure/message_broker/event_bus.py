@@ -3,7 +3,7 @@ from faststream.rabbit.annotations import RabbitBroker as Broker
 
 from app.application.base.event_queue import EventBusRepository
 from app.domain.base.domain_event import DomainEvent
-from app.adapters.message_broker.config import RabbitConfig
+from app.infrastructure.message_broker.config import RabbitConfig
 
 
 class EventBusImpl(EventBusRepository):

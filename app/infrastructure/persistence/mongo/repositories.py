@@ -6,9 +6,9 @@ from motor.motor_asyncio import AsyncIOMotorClientSession, AsyncIOMotorCollectio
 from app.domain.base.domain_event import DomainEvent
 from app.domain.user.user import User
 from app.application.base.event_store import EventStoreRepository
-from app.adapters.events.converters import domain_event_to_integration, integration_event_to_domain
-from app.adapters.events.integration_event import IntegrationEvent
-from app.adapters.persistence.mongo.converters import events_to_user
+from app.infrastructure.events.converters import domain_event_to_integration, integration_event_to_domain
+from app.infrastructure.events.integration_event import IntegrationEvent
+from app.infrastructure.persistence.mongo.converters import events_to_user
 
 
 

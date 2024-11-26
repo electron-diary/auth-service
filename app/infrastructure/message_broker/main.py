@@ -2,7 +2,7 @@ from faststream.rabbit import RabbitBroker
 from faststream.security import SASLPlaintext
 from faststream.rabbit.annotations import RabbitBroker as Broker
 
-from app.adapters.message_broker.config import RabbitConfig
+from app.infrastructure.message_broker.config import RabbitConfig
 
 
 def get_rabbit_broker(config: RabbitConfig) -> Broker:

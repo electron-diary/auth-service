@@ -1,7 +1,7 @@
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorClientSession
 from motor.motor_asyncio import AsyncIOMotorCollection, AsyncIOMotorDatabase
 
-from app.adapters.persistence.mongo.config import MongoConfig
+from app.infrastructure.persistence.mongo.config import MongoConfig
 
 
 def mongo_client(config: MongoConfig) -> AsyncIOMotorClient:

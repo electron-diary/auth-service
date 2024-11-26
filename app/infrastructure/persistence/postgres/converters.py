@@ -1,5 +1,5 @@
 from app.domain.user.user import User
-from app.adapters.persistence.postgres.tables import UserTable
+from app.infrastructure.persistence.postgres.tables import UserTable
 from app.application.user.dto import UserDTO
 from app.domain.user.value_objects import UserId, Username, Contacts, DeleteDate, CreatedDate
 

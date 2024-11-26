@@ -1,7 +1,7 @@
 from typing import Self
 from dataclasses import dataclass
 
-from app.adapters.events.observerable_interface import ObserverableInterfcae
+from app.infrastructure.events.observerable_interface import ObserverableInterfcae
 from app.domain.base.domain_event import DomainEvent
 from app.application.base.event_handlers import DomainEventHandler
 
