@@ -10,7 +10,7 @@ def user_entity_to_table(user: User) -> UserTable:
         username=user.username.value,
         email=user.contacts.email,
         phone_number=user.contacts.phone,
-        is_deleted=user.is_deleted.value
+        is_deleted=user.is_deleted.value,
     )
 
 def table_to_user_entity(user: UserTable) -> User:
@@ -18,7 +18,7 @@ def table_to_user_entity(user: UserTable) -> User:
         id=UserId(value=user.id),
         username=Username(value=user.username),
         contacts=Contacts(email=user.email, phone=user.phone_number),
-        is_deleted=DeletedUser(value=user.is_deleted)
+        is_deleted=DeletedUser(value=user.is_deleted),
     )
 
 def table_to_dto(user: UserTable) -> UserDTO:
@@ -27,5 +27,5 @@ def table_to_dto(user: UserTable) -> UserDTO:
         username=user.username,
         email=user.email,
         phone=user.phone_number,
-        is_deleted=user.is_deleted
+        is_deleted=user.is_deleted,
     )

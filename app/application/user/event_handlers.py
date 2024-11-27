@@ -27,7 +27,7 @@ class UserDeletedEventHandler(DomainEventHandler[UserDeleted]):
 
     async def __call__(self: Self, event: UserDeleted) -> None:
         await self.user_writer_repository.delete_user(
-            user_id=UserId(event.user_id), is_deleted=DeletedUser(True), 
+            user_id=UserId(event.user_id), is_deleted=DeletedUser(True),
         )
 
 
@@ -47,7 +47,7 @@ class UserRestoredEventHandler(DomainEventHandler[UserRestored]):
 
     async def __call__(self: Self, event: UserRestored) -> None:
         await self.user_writer_repository.restore_user(
-            user_id=UserId(event.user_id), is_deleted=DeletedUser(False)
+            user_id=UserId(event.user_id), is_deleted=DeletedUser(False),
         )
 
 

@@ -9,7 +9,7 @@ from app.application.user.command_handlers import (
     DeleteUserCommandHandler,
     RestoreUserCommandHandler,
     UpdateContactsCommandHandler,
-    UpdateUsernameCommandHandler
+    UpdateUsernameCommandHandler,
 )
 from app.application.user.event_handlers import (
     ContactsUpdatedEventHandler,

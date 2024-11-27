@@ -16,6 +16,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[FastStream, None]:
     app: FastStream = faststream_app_factory()
     await app.broker.start()
     yield
+    await app.broker.close()
 
 def faststream_app_factory() -> FastStream:
     config: RabbitConfig = RabbitConfig()

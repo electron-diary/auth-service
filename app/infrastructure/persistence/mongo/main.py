@@ -1,6 +1,6 @@
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorClientSession, AsyncIOMotorCollection, AsyncIOMotorDatabase
-from bson.codec_options import CodecOptions
 from bson import UuidRepresentation
+from bson.codec_options import CodecOptions
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorClientSession, AsyncIOMotorCollection, AsyncIOMotorDatabase
 
 from app.infrastructure.persistence.mongo.config import MongoConfig
 

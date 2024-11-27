@@ -1,8 +1,7 @@
-from faststream.rabbit.annotations import RabbitBroker
 from fastapi import FastAPI
+from faststream.rabbit.annotations import RabbitBroker
 
-from app.presentation.api.controllers import amqp
-from app.presentation.api.controllers import http
+from app.presentation.api.controllers import amqp, http
 
 
 def setup_http_controllers(app: FastAPI) -> None:

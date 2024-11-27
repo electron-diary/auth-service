@@ -14,7 +14,7 @@ from app.application.user.commands import (
 from app.domain.base.domain_event import DomainEvent
 from app.domain.user.builder import UserBuilder
 from app.domain.user.user import User
-from app.domain.user.value_objects import Contacts, DeletedUser, Username, UserId
+from app.domain.user.value_objects import Contacts, DeletedUser, UserId, Username
 
 
 class CreateUserCommandHandler(CommandHandler[CreateUserCommand]):
@@ -22,20 +22,18 @@ class CreateUserCommandHandler(CommandHandler[CreateUserCommand]):
         self.event_store: EventStoreRepository = event_store
         self.event_bus: EventBusRepository = event_bus
 
-    async def __call__(self: Self, command: CreateUserCommand) -> UUID:
-        id: UUID = uuid4()
+    async def __call__(self: Self, command: CreateUserCommand) -> None:
         user: User = UserBuilder.create_user(
-            id=UserId(id),
+            id=UserId(command.user_id),
             username=Username(command.username),
             contacts=Contacts(email=command.email, phone=command.phone_number),
-            is_deleted=DeletedUser(False)
+            is_deleted=DeletedUser(False),
         )
         events: list[DomainEvent] = user.get_actions()
 
         await self.event_store.save_event(events=events)
         await self.event_bus.publish(events=events)
 
-        return id
 
 class UpdateUsernameCommandHandler(CommandHandler[UpdateUsernameCommand]):
     def __init__(self: Self, event_store: EventStoreRepository, event_bus: EventBusRepository) -> None:

@@ -1,13 +1,13 @@
-from typing import Self
 from dataclasses import asdict
+from typing import Self
 
 from faststream.rabbit.annotations import RabbitBroker as Broker
 
 from app.application.base.event_queue import EventBusRepository
 from app.domain.base.domain_event import DomainEvent
-from app.infrastructure.message_broker.config import RabbitConfig
-from app.infrastructure.events.integration_event import IntegrationEvent
 from app.infrastructure.events.converters import domain_event_to_integration
+from app.infrastructure.events.integration_event import IntegrationEvent
+from app.infrastructure.message_broker.config import RabbitConfig
 
 
 class EventBusImpl(EventBusRepository):

@@ -4,6 +4,7 @@ from uuid import UUID
 
 @dataclass(frozen=True)
 class CreateUserCommand:
+    user_id: UUID
     username: str
     phone_number: int | None
     email: str | None
