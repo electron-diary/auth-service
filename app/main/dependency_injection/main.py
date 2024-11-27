@@ -6,7 +6,6 @@ from faststream import FastStream
 
 from app.main.dependency_injection.provide_adapters import MongoProvider, RabbitProvider, SqlaProvider
 from app.main.dependency_injection.provide_handlers import CommandHandlersProvider, EventHandlersProvider, QueryHandlersProvider
-from app.main.dependency_injection.provide_observable import ObservableProvider
 
 
 def make_container() -> AsyncContainer:
@@ -14,7 +13,6 @@ def make_container() -> AsyncContainer:
         SqlaProvider(),
         MongoProvider(),
         RabbitProvider(),
-        ObservableProvider(),
         EventHandlersProvider(),
         CommandHandlersProvider(),
         QueryHandlersProvider(),
