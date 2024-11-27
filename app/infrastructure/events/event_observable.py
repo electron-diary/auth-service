@@ -5,7 +5,9 @@ from app.application.base.event_handlers import DomainEventHandler
 from app.domain.base.domain_event import DomainEvent
 from app.infrastructure.events.observable_interface import ObservableInterface
 
-
+'''
+ЗДЕСЬ ХУИТА
+'''
 @dataclass(frozen=True)
 class Observer:
     event: DomainEvent

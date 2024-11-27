@@ -87,7 +87,7 @@ class RabbitProvider(Provider):
     @provide(scope=Scope.APP)
     async def provide_broker(self: Self, config: RabbitConfig) -> RabbitBroker:
         broker: RabbitBroker = get_rabbit_broker(config=config)
-        await broker.start()
+        await broker.start() #возможно костыль
         return broker
 
     @provide(scope=Scope.REQUEST)

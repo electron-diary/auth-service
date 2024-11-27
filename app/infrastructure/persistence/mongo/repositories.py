@@ -27,7 +27,7 @@ class EventStoreImpl(EventStoreRepository):
 
     async def get_events(self: Self, id: UUID) -> list[DomainEvent]:
         stmt: dict[str | Any] = dict(id=id)
-        cursor: AsyncIOMotorCursor = self.collection.find(stmt, projection={"_id": 0} )
+        cursor: AsyncIOMotorCursor = self.collection.find(stmt, projection={"_id": 0})
         events: list[dict[str]] = await cursor.to_list(length=None)
         return [integration_event_to_domain(IntegrationEvent(**event))for event in events]
 

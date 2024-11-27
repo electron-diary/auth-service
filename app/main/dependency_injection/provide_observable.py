@@ -13,7 +13,9 @@ from app.domain.user.actions import ContactsUpdated, UserCreated, UserDeleted, U
 from app.infrastructure.events.event_observable import ObservableImpl
 from app.infrastructure.events.observable_interface import ObservableInterface
 
-
+'''
+ТОЖЕ ХУИТА
+'''
 class ObservableProvider(Provider):
     @provide(scope=Scope.REQUEST)
     def setup_observable(

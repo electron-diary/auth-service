@@ -3,7 +3,9 @@ from app.domain.user.actions import UserCreated
 from app.domain.user.user import User
 from app.domain.user.value_objects import Contacts, DeletedUser, UserId, Username
 
-
+'''
+ВОЗМОЖНО ХУИТА
+'''
 def events_to_user(events: list[DomainEvent]) -> User:
     print(events)
     user_created: UserCreated = events[0]
