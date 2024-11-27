@@ -1,4 +1,5 @@
 from typing import Self
+from dataclasses import asdict
 
 from app.application.base.event_store import EventStoreRepository
 from app.application.base.query_handler import QueryHandler
@@ -20,9 +21,9 @@ class GetUserActionsQueryHandler(QueryHandler[GetUserActionsQuery, list[DomainEv
     def __init__(self: Self, event_store: EventStoreRepository) -> None:
         self.event_store: EventStoreRepository = event_store
 
-    async def __call__(self: Self, query: GetUserActionsQuery) -> list[DomainEvent]:
-        return await self.event_store.get_events(id=query.user_id)
-
+    async def __call__(self: Self, query: GetUserActionsQuery) -> list:
+        actions: list[DomainEvent] = await self.event_store.get_events(id=query.user_id)
+        return actions
 
 class GetUsersQueryHandler(QueryHandler[GetUsersQuery, list[UserDTO]]):
     def __init__(self: Self, user_reader_repository: UserReaderRepository) -> None:

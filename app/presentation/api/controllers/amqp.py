@@ -2,8 +2,8 @@ from dishka.integrations.faststream import FromDishka, inject
 from faststream.rabbit import RabbitRouter
 
 from app.domain.user.actions import UserCreated, UserDeleted, UsernameUpdated, UserRestored, ContactsUpdated
-from app.infrastructure.events.converters import integration_event_to_domain
-from app.infrastructure.events.integration_event import IntegrationEvent
+from app.infrastructure.message_broker.converters import integration_event_to_domain
+from app.infrastructure.message_broker.integration_event import IntegrationEvent
 from app.application.user.event_handlers import (
     ContactsUpdatedEventHandler,
     UserCreatedEventHandler,

@@ -2,7 +2,7 @@ from dataclasses import asdict
 
 from app.domain.base.domain_event import DomainEvent
 from app.domain.user.actions import ContactsUpdated, UserCreated, UserDeleted, UsernameUpdated, UserRestored
-from app.infrastructure.events.integration_event import IntegrationEvent
+from app.infrastructure.message_broker.integration_event import IntegrationEvent
 
 
 def user_created_to_integration(event: UserCreated) -> IntegrationEvent:
@@ -52,16 +52,3 @@ def domain_event_to_integration(event: DomainEvent) -> IntegrationEvent:
             return user_restored_to_integration(event=event)
         case ContactsUpdated():
             return contacts_updated_to_integration(event=event)
-
-def integration_event_to_domain(event: IntegrationEvent) -> DomainEvent:
-    match event.event_name:
-        case "UserCreated":
-            return UserCreated(**event.event)
-        case "UserDeleted":
-            return UserDeleted(**event.event)
-        case "UsernameUpdated":
-            return UsernameUpdated(**event.event)
-        case "UserRestored":
-            return UserRestored(**event.event)
-        case "ContactsUpdated":
-            return ContactsUpdated(**event.event)

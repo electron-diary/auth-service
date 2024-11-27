@@ -48,7 +48,7 @@ async def get_user_by_id(id: UUID, handler: FromDishka[GetUserByIdQueryHandler])
 
 @router.get('/{id}/actions')
 @inject
-async def get_user_actions(id: UUID, handler: FromDishka[GetUserActionsQueryHandler]) -> list[DomainEvent]:
+async def get_user_actions(id: UUID, handler: FromDishka[GetUserActionsQueryHandler]) -> list:
     query: GetUserActionsQuery = GetUserActionsQuery(user_id=id)
     return await handler(query)
 

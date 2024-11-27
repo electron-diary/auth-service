@@ -1,7 +1,7 @@
 from typing import Self
 
 from app.application.base.command_handler import CommandHandler
-from app.application.base.event_queue import EventBusRepository
+from app.application.base.event_queue import GlobalEventBusRepository
 from app.application.base.event_store import EventStoreRepository
 from app.application.user.commands import (
     CreateUserCommand,
@@ -17,9 +17,9 @@ from app.domain.user.value_objects import Contacts, DeletedUser, UserId, Usernam
 
 
 class CreateUserCommandHandler(CommandHandler[CreateUserCommand]):
-    def __init__(self: Self, event_store: EventStoreRepository, event_bus: EventBusRepository) -> None:
+    def __init__(self: Self, event_store: EventStoreRepository, event_bus: GlobalEventBusRepository) -> None:
         self.event_store: EventStoreRepository = event_store
-        self.event_bus: EventBusRepository = event_bus
+        self.event_bus: GlobalEventBusRepository = event_bus
 
     async def __call__(self: Self, command: CreateUserCommand) -> None:
         user: User = UserBuilder.create_user(
@@ -35,9 +35,9 @@ class CreateUserCommandHandler(CommandHandler[CreateUserCommand]):
 
 
 class UpdateUsernameCommandHandler(CommandHandler[UpdateUsernameCommand]):
-    def __init__(self: Self, event_store: EventStoreRepository, event_bus: EventBusRepository) -> None:
+    def __init__(self: Self, event_store: EventStoreRepository, event_bus: GlobalEventBusRepository) -> None:
         self.event_store: EventStoreRepository = event_store
-        self.event_bus: EventBusRepository = event_bus
+        self.event_bus: GlobalEventBusRepository = event_bus
 
     async def __call__(self: Self, command: UpdateUsernameCommand) -> None:
         user: User = await self.event_store.get_current_state(id=command.user_id)
@@ -49,9 +49,9 @@ class UpdateUsernameCommandHandler(CommandHandler[UpdateUsernameCommand]):
 
 
 class UpdateContactsCommandHandler(CommandHandler[UpdateContactsCommand]):
-    def __init__(self: Self, event_store: EventStoreRepository, event_bus: EventBusRepository) -> None:
+    def __init__(self: Self, event_store: EventStoreRepository, event_bus: GlobalEventBusRepository) -> None:
         self.event_store: EventStoreRepository = event_store
-        self.event_bus: EventBusRepository = event_bus
+        self.event_bus: GlobalEventBusRepository = event_bus
 
     async def __call__(self: Self, command: UpdateContactsCommand) -> None:
         user: User = await self.event_store.get_current_state(id=command.user_id)
@@ -63,9 +63,9 @@ class UpdateContactsCommandHandler(CommandHandler[UpdateContactsCommand]):
 
 
 class DeleteUserCommandHandler(CommandHandler[DeleteUserCommand]):
-    def __init__(self: Self, event_store: EventStoreRepository, event_bus: EventBusRepository) -> None:
+    def __init__(self: Self, event_store: EventStoreRepository, event_bus: GlobalEventBusRepository) -> None:
         self.event_store: EventStoreRepository = event_store
-        self.event_bus: EventBusRepository = event_bus
+        self.event_bus: GlobalEventBusRepository = event_bus
 
     async def __call__(self: Self, command: DeleteUserCommand) -> None:
         user: User = await self.event_store.get_current_state(id=command.user_id)
@@ -77,9 +77,9 @@ class DeleteUserCommandHandler(CommandHandler[DeleteUserCommand]):
 
 
 class RestoreUserCommandHandler(CommandHandler[RestoreUserCommand]):
-    def __init__(self: Self, event_store: EventStoreRepository, event_bus: EventBusRepository) -> None:
+    def __init__(self: Self, event_store: EventStoreRepository, event_bus: GlobalEventBusRepository) -> None:
         self.event_store: EventStoreRepository = event_store
-        self.event_bus: EventBusRepository = event_bus
+        self.event_bus: GlobalEventBusRepository = event_bus
 
     async def __call__(self: Self, command: RestoreUserCommand) -> None:
         user: User = await self.event_store.get_current_state(id=command.user_id)
