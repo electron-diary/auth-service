@@ -1,5 +1,4 @@
 from typing import Self
-from uuid import UUID, uuid4
 
 from app.application.base.command_handler import CommandHandler
 from app.application.base.event_queue import EventBusRepository

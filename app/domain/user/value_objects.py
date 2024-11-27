@@ -2,12 +2,11 @@ from dataclasses import dataclass
 from typing import Self
 from uuid import UUID
 
-from app.domain.base.domain_vo import DomainVO
 from app.domain.user.exceptions import UserException
 
 
 @dataclass(frozen=True)
-class UserId(DomainVO):
+class UserId:
     value: UUID
 
     def __post_init__(self: Self) -> None:
@@ -17,7 +16,7 @@ class UserId(DomainVO):
             raise UserException(f"UserId must be a UUID, not {type(self.value)}")
 
 @dataclass(frozen=True)
-class Username(DomainVO):
+class Username:
     value: str
 
     def __post_init__(self: Self) -> None:
@@ -31,7 +30,7 @@ class Username(DomainVO):
             raise UserException("Username must be at most 20 characters long")
 
 @dataclass(frozen=True)
-class Contacts(DomainVO):
+class Contacts:
     email: str | None
     phone: int | None
 
@@ -42,7 +41,7 @@ class Contacts(DomainVO):
             raise UserException(f"Phone must be an integer, not {type(self.phone)}")
 
 @dataclass(frozen=True)
-class DeletedUser(DomainVO):
+class DeletedUser:
     value: bool
 
     def __post_init__(self: Self) -> None:
