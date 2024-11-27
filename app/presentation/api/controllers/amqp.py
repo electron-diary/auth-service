@@ -1,5 +1,4 @@
 from faststream.rabbit import RabbitRouter
-from faststream import Logger
 from dishka.integrations.faststream import FromDishka, inject
 
 from app.infrastructure.events.observable_interface import ObservableInterface
@@ -14,7 +13,5 @@ router: RabbitRouter = RabbitRouter()
 @router.subscriber(queue='events')
 @inject
 async def handle_events(event: IntegrationEvent, observable: FromDishka[ObservableInterface]) -> None:
-    print(event)
     domain_event: DomainEvent = integration_event_to_domain(event=event)
-    print(domain_event)
     await observable.notify_observers(event=domain_event)
