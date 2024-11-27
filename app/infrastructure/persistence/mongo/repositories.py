@@ -22,13 +22,14 @@ class EventStoreImpl(EventStoreRepository):
     async def save_event(self: Self, events: list[DomainEvent]) -> None:
         for event in events:
             integration_event: IntegrationEvent = domain_event_to_integration(event=event)
+            print(integration_event)
             await self.collection.insert_one(asdict(integration_event), session=self.session)
 
     async def get_events(self: Self, id: UUID) -> list[DomainEvent]:
-        stmt: dict[str | Any] = dict(uuid=id)
-        cursor: AsyncIOMotorCursor = self.collection.find(stmt)
-        events: list[DomainEvent] = await cursor.to_list(length=None)
-        return [integration_event_to_domain(event=event) for event in events]
+        stmt: dict[str | Any] = dict(id=id)
+        cursor: AsyncIOMotorCursor = self.collection.find(stmt, projection={'_id': 0} )
+        events: list[dict[str]] = await cursor.to_list(length=None)
+        return [integration_event_to_domain(IntegrationEvent(**event))for event in events]
 
     async def get_current_state(self: Self, id: UUID) -> User:
         events: list[DomainEvent] = await self.get_events(id=id)

@@ -1,3 +1,4 @@
+from uuid import UUID
 from fastapi import APIRouter
 from dishka.integrations.fastapi import FromDishka, inject
 
@@ -25,8 +26,8 @@ router: APIRouter = APIRouter(prefix='/users', tags=['Users'])
 @inject
 async def create_user(
     command: CreateUserCommand, handler: FromDishka[CreateUserCommandHandler]
-) -> None:
-    await handler(command)
+) -> UUID:
+    return await handler(command)
 
 @router.post('/update/username')
 @inject

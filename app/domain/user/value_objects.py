@@ -14,7 +14,7 @@ class UserId(DomainVO):
     def __post_init__(self: Self) -> None:
         if not self.value:
             raise UserException("UserId cannot be empty")
-        if not isinstance(self.value, UUID):
+        if not UUID(str(self.value)):
             raise UserException(f"UserId must be a UUID, not {type(self.value)}")
 
 @dataclass(frozen=True)
@@ -43,19 +43,9 @@ class Contacts(DomainVO):
             raise UserException(f"Phone must be an integer, not {type(self.phone)}")
 
 @dataclass(frozen=True)
-class DeleteDate(DomainVO):
-    value: datetime | None
+class DeletedUser(DomainVO):
+    value: bool
 
     def __post_init__(self: Self) -> None:
-        if self.value is not None and not isinstance(self.value, datetime):
-            raise UserException(f"DeleteDate must be a datetime, not {type(self.value)}")
-
-@dataclass(frozen=True)
-class CreatedDate(DomainVO):
-    value: datetime
-
-    def __post_init__(self: Self) -> None:
-        if not self.value:
-            raise UserException("CreatedDate cannot be empty")
-        if not isinstance(self.value, datetime):
-            raise UserException(f"CreatedDate must be a datetime, not {type(self.value)}")
+        if self.value is None:
+            raise UserException("DeleteUser cannot be None")

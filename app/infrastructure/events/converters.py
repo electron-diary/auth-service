@@ -1,4 +1,6 @@
+from typing import TypedDict
 from dataclasses import asdict
+from datetime import datetime
 
 from app.domain.base.domain_event import DomainEvent
 from app.domain.user.actions import ContactsUpdated, UserCreated, UserDeleted, UsernameUpdated, UserRestored

@@ -9,5 +9,4 @@ class UserDTO:
     username: str
     email: str | None
     phone: str | None
-    created_at: datetime
-    delete_date: datetime | None
+    is_deleted: bool

@@ -4,7 +4,7 @@ from app.application.base.event_handlers import DomainEventHandler
 from app.application.user.repositories import UserWriterRepository
 from app.domain.user.actions import ContactsUpdated, UserCreated, UserDeleted, UsernameUpdated, UserRestored
 from app.domain.user.user import User
-from app.domain.user.value_objects import Contacts, CreatedDate, DeleteDate, UserId, Username
+from app.domain.user.value_objects import Contacts, DeletedUser, UserId, Username
 
 
 class UserCreatedEventHandler(DomainEventHandler[UserCreated]):
@@ -16,8 +16,7 @@ class UserCreatedEventHandler(DomainEventHandler[UserCreated]):
             id=UserId(event.user_id),
             username=Username(event.username),
             contacts=Contacts(email=event.email, phone=event.phone_number),
-            delete_date=DeleteDate(event.deleted_date),
-            created_at=CreatedDate(event.created_at),
+            is_deleted=DeletedUser(False),
         )
         await self.user_writer_repository.save_user(user=user)
 
@@ -28,7 +27,7 @@ class UserDeletedEventHandler(DomainEventHandler[UserDeleted]):
 
     async def __call__(self: Self, event: UserDeleted) -> None:
         await self.user_writer_repository.delete_user(
-            id=UserId(event.user_id), delete_date=DeleteDate(event.deleted_date),
+            user_id=UserId(event.user_id), is_deleted=DeletedUser(True), 
         )
 
 
@@ -38,7 +37,7 @@ class UsernameUpdatedEventHandler(DomainEventHandler[UsernameUpdated]):
 
     async def __call__(self: Self, event: UsernameUpdated) -> None:
         await self.user_writer_repository.update_username(
-            id=UserId(event.user_id), username=Username(event.username),
+            user_id=UserId(event.user_id), username=Username(event.username),
         )
 
 
@@ -48,7 +47,7 @@ class UserRestoredEventHandler(DomainEventHandler[UserRestored]):
 
     async def __call__(self: Self, event: UserRestored) -> None:
         await self.user_writer_repository.restore_user(
-            id=UserId(event.user_id), delete_date=DeleteDate(event.deleted_date),
+            user_id=UserId(event.user_id), is_deleted=DeletedUser(False)
         )
 
 
@@ -58,6 +57,6 @@ class ContactsUpdatedEventHandler(DomainEventHandler[ContactsUpdated]):
 
     async def __call__(self: Self, event: ContactsUpdated) -> None:
         await self.user_writer_repository.update_contacts(
-            id=UserId(event.user_id), contacts=Contacts(email=event.email, phone=event.phone_number),
+            user_id=UserId(event.user_id), contacts=Contacts(email=event.email, phone=event.phone_number),
         )
 

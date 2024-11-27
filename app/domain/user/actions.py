@@ -11,8 +11,7 @@ class UserCreated(DomainEvent):
     username: str
     phone_number: int | None
     email: str | None
-    created_at: datetime
-    deleted_date: datetime | None
+    is_deleted: bool
 
 @dataclass(frozen=True)
 class ContactsUpdated(DomainEvent):
@@ -28,9 +27,9 @@ class UsernameUpdated(DomainEvent):
 @dataclass(frozen=True)
 class UserDeleted(DomainEvent):
     user_id: UUID
-    deleted_date: datetime
+    is_deleted: bool
 
 @dataclass(frozen=True)
 class UserRestored(DomainEvent):
     user_id: UUID
-    deleted_date: None
+    is_deleted: bool

@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.application.user.dto import UserDTO
 from app.application.user.repositories import UserReaderRepository, UserWriterRepository
 from app.domain.user.user import User
-from app.domain.user.value_objects import Contacts, DeleteDate, UserId, Username
+from app.domain.user.value_objects import Contacts, DeletedUser, UserId, Username
 from app.infrastructure.persistence.postgres.converters import table_to_dto, user_entity_to_table
 from app.infrastructure.persistence.postgres.tables import UserTable
 
@@ -39,23 +39,23 @@ class UserWriterImpl(UserWriterRepository):
 
     async def save_user(self: Self, user: User) -> UserDTO:
         user_table = user_entity_to_table(user=user)
-        stmt = insert(UserTable).values(**user_table.dict())
+        stmt = insert(UserTable).values(user_table.to_dict())
         await self.session.execute(stmt)
 
-    async def delete_user(self: Self, user_id: UserId, delete_date: DeleteDate) -> None:
-        stmt = update(UserTable).where(UserTable.id == user_id).values(delete_date=delete_date.value)
+    async def delete_user(self: Self, user_id: UserId, is_deleted: DeletedUser) -> None:
+        stmt = update(UserTable).where(UserTable.id == user_id.value).values(is_deleted=is_deleted.value)
         await self.session.execute(stmt)
 
-    async def restore_user(self, user_id: User, delete_date: DeleteDate) -> None:
-        stmt = update(UserTable).where(UserTable.id == user_id).values(delete_date=delete_date.value)
+    async def restore_user(self, user_id: UserId, is_deleted: DeletedUser) -> None:
+        stmt = update(UserTable).where(UserTable.id == user_id.value).values(is_deleted=is_deleted.value)
         await self.session.execute(stmt)
 
     async def update_contacts(self, user_id: UserId, contacts: Contacts) -> None:
-        stmt = update(UserTable).where(UserTable.id == user_id).values(
+        stmt = update(UserTable).where(UserTable.id == user_id.value).values(
             email=contacts.email, phone=contacts.phone,
         )
         await self.session.execute(stmt)
 
     async def update_username(self, user_id: UserId, username: Username) -> None:
-        stmt = update(UserTable).where(UserTable.id == user_id).values(username=username.value)
+        stmt = update(UserTable).where(UserTable.id == user_id.value).values(username=username.value)
         await self.session.execute(stmt)
