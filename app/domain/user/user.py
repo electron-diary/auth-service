@@ -10,7 +10,7 @@ from app.domain.user.value_objects import Contacts, DeletedUser, UserId, Usernam
 
 @dataclass
 class User(DomainEntity):
-    _actions: list[DomainEvent] = field(default_factory=list, init=False)
+    _actions: list[DomainEvent] = field(default_factory=list, init=False) #мне это не нравится
     id: UserId
     username: Username
     contacts: Contacts
