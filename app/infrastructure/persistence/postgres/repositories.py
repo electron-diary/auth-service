@@ -52,7 +52,7 @@ class UserWriterImpl(UserWriterRepository):
 
     async def update_contacts(self, user_id: UserId, contacts: Contacts) -> None:
         stmt = update(UserTable).where(UserTable.id == user_id.value).values(
-            email=contacts.email, phone=contacts.phone,
+            email=contacts.email, phone_number=contacts.phone,
         )
         await self.session.execute(stmt)
 

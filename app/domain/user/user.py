@@ -18,14 +18,14 @@ class User(DomainEntity):
     is_deleted: DeletedUser
 
     def update_username(self: Self, username: Username) -> None:
-        if self.is_deleted == True:
+        if self.is_deleted.value:
             raise UserException("User is deleted")
         action: UsernameUpdated = UsernameUpdated(user_id=self.id.value, username=username.value)
         self._apply(action=action)
         self._add_action(action=action)
 
     def update_contacts(self: Self, contacts: Contacts) -> None:
-        if self.is_deleted.value == True:
+        if self.is_deleted.value:
             raise UserException("User is deleted")
         if contacts.email is None and contacts.phone is None:
             raise UserException("At least one contact (email or phone) must be provided.")
@@ -36,14 +36,14 @@ class User(DomainEntity):
         self._add_action(action=action)
 
     def delete_user(self: Self) -> None:
-        if self.is_deleted.value == True:
+        if self.is_deleted.value:
             raise UserException("User is already deleted")
         action: UserDeleted = UserDeleted(user_id=self.id.value, is_deleted=True)
         self._apply(action=action)
         self._add_action(action=action)
 
     def recovery_user(self: Self) -> None:
-        if self.is_deleted.value == False:
+        if not self.is_deleted.value:
             raise UserException("User is not deleted")
         action: UserRestored = UserRestored(user_id=self.id.value, is_deleted=False)
         self._apply(action=action)
