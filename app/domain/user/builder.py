@@ -17,6 +17,7 @@ class UserBuilder:
         action: UserCreated = UserCreated(
             user_id=id.value, username=username.value, email=contacts.email,
             phone_number=contacts.phone, is_deleted=is_deleted.value,
+            event_name='UserCreated', agregate_id=id.value, agregate_name='User'
         )
-        user._add_action(action=action)
+        user._add_event(event=action)
         return user

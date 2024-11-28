@@ -15,7 +15,8 @@ aio-pika = "^9.5.0"
 faststream = {extras = ["rabbit"], version = "^0.5.30"}
 uvicorn = "^0.32.1"
 alembic = "^1.14.0"
-aiomysql = "^0.2.0"
+motor = "^3.6.0"
+aiokafka = "^0.12.0"
 
 
 [build-system]
