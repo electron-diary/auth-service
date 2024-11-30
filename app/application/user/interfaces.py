@@ -25,6 +25,6 @@ class UserReaderGatewayInterface(Protocol):
     @abstractmethod
     async def get_user_by_id(self: Self, user_id: UUID) -> UserDTO | None:
         raise NotImplementedError("method must be implemented by subclasses")
-    
+
 
 

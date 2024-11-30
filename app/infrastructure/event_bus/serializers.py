@@ -1,8 +1,8 @@
+from dataclasses import asdict
+from datetime import datetime
 from json import dumps
 from typing import Any
 from uuid import UUID
-from datetime import datetime
-from dataclasses import asdict
 
 from app.infrastructure.event_bus.events import IntegrationEvent
 
@@ -10,7 +10,7 @@ from app.infrastructure.event_bus.events import IntegrationEvent
 def exclude_invalid_types(obj: object) -> Any:
     if isinstance(obj, UUID):
         return str(obj)
-    elif isinstance(obj, datetime):
+    if isinstance(obj, datetime):
         return obj.isoformat()
 
 def integration_event_to_json(event: IntegrationEvent) -> str:

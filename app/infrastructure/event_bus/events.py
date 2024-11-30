@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
-from uuid import uuid4, UUID
 from datetime import datetime
+from uuid import UUID, uuid4
 
 
 @dataclass(frozen=True)

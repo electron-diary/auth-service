@@ -1,7 +1,13 @@
 from app.domain.base.domain_event import DomainEvent
-from app.domain.user.actions import UserCreated, UserDeleted, UsernameUpdated, UserRestored, ContactsUpdated
-from app.infrastructure.event_bus.events import IntegrationEvent, UserCreatedIntegrationEvent, UserDeletedIntegrationEvent
-from app.infrastructure.event_bus.events import UsernameUpdatedIntegrationEvent, UserRestoredIntegrationEvent,  ContactsUpdatedIntegrationEvent
+from app.domain.user.actions import ContactsUpdated, UserCreated, UserDeleted, UsernameUpdated, UserRestored
+from app.infrastructure.event_bus.events import (
+    ContactsUpdatedIntegrationEvent,
+    IntegrationEvent,
+    UserCreatedIntegrationEvent,
+    UserDeletedIntegrationEvent,
+    UsernameUpdatedIntegrationEvent,
+    UserRestoredIntegrationEvent,
+)
 
 
 def user_created_to_integration_event(user_created: UserCreated) -> UserCreatedIntegrationEvent:
@@ -55,4 +61,4 @@ def domain_event_to_integration_event(event: DomainEvent) -> IntegrationEvent:
             return contacts_updated_to_integration_event(event)
         case _:
             raise ValueError("Unknown event type")
-        
+
