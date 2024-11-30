@@ -8,13 +8,13 @@ from app.domain.base.domain_event import DomainEvent
 class UserCreated(DomainEvent):
     user_id: UUID
     username: str
-    phone_number: int 
+    phone_number: int
     is_deleted: bool
 
 @dataclass(frozen=True)
 class ContactsUpdated(DomainEvent):
     user_id: UUID
-    phone_number: int 
+    phone_number: int
 
 @dataclass(frozen=True)
 class UsernameUpdated(DomainEvent):

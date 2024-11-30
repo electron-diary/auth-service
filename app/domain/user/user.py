@@ -4,7 +4,7 @@ from typing import Self
 from app.domain.base.agregate_root import AgregateRoot
 from app.domain.base.domain_entity import DomainEntity
 from app.domain.base.domain_event import DomainEvent
-from app.domain.user.actions import ContactsUpdated, UserDeleted, UsernameUpdated, UserRestored, UserCreated
+from app.domain.user.actions import ContactsUpdated, UserCreated, UserDeleted, UsernameUpdated, UserRestored
 from app.domain.user.exceptions import UserException
 from app.domain.user.value_objects import Contacts, DeletedUser, UserId, Username
 
@@ -18,7 +18,7 @@ class User(DomainEntity[UserId], AgregateRoot):
     @classmethod
     def create_user(
         cls, id: UserId, username: Username, contacts: Contacts, is_deleted: DeletedUser,
-    ) -> 'User':
+    ) -> "User":
         user: User = cls(
             id=id, username=username, contacts=contacts, is_deleted=is_deleted.value,
         )

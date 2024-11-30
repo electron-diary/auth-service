@@ -31,7 +31,7 @@ class Username:
 
 @dataclass(frozen=True)
 class Contacts:
-    phone: int 
+    phone: int
 
     def __post_init__(self: Self) -> None:
         if not self.phone:
