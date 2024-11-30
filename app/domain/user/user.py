@@ -1,10 +1,10 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Self
 
+from app.domain.base.agregate_root import AgregateRoot
 from app.domain.base.domain_entity import DomainEntity
 from app.domain.base.domain_event import DomainEvent
-from app.domain.base.agregate_root import AgregateRoot
-from app.domain.user.actions import ContactsUpdated, UserDeleted, UsernameUpdated, UserRestored
+from app.domain.user.actions import ContactsUpdated, UserDeleted, UsernameUpdated, UserRestored, UserCreated
 from app.domain.user.exceptions import UserException
 from app.domain.user.value_objects import Contacts, DeletedUser, UserId, Username
 
@@ -15,24 +15,37 @@ class User(DomainEntity[UserId], AgregateRoot):
     contacts: Contacts
     is_deleted: DeletedUser
 
+    @classmethod
+    def create_user(
+        cls, id: UserId, username: Username, contacts: Contacts, is_deleted: DeletedUser,
+    ) -> 'User':
+        user: User = cls(
+            id=id, username=username, contacts=contacts, is_deleted=is_deleted.value,
+        )
+        action: UserCreated = UserCreated(
+            user_id=id.value, username=username.value,
+            phone_number=contacts.phone, is_deleted=is_deleted.value,
+            event_name="UserCreated", agregate_id=id.value, agregate_name="User",
+        )
+        user._add_event(event=action)
+        return user
+
     def update_username(self: Self, username: Username) -> None:
         if self.is_deleted.value:
             raise UserException("User is deleted")
         action: UsernameUpdated = UsernameUpdated(
-            user_id=self.id.value, username=username.value, 
-            event_name='UsernameUpdated', agregate_id=self.id.value, agregate_name='User'
+            user_id=self.id.value, username=username.value,
+            event_name="UsernameUpdated", agregate_id=self.id.value, agregate_name="User",
         )
         self._apply(action=action)
         self._add_event(event=action)
 
-    def update_contacts(self: Self, contacts: Contacts) -> None:
+    def update_contact(self: Self, contacts: Contacts) -> None:
         if self.is_deleted.value:
             raise UserException("User is deleted")
-        if contacts.email is None and contacts.phone is None:
-            raise UserException("At least one contact (email or phone) must be provided.")
         action: ContactsUpdated = ContactsUpdated(
-            user_id=self.id.value, email=contacts.email, phone_number=contacts.phone,
-            event_name='ContactsUpdated', agregate_id=self.id.value, agregate_name='User'
+            user_id=self.id.value, phone_number=contacts.phone,
+            event_name="ContactsUpdated", agregate_id=self.id.value, agregate_name="User",
         )
         self._apply(action=action)
         self._add_event(event=action)
@@ -42,7 +55,7 @@ class User(DomainEntity[UserId], AgregateRoot):
             raise UserException("User is already deleted")
         action: UserDeleted = UserDeleted(
             user_id=self.id.value, is_deleted=True,
-            event_name='UserDeleted', agregate_id=self.id.value, agregate_name='User'
+            event_name="UserDeleted", agregate_id=self.id.value, agregate_name="User",
         )
         self._apply(action=action)
         self._add_event(event=action)
@@ -51,8 +64,8 @@ class User(DomainEntity[UserId], AgregateRoot):
         if not self.is_deleted.value:
             raise UserException("User is not deleted")
         action: UserRestored = UserRestored(
-            user_id=self.id.value, is_deleted=False, 
-            event_name='UserRestored', agregate_id=self.id.value, agregate_name='User'
+            user_id=self.id.value, is_deleted=False,
+            event_name="UserRestored", agregate_id=self.id.value, agregate_name="User",
         )
         self._apply(action=action)
         self._add_event(event=action)
@@ -62,7 +75,7 @@ class User(DomainEntity[UserId], AgregateRoot):
             case UsernameUpdated():
                 self.username = Username(action.username)
             case ContactsUpdated():
-                self.contacts = Contacts(email=action.email, phone=action.phone_number)
+                self.contacts = Contacts(phone=action.phone_number)
             case UserDeleted():
                 self.is_deleted = DeletedUser(action.is_deleted)
             case UserRestored():

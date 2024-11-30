@@ -31,14 +31,13 @@ class Username:
 
 @dataclass(frozen=True)
 class Contacts:
-    email: str | None
-    phone: int | None
+    phone: int 
 
     def __post_init__(self: Self) -> None:
-        if self.email is not None and not isinstance(self.email, str):
-            raise UserException(f"Email must be a string, not {type(self.email)}")
-        if self.phone is not None and not isinstance(self.phone, int):
-            raise UserException(f"Phone must be an integer, not {type(self.phone)}")
+        if not self.phone:
+            raise UserException("Phone cannot be empty")
+        if not isinstance(self.phone, int):
+            raise UserException(f"Phone must be a int, not {type(self.phone)}")
 
 @dataclass(frozen=True)
 class DeletedUser:
