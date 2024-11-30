@@ -1,6 +1,5 @@
-from typing import Self
+from dataclasses import dataclass
 
-
+@dataclass
 class DomainException(Exception):
-    def __init__(self: Self, message: str) -> None:
-        super().__init__(message)
+    message: str

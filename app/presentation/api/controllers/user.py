@@ -45,7 +45,7 @@ router: APIRouter = APIRouter(prefix="/user", tags=["user"])
                     "example": {"detail": "User with this phone number already exists"}
                 }
             },
-            'model': ErrorResponse
+            'model': ErrorResponse[UserAlreadyExistsError]
         },
         status.HTTP_400_BAD_REQUEST: {
             "description": "Bad request",
@@ -54,7 +54,7 @@ router: APIRouter = APIRouter(prefix="/user", tags=["user"])
                     "example": {"detail": "Bad request"}
                 }
             },
-            'model': ErrorResponse
+            'model': ErrorResponse[UserException]
         }
     }
 )
@@ -98,7 +98,7 @@ async def create_user(
                     "example": {"detail": "Username must be between 3 and 30 characters"}
                 }
             }, 
-            "model": ErrorResponse
+            "model": ErrorResponse[UserException]
             
         },
         status.HTTP_404_NOT_FOUND: {
@@ -108,7 +108,7 @@ async def create_user(
                     "example": {"detail": "User with specified ID not found"}
                 }
             },
-            "model": ErrorResponse
+            "model": ErrorResponse[UserNotFoundError]
         },
     }
 
@@ -123,6 +123,9 @@ async def update_username(
     Args:
         command (UpdateUsernameCommand): Command containing user ID and new username
         handler (UpdateUsernameCommandHandler): Injected command handler
+
+    Returns:
+        None
 
     Raises:
         UserNotFoundError or UserException: When user is not found or username validation fails
@@ -153,7 +156,7 @@ async def update_username(
                     }
                 }
             },
-            "model": ErrorResponse
+            "model": ErrorResponse[UserNotFoundError]
         },
         status.HTTP_409_CONFLICT: {
             "description": "User already exists",
@@ -162,7 +165,7 @@ async def update_username(
                     "example": {"detail": "User with this phone number already exists"}
                 }
             },
-            'model': ErrorResponse
+            'model': ErrorResponse[UserAlreadyExistsError]
         },
         status.HTTP_400_BAD_REQUEST: {
             "description": "Invalid username format",
@@ -171,7 +174,7 @@ async def update_username(
                     "example": {"detail": "User phone must be int"}
                 }
             }, 
-            "model": ErrorResponse
+            "model": ErrorResponse[UserException]
         }
     }
 )
@@ -186,6 +189,7 @@ async def update_contacts(
         command: Contact update command containing user ID and new contact information
         handler (UpdateContactsCommandHandler): Injected command handler
 
+    Returns: None
     Raises:
         UserAlreadyExistsError or UserException: When user is exists or contact validation fails
     """
@@ -209,7 +213,7 @@ async def update_contacts(
         },
         status.HTTP_404_NOT_FOUND: {
             "description": "User not found",
-            "model": ErrorResponse,
+            "model": ErrorResponse[UserNotFoundError],
             "content": {
                 "application/json": {
                     "example": {
@@ -220,7 +224,7 @@ async def update_contacts(
         },
         status.HTTP_409_CONFLICT: {
             "description": "Invalid request",
-            "model": ErrorResponse,
+            "model": ErrorResponse[UserException],
             "content": {
                 "application/json": {
                     "example": {
@@ -242,6 +246,7 @@ async def delete_user(
         user_id: The UUID of the user to delete
         handler: Injected command handler for user deletion
 
+    Returns: None
     Raises:
         UserNotFoundError or UserException: When user is not found or deletion fails
     """
@@ -265,7 +270,7 @@ async def delete_user(
         },
         status.HTTP_404_NOT_FOUND: {
             "description": "User not found",
-            "model": ErrorResponse,
+            "model": ErrorResponse[UserNotFoundError],
             "content": {
                 "application/json": {
                     "example": {
@@ -276,7 +281,7 @@ async def delete_user(
         },
         status.HTTP_400_BAD_REQUEST: {
             "description": "Invalid restore operation",
-            "model": ErrorResponse,
+            "model": ErrorResponse[UserException],
             "content": {
                 "application/json": {
                     "example": {
@@ -297,6 +302,7 @@ async def restore_user(
     Args:
         handler: Injected command handler for user restoration
 
+    Returns: None
     Raises:
         UserException or UserNotFoundError: When user is not found or restoration fails
     """
@@ -325,7 +331,7 @@ async def restore_user(
         },
         status.HTTP_404_NOT_FOUND: {
             "description": "User not found",
-            "model": ErrorResponse,
+            "model": ErrorResponse[UserNotFoundError],
             "content": {
                 "application/json": {
                     "example": {
@@ -355,4 +361,3 @@ async def get_user(
     """
     query: GetUserQuery = GetUserQuery(user_id=id)
     return await handler(query=query)
-
