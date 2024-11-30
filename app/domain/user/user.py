@@ -20,7 +20,7 @@ class User(DomainEntity[UserId], AgregateRoot):
         cls, id: UserId, username: Username, contacts: Contacts, is_deleted: DeletedUser,
     ) -> "User":
         user: User = cls(
-            id=id, username=username, contacts=contacts, is_deleted=is_deleted.value,
+            id=id, username=username, contacts=contacts, is_deleted=is_deleted,
         )
         action: UserCreated = UserCreated(
             user_id=id.value, username=username.value,

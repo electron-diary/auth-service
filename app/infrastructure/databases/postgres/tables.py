@@ -1,11 +1,11 @@
 from typing import Self
 
-from sqlalchemy import UUID, Boolean, Column, Integer, String
+from sqlalchemy import UUID, Boolean, Column, BigInteger, String
 from sqlalchemy.orm import DeclarativeBase
 
 
 class Base(DeclarativeBase):
-    pass
+    ...
 
 
 class UserTable(Base):
@@ -13,7 +13,7 @@ class UserTable(Base):
 
     id = Column("id", UUID, unique=True, primary_key=True)
     username = Column("username", String, nullable=False)
-    phone_number = Column("phone_number", Integer, nullable=False, unique=True)
+    phone_number = Column("phone_number", BigInteger, nullable=False, unique=True)
     is_deleted = Column("is_deleted", Boolean, nullable=False, default=0)
 
     def to_dict(self: Self) -> dict:

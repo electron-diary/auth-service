@@ -4,11 +4,11 @@ from typing import Self
 
 @dataclass(frozen=True)
 class PostgresConfig:
-    host: str
-    port: int
-    user: str
-    password: str
-    database: str
+    host: str = "localhost"
+    port: int = 5432
+    user: str = "postgres"
+    password: str = "postgres"
+    database: str = "users"
     echo: bool = True
 
     @property
