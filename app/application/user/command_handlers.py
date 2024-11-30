@@ -25,6 +25,8 @@ class CreateUserCommandHandler(CommandHandler[CreateUserCommand, UUID]):
         self.event_bus: EventBusInterface = event_bus
 
     async def __call__(self: Self, command: CreateUserCommand) -> UUID:
+        if await self.user_writer_gateway.check_phone_exist(phone_number=Contacts(phone=command.phone_number)):
+            raise UserAlreadyExistsError("User already exists")
         user_id: UUID = uuid4()
         user: User = User.create_user(
             id=UserId(value=user_id),
@@ -34,8 +36,7 @@ class CreateUserCommandHandler(CommandHandler[CreateUserCommand, UUID]):
         )
         events: list[DomainEvent] = user.get_events()
 
-        if not await self.user_writer_gateway.create_user(user=user):
-            raise UserAlreadyExistsError("User already exists")
+        await self.user_writer_gateway.create_user(user=user)
         await self.event_bus.publish(events=events)
 
         return user_id
@@ -49,7 +50,7 @@ class UpdateUsernameCommandHandler(CommandHandler[UpdateUsernameCommand, None]):
         self.event_bus: EventBusInterface = event_bus
 
     async def __call__(self: Self, command: UpdateUsernameCommand) -> None:
-        user: User = await self.user_writer_gateway.get_user_by_id(user_id=UserId(command.user_id))
+        user: User | None = await self.user_writer_gateway.get_user_by_id(user_id=UserId(command.user_id))
         if not user:
             raise UserNotFoundError(f"User with id {command.user_id} not found")
         user.update_username(username=Username(value=command.username))
@@ -68,9 +69,11 @@ class UpdateContactsCommandHandler(CommandHandler[UpdateContactsCommand, None]):
         self.event_bus: EventBusInterface = event_bus
 
     async def __call__(self: Self, command: UpdateContactsCommand) -> None:
-        user: User = await self.user_writer_gateway.get_user_by_id(user_id=UserId(command.user_id))
+        user: User | None = await self.user_writer_gateway.get_user_by_id(user_id=UserId(command.user_id))
         if not user:
             raise UserNotFoundError(f"User with id {command.user_id} not found")
+        if await self.user_writer_gateway.check_phone_exist(phone_number=Contacts(phone=command.phone_number)):
+            raise UserAlreadyExistsError("User already exists")
         user.update_contact(contacts=Contacts(phone=command.phone_number))
         events: list[DomainEvent] = user.get_events()
 
@@ -87,14 +90,13 @@ class DeleteUserCommandHandler(CommandHandler[DeleteUserCommand, None]):
         self.event_bus: EventBusInterface = event_bus
 
     async def __call__(self: Self, command: DeleteUserCommand) -> None:
-        user: User = await self.user_writer_gateway.get_user_by_id(user_id=UserId(command.user_id))
+        user: User | None = await self.user_writer_gateway.get_user_by_id(user_id=UserId(command.user_id))
         if not user:
             raise UserNotFoundError(f"User with id {command.user_id} not found")
         user.delete_user()
         events: list[DomainEvent] = user.get_events()
 
-        if not await self.user_writer_gateway.update_user(user=user):
-            raise UserAlreadyExistsError("User already exists")
+        await self.user_writer_gateway.update_user(user=user)
         await self.event_bus.publish(events=events)
 
 
@@ -106,14 +108,13 @@ class RestoreUserCommandHandler(CommandHandler[RestoreUserCommand, None]):
         self.event_bus: EventBusInterface = event_bus
 
     async def __call__(self: Self, command: RestoreUserCommand) -> None:
-        user: User = await self.user_writer_gateway.get_user_by_id(user_id=UserId(command.user_id))
+        user: User | None = await self.user_writer_gateway.get_user_by_id(user_id=UserId(command.user_id))
         if not user:
             raise UserNotFoundError(f"User with id {command.user_id} not found")
         user.restore_user()
         events: list[DomainEvent] = user.get_events()
 
-        if not await self.user_writer_gateway.update_user(user=user):
-            raise UserAlreadyExistsError("User already exists")
+        await self.user_writer_gateway.update_user(user=user)
         await self.event_bus.publish(events=events)
 
 

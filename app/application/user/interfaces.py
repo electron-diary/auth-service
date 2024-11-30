@@ -4,7 +4,7 @@ from uuid import UUID
 
 from app.application.user.dtos import UserDTO
 from app.domain.user.user import User
-from app.domain.user.value_objects import UserId
+from app.domain.user.value_objects import Contacts, UserId
 
 
 class UserWriterGatewayInterface(Protocol):
@@ -13,13 +13,16 @@ class UserWriterGatewayInterface(Protocol):
         raise NotImplementedError("method must be implemented by subclasses")
 
     @abstractmethod
-    async def create_user(self: Self, user: User) -> bool:
+    async def create_user(self: Self, user: User) -> None:
         raise NotImplementedError("method must be implemented by subclasses")
 
     @abstractmethod
-    async def update_user(self: Self, user: User) -> bool:
+    async def update_user(self: Self, user: User) -> None:
         raise NotImplementedError("method must be implemented by subclasses")
 
+    @abstractmethod
+    async def check_phone_exist(self: Self, phone_number: Contacts) -> User | None:
+        raise NotImplementedError("method must be implemented by subclasses")
 
 class UserReaderGatewayInterface(Protocol):
     @abstractmethod
