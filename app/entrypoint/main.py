@@ -1,14 +1,16 @@
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from faststream import FastStream
 from faststream.rabbit.annotations import RabbitBroker as FastStreamRabbitBroker
 
 from app.entrypoint.dependency_injection.main import setup_di_fastapi, setup_di_faststream
-from app.presentation.api.main import setup_controllers_fastapi
 from app.infrastructure.tasks.broker import get_rabbit_broker
 from app.infrastructure.tasks.config import RabbitConfig
 from app.infrastructure.tasks.workers import router
+from app.presentation.api.main import setup_controllers_fastapi
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:

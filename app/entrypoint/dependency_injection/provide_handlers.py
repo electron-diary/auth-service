@@ -10,13 +10,17 @@ from app.application.user.command_handlers import (
     UpdateContactsCommandHandler,
     UpdateUsernameCommandHandler,
 )
-from app.application.user.interfaces import UserWriterGatewayInterface, UserProjectionsGatewayInterface, UserReaderGatewayInterface
 from app.application.user.event_handlers import (
+    ContactsUpdatedEventHandler,
     UserCreatedEventHandler,
     UserDeletedEventHandler,
-    UserRestoredEventHandler,
     UsernameUpdatedEventHandler,
-    ContactsUpdatedEventHandler
+    UserRestoredEventHandler,
+)
+from app.application.user.interfaces import (
+    UserProjectionsGatewayInterface,
+    UserReaderGatewayInterface,
+    UserWriterGatewayInterface,
 )
 from app.application.user.query_handlers import GetUserByIdQueryHandler
 
@@ -24,62 +28,62 @@ from app.application.user.query_handlers import GetUserByIdQueryHandler
 class CommandHandlersProvider(Provider):
     @provide(scope=Scope.REQUEST)
     def provide_create_user_command_handler(
-        self: Self, 
-        user_writer_gateway: UserWriterGatewayInterface, 
+        self: Self,
+        user_writer_gateway: UserWriterGatewayInterface,
         global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface
+        local_event_bus: LocalEventBusInterface,
     ) -> CreateUserCommandHandler:
         return CreateUserCommandHandler(
-            user_writer_gateway=user_writer_gateway, 
-            local_event_bus=local_event_bus, global_event_bus=global_event_bus
+            user_writer_gateway=user_writer_gateway,
+            local_event_bus=local_event_bus, global_event_bus=global_event_bus,
         )
 
     @provide(scope=Scope.REQUEST)
     def provide_update_username_command_handler(
-        self: Self, 
-        user_writer_gateway: UserWriterGatewayInterface, 
+        self: Self,
+        user_writer_gateway: UserWriterGatewayInterface,
         global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface
+        local_event_bus: LocalEventBusInterface,
     ) -> UpdateUsernameCommandHandler:
         return UpdateUsernameCommandHandler(
-            user_writer_gateway=user_writer_gateway, 
-            local_event_bus=local_event_bus, global_event_bus=global_event_bus
+            user_writer_gateway=user_writer_gateway,
+            local_event_bus=local_event_bus, global_event_bus=global_event_bus,
         )
 
     @provide(scope=Scope.REQUEST)
     def provide_update_contacts_command_handler(
-        self: Self, 
-        user_writer_gateway: UserWriterGatewayInterface, 
+        self: Self,
+        user_writer_gateway: UserWriterGatewayInterface,
         global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface
+        local_event_bus: LocalEventBusInterface,
     ) -> UpdateContactsCommandHandler:
         return UpdateContactsCommandHandler(
-            user_writer_gateway=user_writer_gateway, 
-            local_event_bus=local_event_bus, global_event_bus=global_event_bus
+            user_writer_gateway=user_writer_gateway,
+            local_event_bus=local_event_bus, global_event_bus=global_event_bus,
         )
 
     @provide(scope=Scope.REQUEST)
     def provide_delete_user_command_handler(
-        self: Self, 
-        user_writer_gateway: UserWriterGatewayInterface, 
+        self: Self,
+        user_writer_gateway: UserWriterGatewayInterface,
         global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface
+        local_event_bus: LocalEventBusInterface,
     ) -> DeleteUserCommandHandler:
         return DeleteUserCommandHandler(
-            user_writer_gateway=user_writer_gateway, 
-            local_event_bus=local_event_bus, global_event_bus=global_event_bus
+            user_writer_gateway=user_writer_gateway,
+            local_event_bus=local_event_bus, global_event_bus=global_event_bus,
         )
 
     @provide(scope=Scope.REQUEST)
     def provide_restore_user_command_handler(
-        self: Self, 
-        user_writer_gateway: UserWriterGatewayInterface, 
+        self: Self,
+        user_writer_gateway: UserWriterGatewayInterface,
         global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface
+        local_event_bus: LocalEventBusInterface,
     ) -> RestoreUserCommandHandler:
         return RestoreUserCommandHandler(
-            user_writer_gateway=user_writer_gateway, 
-            local_event_bus=local_event_bus, global_event_bus=global_event_bus
+            user_writer_gateway=user_writer_gateway,
+            local_event_bus=local_event_bus, global_event_bus=global_event_bus,
         )
 
 class EventHandlersProvider(Provider):
@@ -113,7 +117,7 @@ class EventHandlersProvider(Provider):
         self: Self, user_projections_gateway: UserProjectionsGatewayInterface,
     ) -> ContactsUpdatedEventHandler:
         return ContactsUpdatedEventHandler(user_projections_gateway=user_projections_gateway)
-    
+
 
 class QueryHandlersProvider(Provider):
     @provide(scope=Scope.REQUEST)

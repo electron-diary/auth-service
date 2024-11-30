@@ -1,8 +1,8 @@
 from typing import Self
 
-from app.application.user.interfaces import UserProjectionsGatewayInterface
-from app.domain.user.actions import UserCreated, UserDeleted, UsernameUpdated, UserRestored, ContactsUpdated
 from app.application.base.event_handler import EventHandler
+from app.application.user.interfaces import UserProjectionsGatewayInterface
+from app.domain.user.actions import ContactsUpdated, UserCreated, UserDeleted, UsernameUpdated, UserRestored
 
 
 class UserCreatedEventHandler(EventHandler[UserCreated]):

@@ -1,10 +1,11 @@
 from typing import Self
 from uuid import UUID
+
 from motor.motor_asyncio import AsyncIOMotorClientSession, AsyncIOMotorCollection
 
-from app.application.user.interfaces import UserReaderGatewayInterface, UserProjectionsGatewayInterface
 from app.application.user.dtos import UserDTO
-from app.domain.user.actions import UserCreated, UserDeleted, UsernameUpdated, UserRestored, ContactsUpdated
+from app.application.user.interfaces import UserProjectionsGatewayInterface, UserReaderGatewayInterface
+from app.domain.user.actions import ContactsUpdated, UserCreated, UserDeleted, UsernameUpdated, UserRestored
 
 
 class UserProjectionsGatewayImpl(UserProjectionsGatewayInterface):
@@ -18,32 +19,32 @@ class UserProjectionsGatewayImpl(UserProjectionsGatewayInterface):
                 "user_id": event.user_id,
                 "username": event.username,
                 "phone_number": event.phone_number,
-                "is_deleted": event.is_deleted
-            }
+                "is_deleted": event.is_deleted,
+            },
         )
-    
+
     async def delete_user(self: Self, event: UserDeleted) -> None:
         await self.collection.update_one(
             filter={"user_id": event.user_id},
-            update={"$set": {"is_deleted": event.is_deleted}}
+            update={"$set": {"is_deleted": event.is_deleted}},
         )
 
     async def update_username(self: Self, event: UsernameUpdated) -> None:
         await self.collection.update_one(
             filter={"user_id": event.user_id},
-            update={"$set": {"username": event.username}}
+            update={"$set": {"username": event.username}},
         )
 
     async def update_contacts(self: Self, event: ContactsUpdated) -> None:
         await self.collection.update_one(
             filter={"user_id": event.user_id},
-            update={"$set": {"phone_number": event.phone_number}}
+            update={"$set": {"phone_number": event.phone_number}},
         )
 
     async def restore_user(self: Self, event: UserRestored) -> None:
         await self.collection.update_one(
             filter={"user_id": event.user_id},
-            update={"$set": {"is_deleted": event.is_deleted}}
+            update={"$set": {"is_deleted": event.is_deleted}},
         )
 
 

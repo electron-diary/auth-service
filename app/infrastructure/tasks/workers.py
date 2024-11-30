@@ -1,15 +1,14 @@
-from faststream.rabbit import RabbitRouter
 from dishka.integrations.faststream import FromDishka, inject
+from faststream.rabbit import RabbitRouter
 
 from app.application.user.event_handlers import (
+    ContactsUpdatedEventHandler,
     UserCreatedEventHandler,
     UserDeletedEventHandler,
     UsernameUpdatedEventHandler,
     UserRestoredEventHandler,
-    ContactsUpdatedEventHandler,
 )
-from app.domain.user.actions import UserCreated, UserDeleted, UsernameUpdated, UserRestored, ContactsUpdated
-
+from app.domain.user.actions import ContactsUpdated, UserCreated, UserDeleted, UsernameUpdated, UserRestored
 
 router: RabbitRouter = RabbitRouter()
 

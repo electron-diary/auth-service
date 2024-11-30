@@ -19,10 +19,10 @@ from app.domain.user.value_objects import Contacts, DeletedUser, UserId, Usernam
 
 class CreateUserCommandHandler(CommandHandler[CreateUserCommand, UUID]):
     def __init__(
-        self: Self, 
-        user_writer_gateway: UserWriterGatewayInterface, 
+        self: Self,
+        user_writer_gateway: UserWriterGatewayInterface,
         global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface
+        local_event_bus: LocalEventBusInterface,
     ) -> None:
         self.user_writer_gateway: UserWriterGatewayInterface = user_writer_gateway
         self.global_event_bus: GlobalEventBusInterface = global_event_bus
@@ -49,10 +49,10 @@ class CreateUserCommandHandler(CommandHandler[CreateUserCommand, UUID]):
 
 class UpdateUsernameCommandHandler(CommandHandler[UpdateUsernameCommand, None]):
     def __init__(
-        self: Self, 
-        user_writer_gateway: UserWriterGatewayInterface, 
+        self: Self,
+        user_writer_gateway: UserWriterGatewayInterface,
         global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface
+        local_event_bus: LocalEventBusInterface,
     ) -> None:
         self.user_writer_gateway: UserWriterGatewayInterface = user_writer_gateway
         self.global_event_bus: GlobalEventBusInterface = global_event_bus
@@ -72,10 +72,10 @@ class UpdateUsernameCommandHandler(CommandHandler[UpdateUsernameCommand, None]):
 
 class UpdateContactsCommandHandler(CommandHandler[UpdateContactsCommand, None]):
     def __init__(
-        self: Self, 
-        user_writer_gateway: UserWriterGatewayInterface, 
+        self: Self,
+        user_writer_gateway: UserWriterGatewayInterface,
         global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface
+        local_event_bus: LocalEventBusInterface,
     ) -> None:
         self.user_writer_gateway: UserWriterGatewayInterface = user_writer_gateway
         self.global_event_bus: GlobalEventBusInterface = global_event_bus
@@ -97,10 +97,10 @@ class UpdateContactsCommandHandler(CommandHandler[UpdateContactsCommand, None]):
 
 class DeleteUserCommandHandler(CommandHandler[DeleteUserCommand, None]):
     def __init__(
-        self: Self, 
-        user_writer_gateway: UserWriterGatewayInterface, 
+        self: Self,
+        user_writer_gateway: UserWriterGatewayInterface,
         global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface
+        local_event_bus: LocalEventBusInterface,
     ) -> None:
         self.user_writer_gateway: UserWriterGatewayInterface = user_writer_gateway
         self.global_event_bus: GlobalEventBusInterface = global_event_bus
@@ -120,10 +120,10 @@ class DeleteUserCommandHandler(CommandHandler[DeleteUserCommand, None]):
 
 class RestoreUserCommandHandler(CommandHandler[RestoreUserCommand, None]):
     def __init__(
-        self: Self, 
-        user_writer_gateway: UserWriterGatewayInterface, 
+        self: Self,
+        user_writer_gateway: UserWriterGatewayInterface,
         global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface
+        local_event_bus: LocalEventBusInterface,
     ) -> None:
         self.user_writer_gateway: UserWriterGatewayInterface = user_writer_gateway
         self.global_event_bus: GlobalEventBusInterface = global_event_bus

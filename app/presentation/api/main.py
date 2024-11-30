@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from app.presentation.api.controllers.user import router
 from app.presentation.api.controllers.metrics import metrics
+from app.presentation.api.controllers.user import router
 
 
 def setup_controllers_fastapi(app: FastAPI) -> None:

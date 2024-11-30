@@ -18,13 +18,12 @@ from app.application.user.commands import (
     UpdateContactsCommand,
     UpdateUsernameCommand,
 )
-from app.application.user.query_handlers import GetUserByIdQueryHandler
 from app.application.user.dtos import UserDTO
-from app.application.user.queries import GetUserQuery
 from app.application.user.exceptions import UserAlreadyExistsError, UserNotFoundError
+from app.application.user.queries import GetUserQuery
+from app.application.user.query_handlers import GetUserByIdQueryHandler
 from app.domain.user.exceptions import UserException
 from app.presentation.api.responses.error_response import ErrorResponse
-
 
 router: APIRouter = APIRouter(prefix="/user", tags=["user"])
 
@@ -36,27 +35,27 @@ router: APIRouter = APIRouter(prefix="/user", tags=["user"])
     responses={
         status.HTTP_201_CREATED: {
             "description": "User successfully created",
-            "model": UserDTO
+            "model": UserDTO,
         },
         status.HTTP_409_CONFLICT: {
             "description": "User already exists",
             "content": {
                 "application/json": {
-                    "example": {"detail": "User with this phone number already exists"}
-                }
+                    "example": {"detail": "User with this phone number already exists"},
+                },
             },
-            'model': ErrorResponse[UserAlreadyExistsError]
+            "model": ErrorResponse[UserAlreadyExistsError],
         },
         status.HTTP_400_BAD_REQUEST: {
             "description": "Bad request",
             "content": {
                 "application/json": {
-                    "example": {"detail": "Bad request"}
-                }
+                    "example": {"detail": "Bad request"},
+                },
             },
-            'model': ErrorResponse[UserException]
-        }
-    }
+            "model": ErrorResponse[UserException],
+        },
+    },
 )
 @inject
 async def create_user(
@@ -79,38 +78,38 @@ async def create_user(
 
 
 @router.put(
-    "/update_username", 
+    "/update_username",
     status_code=status.HTTP_200_OK,
     responses={
         status.HTTP_200_OK: {
             "description": "Username successfully updated",
             "content": {
                 "application/json": {
-                    "example": {"message": "Username updated successfully"}
-                }
+                    "example": {"message": "Username updated successfully"},
+                },
             },
-            "model": None
+            "model": None,
         },
         status.HTTP_400_BAD_REQUEST: {
             "description": "Invalid username format",
             "content": {
                 "application/json": {
-                    "example": {"detail": "Username must be between 3 and 30 characters"}
-                }
-            }, 
-            "model": ErrorResponse[UserException]
-            
+                    "example": {"detail": "Username must be between 3 and 30 characters"},
+                },
+            },
+            "model": ErrorResponse[UserException],
+
         },
         status.HTTP_404_NOT_FOUND: {
             "description": "User not found",
             "content": {
                 "application/json": {
-                    "example": {"detail": "User with specified ID not found"}
-                }
+                    "example": {"detail": "User with specified ID not found"},
+                },
             },
-            "model": ErrorResponse[UserNotFoundError]
+            "model": ErrorResponse[UserNotFoundError],
         },
-    }
+    },
 
 )
 @inject
@@ -141,10 +140,10 @@ async def update_username(
             "description": "User contacts successfully updated",
             "content": {
                 "application/json": {
-                    "example": {"message": "User contacts updated successfully"}
-                }
+                    "example": {"message": "User contacts updated successfully"},
+                },
             },
-            "model": None
+            "model": None,
         },
         status.HTTP_404_NOT_FOUND: {
             "description": "User not found",
@@ -152,31 +151,31 @@ async def update_username(
                 "application/json": {
                     "example": {
                         "error_code": "USER_NOT_FOUND",
-                        "message": "User with specified ID does not exist"
-                    }
-                }
+                        "message": "User with specified ID does not exist",
+                    },
+                },
             },
-            "model": ErrorResponse[UserNotFoundError]
+            "model": ErrorResponse[UserNotFoundError],
         },
         status.HTTP_409_CONFLICT: {
             "description": "User already exists",
             "content": {
                 "application/json": {
-                    "example": {"detail": "User with this phone number already exists"}
-                }
+                    "example": {"detail": "User with this phone number already exists"},
+                },
             },
-            'model': ErrorResponse[UserAlreadyExistsError]
+            "model": ErrorResponse[UserAlreadyExistsError],
         },
         status.HTTP_400_BAD_REQUEST: {
             "description": "Invalid username format",
             "content": {
                 "application/json": {
-                    "example": {"detail": "User phone must be int"}
-                }
-            }, 
-            "model": ErrorResponse[UserException]
-        }
-    }
+                    "example": {"detail": "User phone must be int"},
+                },
+            },
+            "model": ErrorResponse[UserException],
+        },
+    },
 )
 @inject
 async def update_contacts(
@@ -207,9 +206,9 @@ async def update_contacts(
                 "application/json": {
                     "example": {
                         "message": "User successfully deleted",
-                    }
-                }
-            }
+                    },
+                },
+            },
         },
         status.HTTP_404_NOT_FOUND: {
             "description": "User not found",
@@ -217,10 +216,10 @@ async def update_contacts(
             "content": {
                 "application/json": {
                     "example": {
-                        "message": "User with specified ID does not exist"
-                    }
-                }
-            }
+                        "message": "User with specified ID does not exist",
+                    },
+                },
+            },
         },
         status.HTTP_409_CONFLICT: {
             "description": "Invalid request",
@@ -228,12 +227,12 @@ async def update_contacts(
             "content": {
                 "application/json": {
                     "example": {
-                        "message": "Invalid user ID format"
-                    }
-                }
-            }
+                        "message": "Invalid user ID format",
+                    },
+                },
+            },
         },
-    }
+    },
 )
 @inject
 async def delete_user(
@@ -264,9 +263,9 @@ async def delete_user(
                 "application/json": {
                     "example": {
                         "message": "User successfully restored",
-                    }
-                }
-            }
+                    },
+                },
+            },
         },
         status.HTTP_404_NOT_FOUND: {
             "description": "User not found",
@@ -274,10 +273,10 @@ async def delete_user(
             "content": {
                 "application/json": {
                     "example": {
-                        "message": "User with specified ID does not exist"
-                    }
-                }
-            }
+                        "message": "User with specified ID does not exist",
+                    },
+                },
+            },
         },
         status.HTTP_400_BAD_REQUEST: {
             "description": "Invalid restore operation",
@@ -285,11 +284,11 @@ async def delete_user(
             "content": {
                 "application/json": {
                     "example": {
-                        "message": "User is not in deleted state"
-                    }
-                }
-            }
-        }
+                        "message": "User is not in deleted state",
+                    },
+                },
+            },
+        },
     },
 )
 @inject
@@ -324,10 +323,10 @@ async def restore_user(
                         "email": "john@example.com",
                         "created_at": "2024-01-01T00:00:00Z",
                         "updated_at": "2024-01-20T12:00:00Z",
-                        "retrieved_at": "2024-01-20T12:00:00Z"
-                    }
-                }
-            }
+                        "retrieved_at": "2024-01-20T12:00:00Z",
+                    },
+                },
+            },
         },
         status.HTTP_404_NOT_FOUND: {
             "description": "User not found",
@@ -335,12 +334,12 @@ async def restore_user(
             "content": {
                 "application/json": {
                     "example": {
-                        "message": "User with specified ID does not exist"
-                    }
-                }
-            }
+                        "message": "User with specified ID does not exist",
+                    },
+                },
+            },
         },
-    }
+    },
 )
 @inject
 async def get_user(

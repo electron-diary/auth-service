@@ -3,9 +3,9 @@ from typing import Protocol, Self
 from uuid import UUID
 
 from app.application.user.dtos import UserDTO
+from app.domain.user.actions import ContactsUpdated, UserCreated, UserDeleted, UsernameUpdated, UserRestored
 from app.domain.user.user import User
 from app.domain.user.value_objects import Contacts, UserId
-from app.domain.user.actions import UserCreated, UsernameUpdated, UserDeleted, UserRestored, ContactsUpdated
 
 
 class UserWriterGatewayInterface(Protocol):
@@ -36,19 +36,19 @@ class UserProjectionsGatewayInterface(Protocol):
     @abstractmethod
     async def add_user(self: Self, event: UserCreated) -> None:
         raise NotImplementedError("method must be implemented by subclasses")
-    
+
     @abstractmethod
     async def update_username(self: Self, event: UsernameUpdated) -> None:
         raise NotImplementedError("method must be implemented by subclasses")
-    
+
     @abstractmethod
     async def delete_user(self: Self, event: UserDeleted) -> None:
         raise NotImplementedError("method must be implemented by subclasses")
-    
+
     @abstractmethod
     async def restore_user(self: Self, event: UserRestored) -> None:
         raise NotImplementedError("method must be implemented by subclasses")
-    
+
     @abstractmethod
     async def update_contacts(self: Self, event: ContactsUpdated) -> None:
         raise NotImplementedError("method must be implemented by subclasses")

@@ -19,8 +19,17 @@ from dishka.integrations.faststream import setup_dishka as setup_dishka_faststre
 from fastapi import FastAPI
 from faststream import FastStream
 
-from app.entrypoint.dependency_injection.provide_adapters import GlobalEventBusProvider, SqlalchemyProvider, MongodbProvider, LocalEventBusProvider
-from app.entrypoint.dependency_injection.provide_handlers import CommandHandlersProvider, QueryHandlersProvider, EventHandlersProvider
+from app.entrypoint.dependency_injection.provide_adapters import (
+    GlobalEventBusProvider,
+    LocalEventBusProvider,
+    MongodbProvider,
+    SqlalchemyProvider,
+)
+from app.entrypoint.dependency_injection.provide_handlers import (
+    CommandHandlersProvider,
+    EventHandlersProvider,
+    QueryHandlersProvider,
+)
 
 
 def fastapi_container() -> AsyncContainer:
@@ -77,7 +86,7 @@ def faststream_container() -> AsyncContainer:
     container: AsyncContainer = make_async_container(
         MongodbProvider(),
         LocalEventBusProvider(),
-        EventHandlersProvider()
+        EventHandlersProvider(),
     )
     return container
 

@@ -1,6 +1,6 @@
 from typing import Self
 
-from sqlalchemy import UUID, Boolean, Column, BigInteger, String
+from sqlalchemy import UUID, BigInteger, Boolean, Column, String
 from sqlalchemy.orm import DeclarativeBase
 
 
