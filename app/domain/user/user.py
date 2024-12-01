@@ -11,6 +11,15 @@ from app.domain.user.value_objects import Contacts, DeletedUser, UserId, Usernam
 
 @dataclass
 class User(DomainEntity[UserId], AgregateRoot):
+    """
+    User aggregate root entity that represents a user in the system.
+
+    Attributes:
+        username (Username): Value object representing user's display name
+        contacts (Contacts): Value object containing user's contact information
+        is_deleted (DeletedUser): Value object indicating if the user is marked as deleted
+    """
+
     username: Username
     contacts: Contacts
     is_deleted: DeletedUser
@@ -19,6 +28,18 @@ class User(DomainEntity[UserId], AgregateRoot):
     def create_user(
         cls, id: UserId, username: Username, contacts: Contacts, is_deleted: DeletedUser,
     ) -> "User":
+        """
+        Factory method to create a new User instance and record the creation event.
+
+        Args:
+            id (UserId): Unique identifier for the user
+            username (Username): User's display name
+            contacts (Contacts): User's contact information
+            is_deleted (DeletedUser): Initial deletion status
+
+        Returns:
+            User: New user instance with creation event recorded
+        """
         user: User = cls(
             id=id, username=username, contacts=contacts, is_deleted=is_deleted,
         )
@@ -31,6 +52,15 @@ class User(DomainEntity[UserId], AgregateRoot):
         return user
 
     def update_username(self: Self, username: Username) -> None:
+        """
+        Updates the user's username if the user is not deleted.
+
+        Args:
+            username (Username): New username to set
+
+        Raises:
+            UserException: If the user is marked as deleted
+        """
         if self.is_deleted.value:
             raise UserException("User is deleted")
         action: UsernameUpdated = UsernameUpdated(
@@ -41,6 +71,15 @@ class User(DomainEntity[UserId], AgregateRoot):
         self._add_event(event=action)
 
     def update_contact(self: Self, contacts: Contacts) -> None:
+        """
+        Updates the user's contact information if the user is not deleted.
+
+        Args:
+            contacts (Contacts): New contact information
+
+        Raises:
+            UserException: If the user is marked as deleted
+        """
         if self.is_deleted.value:
             raise UserException("User is deleted")
         action: ContactsUpdated = ContactsUpdated(
@@ -51,6 +90,12 @@ class User(DomainEntity[UserId], AgregateRoot):
         self._add_event(event=action)
 
     def delete_user(self: Self) -> None:
+        """
+        Marks the user as deleted if not already deleted.
+
+        Raises:
+            UserException: If the user is already marked as deleted
+        """
         if self.is_deleted.value:
             raise UserException("User is already deleted")
         action: UserDeleted = UserDeleted(
@@ -61,6 +106,12 @@ class User(DomainEntity[UserId], AgregateRoot):
         self._add_event(event=action)
 
     def recovery_user(self: Self) -> None:
+        """
+        Restores a deleted user if the user is currently marked as deleted.
+
+        Raises:
+            UserException: If the user is not marked as deleted
+        """
         if not self.is_deleted.value:
             raise UserException("User is not deleted")
         action: UserRestored = UserRestored(
@@ -71,6 +122,13 @@ class User(DomainEntity[UserId], AgregateRoot):
         self._add_event(event=action)
 
     def _apply(self: Self, action: DomainEvent) -> None:
+        """
+        Private method to apply domain events and update the entity state.
+        Uses pattern matching to handle different types of events.
+
+        Args:
+            action (DomainEvent): The domain event to apply
+        """
         match action:
             case UsernameUpdated():
                 self.username = Username(action.username)
