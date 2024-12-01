@@ -53,7 +53,7 @@ class UserReaderGatewayImpl(UserReaderGatewayInterface):
         self.session: AsyncIOMotorClientSession = session
         self.collection: AsyncIOMotorCollection = collection
 
-    async def get_user_by_id(self: Self, user_id: UUID) -> None:
+    async def get_user_by_id(self: Self, user_id: UUID) -> UserDTO | None:
         statement = {"user_id": user_id}
         user: dict[str] | None = await self.collection.find_one(filter=statement, projection={"_id": 0})
         if not user:
