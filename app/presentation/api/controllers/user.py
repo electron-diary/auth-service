@@ -30,12 +30,12 @@ router: APIRouter = APIRouter(prefix="/user", tags=["user"])
 
 @router.post(
     "/create",
-    response_model=UserDTO,
+    response_model=None,
     status_code=status.HTTP_201_CREATED,
     responses={
         status.HTTP_201_CREATED: {
             "description": "User successfully created",
-            "model": UserDTO,
+            "model": None,
         },
         status.HTTP_409_CONFLICT: {
             "description": "User already exists",
@@ -318,12 +318,10 @@ async def restore_user(
             "content": {
                 "application/json": {
                     "example": {
-                        "id": "123e4567-e89b-12d3-a456-426614174000",
+                        "user_id": "123e4567-e89b-12d3-a456-426614174000",
                         "username": "john_doe",
-                        "email": "john@example.com",
-                        "created_at": "2024-01-01T00:00:00Z",
-                        "updated_at": "2024-01-20T12:00:00Z",
-                        "retrieved_at": "2024-01-20T12:00:00Z",
+                        "phone_number": 123456789,
+                        "is_deleted": False
                     },
                 },
             },
