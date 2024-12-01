@@ -18,7 +18,3 @@ class AgregateRoot:
 
     def _apply(self: Self, event: DomainEvent) -> None:
         ...
-
-    def replay_events(self: Self, events: list[DomainEvent]) -> None:
-        for event in events:
-            self._apply(event=event)

@@ -2,7 +2,6 @@ from typing import Self
 from uuid import UUID, uuid4
 
 from app.application.base.command_handler import CommandHandler
-from app.application.base.event_bus import GlobalEventBusInterface, LocalEventBusInterface
 from app.application.user.commands import (
     CreateUserCommand,
     DeleteUserCommand,
@@ -15,18 +14,17 @@ from app.application.user.interfaces import UserWriterGatewayInterface
 from app.domain.base.domain_event import DomainEvent
 from app.domain.user.user import User
 from app.domain.user.value_objects import Contacts, DeletedUser, UserId, Username
+from app.application.base.base_mediator import MediatorInterface
 
 
 class CreateUserCommandHandler(CommandHandler[CreateUserCommand, UUID]):
     def __init__(
         self: Self,
         user_writer_gateway: UserWriterGatewayInterface,
-        global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface,
+        mediator_interface: MediatorInterface,
     ) -> None:
         self.user_writer_gateway: UserWriterGatewayInterface = user_writer_gateway
-        self.global_event_bus: GlobalEventBusInterface = global_event_bus
-        self.local_event_bus: LocalEventBusInterface = local_event_bus
+        self.mediator_interface: MediatorInterface = mediator_interface
 
     async def __call__(self: Self, command: CreateUserCommand) -> UUID:
         if await self.user_writer_gateway.check_phone_exist(phone_number=Contacts(phone=command.phone_number)):
@@ -41,8 +39,7 @@ class CreateUserCommandHandler(CommandHandler[CreateUserCommand, UUID]):
         events: list[DomainEvent] = user.get_events()
 
         await self.user_writer_gateway.create_user(user=user)
-        await self.local_event_bus.publish(events=events)
-        await self.global_event_bus.publish(events=events)
+        await self.mediator_interface.process_events(events=events)
 
         return user_id
 
@@ -51,12 +48,10 @@ class UpdateUsernameCommandHandler(CommandHandler[UpdateUsernameCommand, None]):
     def __init__(
         self: Self,
         user_writer_gateway: UserWriterGatewayInterface,
-        global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface,
+        mediator_interface: MediatorInterface,
     ) -> None:
         self.user_writer_gateway: UserWriterGatewayInterface = user_writer_gateway
-        self.global_event_bus: GlobalEventBusInterface = global_event_bus
-        self.local_event_bus: LocalEventBusInterface = local_event_bus
+        self.mediator_interface: MediatorInterface = mediator_interface
 
     async def __call__(self: Self, command: UpdateUsernameCommand) -> None:
         user: User | None = await self.user_writer_gateway.get_user_by_id(user_id=UserId(command.user_id))
@@ -65,21 +60,18 @@ class UpdateUsernameCommandHandler(CommandHandler[UpdateUsernameCommand, None]):
         user.update_username(username=Username(value=command.username))
         events: list[DomainEvent] = user.get_events()
 
-        await self.user_writer_gateway.update_user(user=user)
-        await self.local_event_bus.publish(events=events)
-        await self.global_event_bus.publish(events=events)
-
+        await self.user_writer_gateway.create_user(user=user)
+        await self.mediator_interface.process_events(events=events)
+        
 
 class UpdateContactsCommandHandler(CommandHandler[UpdateContactsCommand, None]):
     def __init__(
         self: Self,
         user_writer_gateway: UserWriterGatewayInterface,
-        global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface,
+        mediator_interface: MediatorInterface,
     ) -> None:
         self.user_writer_gateway: UserWriterGatewayInterface = user_writer_gateway
-        self.global_event_bus: GlobalEventBusInterface = global_event_bus
-        self.local_event_bus: LocalEventBusInterface = local_event_bus
+        self.mediator_interface: MediatorInterface = mediator_interface
 
     async def __call__(self: Self, command: UpdateContactsCommand) -> None:
         user: User | None = await self.user_writer_gateway.get_user_by_id(user_id=UserId(command.user_id))
@@ -90,21 +82,18 @@ class UpdateContactsCommandHandler(CommandHandler[UpdateContactsCommand, None]):
         user.update_contact(contacts=Contacts(phone=command.phone_number))
         events: list[DomainEvent] = user.get_events()
 
-        await self.user_writer_gateway.update_user(user=user)
-        await self.local_event_bus.publish(events=events)
-        await self.global_event_bus.publish(events=events)
+        await self.user_writer_gateway.create_user(user=user)
+        await self.mediator_interface.process_events(events=events)
 
 
 class DeleteUserCommandHandler(CommandHandler[DeleteUserCommand, None]):
     def __init__(
         self: Self,
         user_writer_gateway: UserWriterGatewayInterface,
-        global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface,
+        mediator_interface: MediatorInterface,
     ) -> None:
         self.user_writer_gateway: UserWriterGatewayInterface = user_writer_gateway
-        self.global_event_bus: GlobalEventBusInterface = global_event_bus
-        self.local_event_bus: LocalEventBusInterface = local_event_bus
+        self.mediator_interface: MediatorInterface = mediator_interface
 
     async def __call__(self: Self, command: DeleteUserCommand) -> None:
         user: User | None = await self.user_writer_gateway.get_user_by_id(user_id=UserId(command.user_id))
@@ -113,21 +102,18 @@ class DeleteUserCommandHandler(CommandHandler[DeleteUserCommand, None]):
         user.delete_user()
         events: list[DomainEvent] = user.get_events()
 
-        await self.user_writer_gateway.update_user(user=user)
-        await self.local_event_bus.publish(events=events)
-        await self.global_event_bus.publish(events=events)
+        await self.user_writer_gateway.create_user(user=user)
+        await self.mediator_interface.process_events(events=events)
 
 
 class RestoreUserCommandHandler(CommandHandler[RestoreUserCommand, None]):
     def __init__(
         self: Self,
         user_writer_gateway: UserWriterGatewayInterface,
-        global_event_bus: GlobalEventBusInterface,
-        local_event_bus: LocalEventBusInterface,
+        mediator_interface: MediatorInterface,
     ) -> None:
         self.user_writer_gateway: UserWriterGatewayInterface = user_writer_gateway
-        self.global_event_bus: GlobalEventBusInterface = global_event_bus
-        self.local_event_bus: LocalEventBusInterface = local_event_bus
+        self.mediator_interface: MediatorInterface = mediator_interface
 
     async def __call__(self: Self, command: RestoreUserCommand) -> None:
         user: User | None = await self.user_writer_gateway.get_user_by_id(user_id=UserId(command.user_id))
@@ -136,8 +122,7 @@ class RestoreUserCommandHandler(CommandHandler[RestoreUserCommand, None]):
         user.recovery_user()
         events: list[DomainEvent] = user.get_events()
 
-        await self.user_writer_gateway.update_user(user=user)
-        await self.local_event_bus.publish(events=events)
-        await self.global_event_bus.publish(events=events)
+        await self.user_writer_gateway.create_user(user=user)
+        await self.mediator_interface.process_events(events=events)
 
 

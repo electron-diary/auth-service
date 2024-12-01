@@ -32,25 +32,4 @@ class UserReaderGatewayInterface(Protocol):
         raise NotImplementedError("method must be implemented by subclasses")
 
 
-class UserProjectionsGatewayInterface(Protocol):
-    @abstractmethod
-    async def add_user(self: Self, event: UserCreated) -> None:
-        raise NotImplementedError("method must be implemented by subclasses")
-
-    @abstractmethod
-    async def update_username(self: Self, event: UsernameUpdated) -> None:
-        raise NotImplementedError("method must be implemented by subclasses")
-
-    @abstractmethod
-    async def delete_user(self: Self, event: UserDeleted) -> None:
-        raise NotImplementedError("method must be implemented by subclasses")
-
-    @abstractmethod
-    async def restore_user(self: Self, event: UserRestored) -> None:
-        raise NotImplementedError("method must be implemented by subclasses")
-
-    @abstractmethod
-    async def update_contacts(self: Self, event: ContactsUpdated) -> None:
-        raise NotImplementedError("method must be implemented by subclasses")
-
 
