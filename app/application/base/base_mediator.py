@@ -9,23 +9,43 @@ from app.application.base.query_handler import QueryHandler
 from app.domain.base.domain_event import DomainEvent
 
 
-class CommandMediatorInterface(Protocol):
+class MediatorInterface(Protocol):
     """
-    Protocol defining the interface for command mediation.
-    Handles registration and processing of command handlers.
-
-    This interface is part of the Mediator pattern implementation,
-    specifically focused on command handling in CQRS architecture.
+    Defines a protocol for mediator pattern implementation that handles commands, events, and queries.
+    The mediator acts as a central hub that coordinates communication between different components
+    of the application, promoting loose coupling between objects.
     """
 
     @abstractmethod
-    def register_command_handler(self: Self, command_type: BaseCommand, handler: CommandHandler) -> None:
+    def register_command_handler(self: Self, command_type: BaseCommand, handler: CommandHandler[BaseCommand, Any]) -> None:
         """
         Registers a handler for a specific command type.
 
         Args:
-            command_type: Type of command to be handled
-            handler: Handler implementation for the command
+            command_type: The type of command to be handled
+            handler: The handler implementation that will process the command
+        """
+        raise NotImplementedError("method must be implemented by subclasses")
+    
+    @abstractmethod
+    def register_event_handler(self: Self, event_type: DomainEvent, handler: EventHandler[DomainEvent]) -> None:
+        """
+        Registers a handler for a specific domain event type.
+
+        Args:
+            event_type: The type of domain event to be handled
+            handler: The handler implementation that will process the event
+        """
+        raise NotImplementedError("method must be implemented by subclasses")
+    
+    @abstractmethod
+    def register_query_handler(self: Self, query_type: BaseQuery, handler: QueryHandler[BaseQuery, Any]) -> None:
+        """
+        Registers a handler for a specific query type.
+
+        Args:
+            query_type: The type of query to be handled
+            handler: The handler implementation that will process the query
         """
         raise NotImplementedError("method must be implemented by subclasses")
 
@@ -35,30 +55,20 @@ class CommandMediatorInterface(Protocol):
         Processes a command by routing it to its registered handler.
 
         Args:
-            command: Command to be processed
+            command: The command to be processed
+
         Returns:
-            Any: Result of command processing
+            Any: The result of the command processing
         """
         raise NotImplementedError("method must be implemented by subclasses")
 
-
-class QueryMediatorInterface(Protocol):
-    """
-    Protocol defining the interface for query mediation.
-    Handles registration and processing of query handlers.
-
-    This interface supports the query side of CQRS pattern,
-    managing read operations in the system.
-    """
-
     @abstractmethod
-    def register_query_handler(self: Self, query_type: BaseQuery, handler: QueryHandler) -> None:
+    async def process_events(self: Self, events: list[DomainEvent]) -> None:
         """
-        Registers a handler for a specific query type.
+        Processes a list of domain events by routing each to their respective handlers.
 
         Args:
-            query_type: Type of query to be handled
-            handler: Handler implementation for the query
+            events: List of domain events to be processed
         """
         raise NotImplementedError("method must be implemented by subclasses")
 
@@ -68,51 +78,9 @@ class QueryMediatorInterface(Protocol):
         Processes a query by routing it to its registered handler.
 
         Args:
-            query: Query to be processed
+            query: The query to be processed
+
         Returns:
-            Any: Result of query processing
+            Any: The result of the query processing
         """
         raise NotImplementedError("method must be implemented by subclasses")
-
-
-class EventMediatorInterface(Protocol):
-    """
-    Protocol defining the interface for event mediation.
-    Handles registration and processing of event handlers.
-
-    This interface supports event-driven architecture by managing
-    domain event handling and distribution.
-    """
-
-    @abstractmethod
-    def register_event_handler(self: Self, event_type: DomainEvent, handler: EventHandler) -> None:
-        """
-        Registers a handler for a specific event type.
-
-        Args:
-            event_type: Type of event to be handled
-            handler: Handler implementation for the event
-        """
-        raise NotImplementedError("method must be implemented by subclasses")
-
-    @abstractmethod
-    async def process_events(self: Self, events: list[DomainEvent]) -> None:
-        """
-        Processes a list of domain events by routing them to their handlers.
-
-        Args:
-            events: List of events to be processed
-        """
-        raise NotImplementedError("method must be implemented by subclasses")
-
-
-class MediatorInterface(EventMediatorInterface, QueryMediatorInterface, CommandMediatorInterface):
-    """
-    Comprehensive mediator interface combining event, query, and command handling.
-    
-    This interface provides a complete mediation layer for the application,
-    implementing the Mediator pattern and supporting CQRS architecture.
-    Inherits from all specific mediator interfaces to provide a unified
-    point of interaction for the application.
-    """
-
