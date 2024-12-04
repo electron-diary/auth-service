@@ -90,7 +90,7 @@ class ConcreteMediator(MediatorInterface):
         Raises:
             ValueError: If no handler is registered for the given query type
         """
-        handler: QueryHandler = self.self.query_handlers.get(query)
+        handler: QueryHandler = self.query_handlers.get(query)
         if not handler:
             raise ValueError(f"No handler registered for query {query}")
         return await handler(query)

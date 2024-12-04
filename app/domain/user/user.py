@@ -1,7 +1,6 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Self
 
-from app.domain.base.agregate_root import AgregateRoot
 from app.domain.base.domain_entity import DomainEntity
 from app.domain.base.domain_event import DomainEvent
 from app.domain.user.actions import ContactsUpdated, UserCreated, UserDeleted, UsernameUpdated, UserRestored
@@ -10,18 +9,20 @@ from app.domain.user.value_objects import Contacts, DeletedUser, UserId, Usernam
 
 
 @dataclass
-class User(DomainEntity[UserId], AgregateRoot):
+class User(DomainEntity[UserId]):
     """
-    User aggregate root entity that represents a user in the system.
-
-    Attributes:
-        username (Username): Value object representing user's display name
-        contacts (Contacts): Value object containing user's contact information
-        is_deleted (DeletedUser): Value object indicating if the user is marked as deleted
+    User domain entity representing a user in the system.
+    Implements event sourcing pattern to track all changes to user state.
+    Inherits from DomainEntity with UserId as the identifier type.
     """
 
+    # Internal list to store domain events before they are committed
+    _events: list[DomainEvent] = field(default_factory=list, init=False)
+    # Value object for user's username
     username: Username
-    contacts: Contacts
+    # Value object containing user's contact information
+    contacts: Contacts  
+    # Value object tracking user's deletion status
     is_deleted: DeletedUser
 
     @classmethod
@@ -29,16 +30,17 @@ class User(DomainEntity[UserId], AgregateRoot):
         cls, id: UserId, username: Username, contacts: Contacts, is_deleted: DeletedUser,
     ) -> "User":
         """
-        Factory method to create a new User instance and record the creation event.
+        Factory method to create a new User instance.
+        Records a UserCreated event.
 
         Args:
-            id (UserId): Unique identifier for the user
-            username (Username): User's display name
-            contacts (Contacts): User's contact information
-            is_deleted (DeletedUser): Initial deletion status
+            id: Unique identifier for the user
+            username: User's username value object
+            contacts: User's contact information
+            is_deleted: Initial deletion status
 
         Returns:
-            User: New user instance with creation event recorded
+            A new User instance
         """
         user: User = cls(
             id=id, username=username, contacts=contacts, is_deleted=is_deleted,
@@ -54,12 +56,13 @@ class User(DomainEntity[UserId], AgregateRoot):
     def update_username(self: Self, username: Username) -> None:
         """
         Updates the user's username if the user is not deleted.
+        Records a UsernameUpdated event.
 
         Args:
-            username (Username): New username to set
+            username: New username value object
 
         Raises:
-            UserException: If the user is marked as deleted
+            UserException: If user is marked as deleted
         """
         if self.is_deleted.value:
             raise UserException("User is deleted")
@@ -72,13 +75,14 @@ class User(DomainEntity[UserId], AgregateRoot):
 
     def update_contact(self: Self, contacts: Contacts) -> None:
         """
-        Updates the user's contact information if the user is not deleted.
+        Updates user's contact information if user is not deleted.
+        Records a ContactsUpdated event.
 
         Args:
-            contacts (Contacts): New contact information
+            contacts: New contact information value object
 
         Raises:
-            UserException: If the user is marked as deleted
+            UserException: If user is marked as deleted
         """
         if self.is_deleted.value:
             raise UserException("User is deleted")
@@ -91,10 +95,11 @@ class User(DomainEntity[UserId], AgregateRoot):
 
     def delete_user(self: Self) -> None:
         """
-        Marks the user as deleted if not already deleted.
+        Marks the user as deleted.
+        Records a UserDeleted event.
 
         Raises:
-            UserException: If the user is already marked as deleted
+            UserException: If user is already marked as deleted
         """
         if self.is_deleted.value:
             raise UserException("User is already deleted")
@@ -107,10 +112,11 @@ class User(DomainEntity[UserId], AgregateRoot):
 
     def recovery_user(self: Self) -> None:
         """
-        Restores a deleted user if the user is currently marked as deleted.
+        Restores a previously deleted user.
+        Records a UserRestored event.
 
         Raises:
-            UserException: If the user is not marked as deleted
+            UserException: If user is not currently deleted
         """
         if not self.is_deleted.value:
             raise UserException("User is not deleted")
@@ -123,11 +129,11 @@ class User(DomainEntity[UserId], AgregateRoot):
 
     def _apply(self: Self, action: DomainEvent) -> None:
         """
-        Private method to apply domain events and update the entity state.
-        Uses pattern matching to handle different types of events.
+        Applies domain events to update the user's state.
+        Uses pattern matching to handle different event types.
 
         Args:
-            action (DomainEvent): The domain event to apply
+            action: Domain event to apply to user state
         """
         match action:
             case UsernameUpdated():
@@ -140,3 +146,23 @@ class User(DomainEntity[UserId], AgregateRoot):
                 self.is_deleted = DeletedUser(action.is_deleted)
             case _:
                 pass
+    
+    def _add_event(self: Self, event: DomainEvent) -> None:
+        """
+        Adds a domain event to the pending events list.
+
+        Args:
+            event: Domain event to be recorded
+        """
+        self._events.append(event)
+
+    def get_events(self: Self) -> list[DomainEvent]:
+        """
+        Retrieves and clears all pending domain events.
+
+        Returns:
+            List of pending domain events
+        """
+        actions: list[DomainEvent] = self._events.copy()
+        self._events.clear()
+        return actions
