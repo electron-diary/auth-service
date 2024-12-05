@@ -1,23 +1,25 @@
-from dataclasses import dataclass
+from enum import Enum
+from typing import Self
 
-from app.domain.base.domain_exception import DomainException
+
+class ErrorType(Enum):
+    INVALID_CONTACTS = "invalid_contacts"
+    INVALID_AGE = "invalid_age"
+    INVALID_NAME = "invalid_name"
+    INVALID_GENDER = "invalid_gender"
+    INVALID_ID = "invalid_id"
+    INVALID_STATUS = "invalid_status"
+    INVALID_PICTURES = "invalid_pictures"
+    INVALID_ADDRESS = "invalid_address"
 
 
-@dataclass
-class UserException(DomainException):
-    """
-    Base exception class for all user-related domain exceptions.
-    
-    This class extends DomainException to handle specific exceptions that occur
-    within the user domain context. It can be used as a base class for more
-    specific user-related exceptions such as:
-    - Invalid username format
-    - Invalid phone number format
-    
-    Usage:
-        raise UserException(message="Invalid username format")
-    
-    Inherits:
-        DomainException: Base exception class for all domain-specific exceptions
-    """
+class DomainError(Exception):
+    def __init__(
+        self: Self,
+        data: str,
+        exc: ErrorType,
+    ) -> None:
+        super().__init__(data)
 
+        self.data: str = data
+        self.exc: ErrorType = exc
