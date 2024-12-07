@@ -13,7 +13,7 @@ class ErrorType(Enum):
     INVALID_ADDRESS = "invalid_address"
 
 
-class DomainError(Exception):
+class UserError(Exception):
     def __init__(
         self: Self,
         data: str,

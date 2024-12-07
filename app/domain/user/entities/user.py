@@ -11,7 +11,6 @@ from app.domain.user.value_objects.gender import Gender
 from app.domain.user.value_objects.age import Age
 from app.domain.user.enums.statuses import StatusTypes
 from app.domain.domain_event import DomainEvent
-from app.domain.user.events.user_created import UserCreated
 from app.domain.user.events.address_changed import AddressChanged
 from app.domain.user.events.age_changed import AgeChanged
 from app.domain.user.events.contacts_changed import ContactsChanged
@@ -19,16 +18,21 @@ from app.domain.user.events.fullname_changed import FullnameChanged
 from app.domain.user.events.gender_changed import GenderChanged
 from app.domain.user.events.pictures_changed import ProfilePicturesChanged
 from app.domain.user.events.status_changed import StatusChanged
+from app.domain.uowed import UowedEntity
+from app.domain.unit_of_work import UnitOfWork
 
 
-class User:
+class User(UowedEntity[Id]):
     def __init__(
         self: Self,
         id: Id,
+        uow: UnitOfWork,
         contacts: Contacts,
         status: Status,
         profile: Profile
     ) -> None:
+        super().__init__(uow=uow)
+
         self.id: Id = id
         self.contacts: Contacts = contacts
         self.status: Status = status
@@ -49,6 +53,7 @@ class User:
             agregate_name='User'
         )
         self.add_event(event=event)
+        self.mark_dirty()
 
     def edit_age(self: Self, age: Age) -> None:
         if self.status.status == StatusTypes.INACTIVE:
@@ -138,6 +143,7 @@ class User:
             agregate_name='User'
         )
         self.add_event(event=event)
+        self.mark_dirty()
 
     def add_event(self: Self, event: DomainEvent) -> None:
         self._events.append(event)

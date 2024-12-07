@@ -1,6 +1,6 @@
 from typing import Self
 
-from app.domain.user.exceptions import DomainError, ErrorType
+from app.domain.user.exceptions import UserError, ErrorType
 
 
 class Address:
@@ -20,14 +20,14 @@ class Address:
 
     def to_raw(self: Self) -> None:
         if self.country and not isinstance(self.country, str):
-            raise DomainError("Invalid country", ErrorType.INVALID_ADDRESS)
+            raise UserError("Invalid country", ErrorType.INVALID_ADDRESS)
 
         if self.city and not isinstance(self.city, str):
-            raise DomainError("Invalid city", ErrorType.INVALID_ADDRESS)
+            raise UserError("Invalid city", ErrorType.INVALID_ADDRESS)
 
         if self.street and not isinstance(self.street, str):
-            raise DomainError("Invalid street", ErrorType.INVALID_ADDRESS)
+            raise UserError("Invalid street", ErrorType.INVALID_ADDRESS)
 
         if self.house_location and not isinstance(self.house_location, int):
-            raise DomainError("Invalid house location", ErrorType.INVALID_ADDRESS)
+            raise UserError("Invalid house location", ErrorType.INVALID_ADDRESS)
 

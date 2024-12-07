@@ -1,19 +1,16 @@
 from typing import Self, Protocol
 from abc import abstractmethod
 
-from app.domain.user.entities.user import User
-from app.domain.user.value_objects.id import Id
 
-
-class UserRepository(Protocol):
+class UnitOfWork(Protocol):
     @abstractmethod
-    async def add(self: Self, user: User) -> None:
+    async def commit(self: Self) -> None:
         raise NotImplementedError('Method must be implemented by subclasses')
     
     @abstractmethod
-    async def update(self: Self, user: User) -> None:
+    def register_clean(self: Self) -> None:
         raise NotImplementedError('Method must be implemented by subclasses')
     
     @abstractmethod
-    async def load(self: Self, user_id: Id) -> User | None:
+    def register_dirty(self: Self) -> None:
         raise NotImplementedError('Method must be implemented by subclasses')

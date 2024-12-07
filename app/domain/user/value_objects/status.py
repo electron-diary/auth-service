@@ -1,7 +1,7 @@
 from typing import Self
 
 from app.domain.user.enums.statuses import StatusTypes
-from app.domain.user.exceptions import DomainError, ErrorType
+from app.domain.user.exceptions import UserError, ErrorType
 
 
 class Status:
@@ -15,7 +15,7 @@ class Status:
 
     def to_raw(self: Self) -> None:
         if not self.status or not isinstance(self.status, StatusTypes):
-            raise DomainError("Invalid user status", ErrorType.INVALID_STATUS)
+            raise UserError("Invalid user status", ErrorType.INVALID_STATUS)
 
         if self.status not in list(StatusTypes):
-            raise DomainError("Invalid user status", ErrorType.INVALID_STATUS)
+            raise UserError("Invalid user status", ErrorType.INVALID_STATUS)

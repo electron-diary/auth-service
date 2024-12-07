@@ -1,6 +1,6 @@
 from typing import Self
 
-from app.domain.user.exceptions import DomainError, ErrorType
+from app.domain.user.exceptions import UserError, ErrorType
 
 
 class Fullname:
@@ -18,11 +18,11 @@ class Fullname:
 
     def to_raw(self: Self) -> None:
         if not self.first_name or not isinstance(self.first_name, str):
-            raise DomainError("Invalid firstname", ErrorType.INVALID_NAME)
+            raise UserError("Invalid firstname", ErrorType.INVALID_NAME)
 
         if not self.last_name or not isinstance(self.last_name, str):
-            raise DomainError("Invalid lastname", ErrorType.INVALID_NAME)
+            raise UserError("Invalid lastname", ErrorType.INVALID_NAME)
 
         if self.middle_name and not isinstance(self.middle_name, str):
-            raise DomainError("Invalid middlename", ErrorType.INVALID_NAME)
+            raise UserError("Invalid middlename", ErrorType.INVALID_NAME)
 

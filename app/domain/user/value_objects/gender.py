@@ -1,6 +1,6 @@
 from typing import Self
 
-from app.domain.user.exceptions import DomainError, ErrorType
+from app.domain.user.exceptions import UserError, ErrorType
 from app.domain.user.enums.gender import GenderTypes
 
 
@@ -15,7 +15,7 @@ class Gender:
 
     def to_raw(self: Self) -> None:
         if self.gender and not isinstance(self.gender, GenderTypes):
-            raise DomainError("Invalid gender", ErrorType.INVALID_GENDER)
+            raise UserError("Invalid gender", ErrorType.INVALID_GENDER)
 
         if self.gender and self.gender not in list(GenderTypes):
-            raise DomainError("Invalid gender", ErrorType.INVALID_GENDER)
+            raise UserError("Invalid gender", ErrorType.INVALID_GENDER)

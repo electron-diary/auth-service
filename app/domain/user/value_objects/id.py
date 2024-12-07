@@ -1,7 +1,7 @@
 from typing import Self
 from uuid import UUID
 
-from app.domain.user.exceptions import DomainError, ErrorType
+from app.domain.user.exceptions import UserError, ErrorType
 
 
 class Id:
@@ -15,4 +15,4 @@ class Id:
 
     def to_raw(self: Self) -> None:
         if not self.id or not isinstance(self.id, UUID):
-            raise DomainError("Invalid id", ErrorType.INVALID_ID)
+            raise UserError("Invalid id", ErrorType.INVALID_ID)
