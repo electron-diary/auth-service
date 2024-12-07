@@ -9,7 +9,7 @@ class UowedEntity[EntityId]:
         self.uow: UnitOfWork = uow
 
     def mark_new(self: Self) -> None:
-        self.uow.register_clean(self)
+        self.uow.register_new(self)
 
     def mark_dirty(self: Self) -> None:
         self.uow.register_dirty(self)

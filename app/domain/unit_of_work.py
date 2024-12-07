@@ -8,7 +8,7 @@ class UnitOfWork(Protocol):
         raise NotImplementedError('Method must be implemented by subclasses')
     
     @abstractmethod
-    def register_clean(self: Self) -> None:
+    def register_new(self: Self) -> None:
         raise NotImplementedError('Method must be implemented by subclasses')
     
     @abstractmethod
