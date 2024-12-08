@@ -1,6 +1,6 @@
 from typing import Self
 
-from app.domain.unit_of_work import UnitOfWork
+from app.domain.unit_of_work import UowTracker
 from app.domain.uowed import UowedEntity
 from app.domain.user.value_objects.address import Address
 from app.domain.user.value_objects.age import Age
@@ -15,7 +15,7 @@ class Profile(UowedEntity[Id]):
         self: Self,
         profile_id: Id,
         age: Age,
-        uow: UnitOfWork,
+        uow: UowTracker,
         gender: Gender,
         fullname: Fullname,
         address: Address,
@@ -39,7 +39,7 @@ class Profile(UowedEntity[Id]):
         fullname: Fullname,
         address: Address,
         pictures: ProfilePictures,
-        uow: UnitOfWork,
+        uow: UowTracker,
     ) -> Self:
         profile = cls(
             profile_id=profile_id,

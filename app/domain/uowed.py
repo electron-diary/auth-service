@@ -1,12 +1,12 @@
 from typing import Self
 
-from app.domain.unit_of_work import UnitOfWork
+from app.domain.unit_of_work import UowTracker
 
 
 class UowedEntity[EntityId]:
-    def __init__(self: Self, uow: UnitOfWork, id: EntityId) -> None:
+    def __init__(self: Self, uow: UowTracker, id: EntityId) -> None:
         self.id: EntityId = id
-        self.uow: UnitOfWork = uow
+        self.uow: UowTracker = uow
 
     def mark_new(self: Self) -> None:
         self.uow.register_new(self)

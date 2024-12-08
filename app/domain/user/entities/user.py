@@ -1,7 +1,7 @@
 from typing import Self
 
 from app.domain.domain_event import DomainEvent
-from app.domain.unit_of_work import UnitOfWork
+from app.domain.unit_of_work import UowTracker
 from app.domain.uowed import UowedEntity
 from app.domain.user.entities.profile import Profile
 from app.domain.user.enums.statuses import StatusTypes
@@ -27,7 +27,7 @@ class User(UowedEntity[Id]):
     def __init__(
         self: Self,
         id: Id,
-        uow: UnitOfWork,
+        uow: UowTracker,
         contacts: Contacts,
         status: Status,
         profile: Profile,
@@ -43,7 +43,7 @@ class User(UowedEntity[Id]):
     @classmethod
     def create(
         cls: type[Self],
-        uow: UnitOfWork,
+        uow: UowTracker,
         user_id: Id,
         profile_id: Id,
         age: Age,

@@ -2,11 +2,7 @@ from abc import abstractmethod
 from typing import Protocol, Self
 
 
-class UnitOfWork(Protocol):
-    @abstractmethod
-    async def commit(self: Self) -> None:
-        raise NotImplementedError("Method must be implemented by subclasses")
-
+class UowTracker(Protocol):
     @abstractmethod
     def register_new(self: Self) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
