@@ -41,7 +41,7 @@ class Profile(UowedEntity[Id]):
         pictures: ProfilePictures,
         uow: UnitOfWork,
     ) -> Self:
-        profile = Profile(
+        profile = cls(
             profile_id=profile_id,
             age=age,
             gender=gender,
