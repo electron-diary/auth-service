@@ -1,7 +1,7 @@
 from typing import Self
 
 from app.domain.user.enums.statuses import StatusTypes
-from app.domain.user.exceptions import UserError, ErrorType
+from app.domain.user.exceptions import ErrorType, UserError
 
 
 class Status:

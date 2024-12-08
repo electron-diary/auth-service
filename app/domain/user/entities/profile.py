@@ -1,13 +1,13 @@
 from typing import Self
 
+from app.domain.unit_of_work import UnitOfWork
+from app.domain.uowed import UowedEntity
 from app.domain.user.value_objects.address import Address
+from app.domain.user.value_objects.age import Age
 from app.domain.user.value_objects.fullname import Fullname
 from app.domain.user.value_objects.gender import Gender
-from app.domain.user.value_objects.profile_pictures import ProfilePictures
-from app.domain.user.value_objects.age import Age
 from app.domain.user.value_objects.id import Id
-from app.domain.uowed import UowedEntity
-from app.domain.unit_of_work import UnitOfWork
+from app.domain.user.value_objects.profile_pictures import ProfilePictures
 
 
 class Profile(UowedEntity[Id]):
@@ -19,7 +19,7 @@ class Profile(UowedEntity[Id]):
         gender: Gender,
         fullname: Fullname,
         address: Address,
-        pictures: ProfilePictures
+        pictures: ProfilePictures,
     ) -> None:
         super().__init__(uow=uow, id=profile_id)
 
@@ -39,7 +39,7 @@ class Profile(UowedEntity[Id]):
         fullname: Fullname,
         address: Address,
         pictures: ProfilePictures,
-        uow: UnitOfWork
+        uow: UnitOfWork,
     ) -> Self:
         profile = Profile(
             profile_id=profile_id,
@@ -48,7 +48,7 @@ class Profile(UowedEntity[Id]):
             fullname=fullname,
             address=address,
             pictures=pictures,
-            uow=uow
+            uow=uow,
         )
         profile.mark_new()
 

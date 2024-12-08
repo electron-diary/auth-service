@@ -1,16 +1,10 @@
 from typing import Self
 
-from app.domain.user.value_objects.id import Id
-from app.domain.user.value_objects.contacts import Contacts
-from app.domain.user.value_objects.status import Status
-from app.domain.user.entities.profile import Profile
-from app.domain.user.value_objects.fullname import Fullname
-from app.domain.user.value_objects.profile_pictures import ProfilePictures
-from app.domain.user.value_objects.address import Address
-from app.domain.user.value_objects.gender import Gender
-from app.domain.user.value_objects.age import Age
-from app.domain.user.enums.statuses import StatusTypes
 from app.domain.domain_event import DomainEvent
+from app.domain.unit_of_work import UnitOfWork
+from app.domain.uowed import UowedEntity
+from app.domain.user.entities.profile import Profile
+from app.domain.user.enums.statuses import StatusTypes
 from app.domain.user.events.address_changed import AddressChanged
 from app.domain.user.events.age_changed import AgeChanged
 from app.domain.user.events.contacts_changed import ContactsChanged
@@ -18,9 +12,15 @@ from app.domain.user.events.fullname_changed import FullnameChanged
 from app.domain.user.events.gender_changed import GenderChanged
 from app.domain.user.events.pictures_changed import ProfilePicturesChanged
 from app.domain.user.events.status_changed import StatusChanged
-from app.domain.uowed import UowedEntity
-from app.domain.unit_of_work import UnitOfWork
 from app.domain.user.events.user_created import UserCreated
+from app.domain.user.value_objects.address import Address
+from app.domain.user.value_objects.age import Age
+from app.domain.user.value_objects.contacts import Contacts
+from app.domain.user.value_objects.fullname import Fullname
+from app.domain.user.value_objects.gender import Gender
+from app.domain.user.value_objects.id import Id
+from app.domain.user.value_objects.profile_pictures import ProfilePictures
+from app.domain.user.value_objects.status import Status
 
 
 class User(UowedEntity[Id]):
@@ -30,7 +30,7 @@ class User(UowedEntity[Id]):
         uow: UnitOfWork,
         contacts: Contacts,
         status: Status,
-        profile: Profile
+        profile: Profile,
     ) -> None:
         super().__init__(uow=uow, id=id)
 
@@ -39,9 +39,9 @@ class User(UowedEntity[Id]):
         self.status: Status = status
         self.profile: Profile = profile
         self._events: list[DomainEvent] = []
-    
+
     @classmethod
-    def user_factory(
+    def create(
         cls: type[Self],
         uow: UnitOfWork,
         user_id: Id,
@@ -52,7 +52,7 @@ class User(UowedEntity[Id]):
         address: Address,
         contacts: Contacts,
         pictures: ProfilePictures,
-        status: Status
+        status: Status,
     ) -> Self:
         profile: Profile = Profile.create(
             age=age,
@@ -61,21 +61,21 @@ class User(UowedEntity[Id]):
             fullname=fullname,
             address=address,
             pictures=pictures,
-            uow=uow
+            uow=uow,
         )
         user: User = cls(
             id=user_id,
             uow=uow,
             contacts=contacts,
             status=status,
-            profile=profile
+            profile=profile,
         )
         user.mark_new()
 
         event: UserCreated = UserCreated(
             aggregate_id=user_id.id,
-            event_type='UserCreated',
-            agregate_name='User',
+            event_type="UserCreated",
+            agregate_name="User",
             user_id=user_id.id,
             status=status.status,
             phone_number=contacts.phone_number,
@@ -90,7 +90,7 @@ class User(UowedEntity[Id]):
             city=address.city,
             street=address.street,
             house_location=address.house_location,
-            pictures=pictures.profile_pictures
+            pictures=pictures.profile_pictures,
         )
         user.add_event(event=event)
 
@@ -99,15 +99,15 @@ class User(UowedEntity[Id]):
     def edit_contacts(self: Self, contacts: Contacts) -> None:
         if self.status.status == StatusTypes.INACTIVE:
             raise ...
-        
+
         self.contacts = contacts
         event: ContactsChanged = ContactsChanged(
             aggregate_id=self.id.id,
             user_id=self.id.id,
             email=self.contacts.email,
             phone_number=self.contacts.phone_number,
-            event_type='ContactsChanged',
-            agregate_name='User'
+            event_type="ContactsChanged",
+            agregate_name="User",
         )
         self.add_event(event=event)
         self.mark_dirty()
@@ -115,35 +115,35 @@ class User(UowedEntity[Id]):
     def edit_age(self: Self, age: Age) -> None:
         if self.status.status == StatusTypes.INACTIVE:
             raise ...
-        
+
         self.profile.edit_age(age=age)
         event: AgeChanged = AgeChanged(
             aggregate_id=self.id.id,
             user_id=self.id.id,
             age=self.profile.age.age,
-            event_type='AgeChanged',
-            agregate_name='User'
+            event_type="AgeChanged",
+            agregate_name="User",
         )
         self.add_event(event=event)
 
     def edit_gender(self: Self, gender: Gender) -> None:
         if self.status.status == StatusTypes.INACTIVE:
             raise ...
-        
+
         self.profile.edit_gender(gender=gender)
         event: GenderChanged = GenderChanged(
             aggregate_id=self.id.id,
             user_id=self.id.id,
             gender=self.profile.gender.gender.value,
-            event_type='GenderChanged',
-            agregate_name='User'
+            event_type="GenderChanged",
+            agregate_name="User",
         )
         self.add_event(event=event)
 
     def edit_address(self: Self, address: Address) -> None:
         if self.status.status == StatusTypes.INACTIVE:
             raise ...
-        
+
         self.profile.edit_address(address=address)
         event: AddressChanged = AddressChanged(
             aggregate_id=self.id.id,
@@ -152,15 +152,15 @@ class User(UowedEntity[Id]):
             city=self.profile.address.city,
             street=self.profile.address.street,
             house_location=self.profile.address.house_location,
-            event_type='AddressChanged',
-            agregate_name='User'
+            event_type="AddressChanged",
+            agregate_name="User",
         )
         self.add_event(event=event)
 
     def edit_fullname(self: Self, fullname: Fullname) -> None:
         if self.status.status == StatusTypes.INACTIVE:
             raise ...
-        
+
         self.profile.edit_fullname(fullname=fullname)
         event: FullnameChanged = FullnameChanged(
             aggregate_id=self.id.id,
@@ -168,36 +168,36 @@ class User(UowedEntity[Id]):
             first_name=self.profile.fullname.first_name,
             last_name=self.profile.fullname.last_name,
             middle_name=self.profile.fullname.middle_name,
-            event_type='FullnameChanged',
-            agregate_name='User'
+            event_type="FullnameChanged",
+            agregate_name="User",
         )
         self.add_event(event=event)
 
     def edit_pictures(self: Self, pictures: ProfilePictures) -> None:
         if self.status.status == StatusTypes.INACTIVE:
             raise ...
-        
+
         self.profile.edit_pictures(pictures=pictures)
         event: ProfilePicturesChanged = ProfilePicturesChanged(
             aggregate_id=self.id.id,
             user_id=self.id.id,
             profile_pictures=self.profile.pictures.profile_pictures,
-            event_type='ProfilePicturesChanged',
-            agregate_name='User'
+            event_type="ProfilePicturesChanged",
+            agregate_name="User",
         )
         self.add_event(event=event)
 
     def edit_status(self: Self, status: Status) -> None:
         if self.status.status == StatusTypes.INACTIVE:
             raise ...
-        
+
         self.status = status
         event: StatusChanged = StatusChanged(
             aggregate_id=self.id.id,
             user_id=self.id.id,
             status=self.status.status.value,
-            event_type='StatusChanged',
-            agregate_name='User'
+            event_type="StatusChanged",
+            agregate_name="User",
         )
         self.add_event(event=event)
         self.mark_dirty()
@@ -208,5 +208,5 @@ class User(UowedEntity[Id]):
     def raise_events(self: Self) -> list[DomainEvent]:
         events: list[DomainEvent] = self._events.copy()
         self._events.clear()
-        
+
         return events

@@ -1,6 +1,6 @@
 from typing import Self
 
-from app.domain.user.exceptions import UserError, ErrorType
+from app.domain.user.exceptions import ErrorType, UserError
 
 
 class Contacts:

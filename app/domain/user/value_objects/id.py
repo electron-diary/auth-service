@@ -1,7 +1,7 @@
 from typing import Self
 from uuid import UUID
 
-from app.domain.user.exceptions import UserError, ErrorType
+from app.domain.user.exceptions import ErrorType, UserError
 
 
 class Id:
