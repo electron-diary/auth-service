@@ -20,6 +20,7 @@ from app.domain.user.events.pictures_changed import ProfilePicturesChanged
 from app.domain.user.events.status_changed import StatusChanged
 from app.domain.uowed import UowedEntity
 from app.domain.unit_of_work import UnitOfWork
+from app.domain.user.events.user_created import UserCreated
 
 
 class User(UowedEntity[Id]):
@@ -31,13 +32,69 @@ class User(UowedEntity[Id]):
         status: Status,
         profile: Profile
     ) -> None:
-        super().__init__(uow=uow)
+        super().__init__(uow=uow, id=id)
 
         self.id: Id = id
         self.contacts: Contacts = contacts
         self.status: Status = status
         self.profile: Profile = profile
         self._events: list[DomainEvent] = []
+    
+    @classmethod
+    def user_factory(
+        cls: type[Self],
+        uow: UnitOfWork,
+        user_id: Id,
+        profile_id: Id,
+        age: Age,
+        gender: Gender,
+        fullname: Fullname,
+        address: Address,
+        contacts: Contacts,
+        pictures: ProfilePictures,
+        status: Status
+    ) -> Self:
+        profile: Profile = Profile.create(
+            age=age,
+            profile_id=profile_id,
+            gender=gender,
+            fullname=fullname,
+            address=address,
+            pictures=pictures,
+            uow=uow
+        )
+        user: User = cls(
+            id=user_id,
+            uow=uow,
+            contacts=contacts,
+            status=status,
+            profile=profile
+        )
+        user.mark_new()
+
+        event: UserCreated = UserCreated(
+            aggregate_id=user_id.id,
+            event_type='UserCreated',
+            agregate_name='User',
+            user_id=user_id.id,
+            status=status.status,
+            phone_number=contacts.phone_number,
+            email=contacts.email,
+            profile_id=profile_id.id,
+            age=age.age,
+            gender=gender.gender,
+            first_name=fullname.first_name,
+            last_name=fullname.last_name,
+            middle_name=fullname.middle_name,
+            country=address.country,
+            city=address.city,
+            street=address.street,
+            house_location=address.house_location,
+            pictures=pictures.profile_pictures
+        )
+        user.add_event(event=event)
+
+        return user
 
     def edit_contacts(self: Self, contacts: Contacts) -> None:
         if self.status.status == StatusTypes.INACTIVE:

@@ -21,7 +21,7 @@ class Profile(UowedEntity[Id]):
         address: Address,
         pictures: ProfilePictures
     ) -> None:
-        super().__init__(uow=uow)
+        super().__init__(uow=uow, id=profile_id)
 
         self.profile_id: Id = profile_id
         self.age: Age = age
@@ -29,6 +29,30 @@ class Profile(UowedEntity[Id]):
         self.fullname: Fullname = fullname
         self.address: Address = address
         self.pictures: ProfilePictures = pictures
+
+    @classmethod
+    def create(
+        cls: type[Self],
+        age: Age,
+        profile_id: Id,
+        gender: Gender,
+        fullname: Fullname,
+        address: Address,
+        pictures: ProfilePictures,
+        uow: UnitOfWork
+    ) -> Self:
+        profile = Profile(
+            profile_id=profile_id,
+            age=age,
+            gender=gender,
+            fullname=fullname,
+            address=address,
+            pictures=pictures,
+            uow=uow
+        )
+        profile.mark_new()
+
+        return profile
 
     def edit_age(self: Self, age: Age) -> None:
         self.age = age
