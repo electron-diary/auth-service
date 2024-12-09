@@ -12,7 +12,7 @@ class Profile(UowedEntity[None]):
         uow: UnitOfWorkInterface,
         id: ...,
         avatars: list[Avatar],
-        social_networks: list[SocialNetwork]
+        social_networks: list[SocialNetwork],
     ) -> None:
         super().__init__(uow=uow, id=id)
 
@@ -25,7 +25,7 @@ class Profile(UowedEntity[None]):
         profile.mark_new()
 
         return profile
-    
+
     def add_avatar(self: Self) -> None:
         avatar: Avatar = Avatar.create(uow=self.uow)
         self.avatars.append(avatar)

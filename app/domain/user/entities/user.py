@@ -5,12 +5,12 @@ from app.domain.uowed import UowedEntity
 from app.domain.user.entities.profile import Profile
 
 
-class UserEntity(UowedEntity[None]):
+class User(UowedEntity[None]):
     def __init__(
         self: Self,
         uow: UnitOfWorkInterface,
         id: ...,
-        profile: Profile
+        profile: Profile,
     ) -> None:
         super().__init__(uow=uow, id=id)
 
@@ -22,7 +22,7 @@ class UserEntity(UowedEntity[None]):
         user.mark_new()
 
         return user
-    
+
     def add_avatar(self: Self) -> None:
         self.profile.add_avatar()
 
