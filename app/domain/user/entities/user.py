@@ -26,14 +26,15 @@ class User(UowedEntity[None]):
     def add_avatar(self: Self) -> None:
         self.profile.add_avatar()
 
-    def delete_avatar(self: Self):
+    def delete_avatar(self: Self) -> None:
         self.profile.delete_avatar()
 
     def add_social_network(self: Self) -> None:
         self.profile.add_social_network()
 
-    def delete_social_network(self: Self):
+    def delete_social_network(self: Self) -> None:
         self.profile.delete_social_network()
 
     def delete(self: Self) -> None:
+        self.profile.delete()
         self.mark_deleted()

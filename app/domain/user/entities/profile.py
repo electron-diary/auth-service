@@ -45,4 +45,10 @@ class Profile(UowedEntity[None]):
                 social_network.delete()
 
     def delete(self: Self) -> None:
+        for avatar in self.avatars:
+            avatar.delete()
+
+        for social_network in self.social_networks:
+            social_network.delete()
+        
         self.mark_deleted()
