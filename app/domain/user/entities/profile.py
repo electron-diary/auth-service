@@ -20,6 +20,7 @@ class Profile(UowedEntity[None]):
 
         self.avatars: list[Avatar] = avatars
         self.social_networks: list[SocialNetwork] = social_networks
+        self.addresses: list[Address] = addresses
 
     @classmethod
     def create(cls: type[Self], uow: UnitOfWorkInterface) -> Self:
