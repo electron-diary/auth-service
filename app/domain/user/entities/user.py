@@ -35,6 +35,12 @@ class User(UowedEntity[None]):
     def delete_social_network(self: Self) -> None:
         self.profile.delete_social_network()
 
+    def add_address(self: Self) -> None:
+        self.profile.add_address()
+
+    def delete_address(self: Self) -> None:
+        self.profile.delete_address()
+
     def delete(self: Self) -> None:
         self.profile.delete()
         self.mark_deleted()

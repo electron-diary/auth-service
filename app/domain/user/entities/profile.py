@@ -4,6 +4,7 @@ from app.domain.unit_of_work import UnitOfWorkInterface
 from app.domain.uowed import UowedEntity
 from app.domain.user.entities.avatar import Avatar
 from app.domain.user.entities.social_network import SocialNetwork
+from app.domain.user.entities.address import Address
 
 
 class Profile(UowedEntity[None]):
@@ -13,6 +14,7 @@ class Profile(UowedEntity[None]):
         id: ...,
         avatars: list[Avatar],
         social_networks: list[SocialNetwork],
+        addresses: list[Address],
     ) -> None:
         super().__init__(uow=uow, id=id)
 
@@ -25,6 +27,15 @@ class Profile(UowedEntity[None]):
         profile.mark_new()
 
         return profile
+    
+    def add_address(self: Self) -> None:
+        address: Address = Address.create(uow=self.uow)
+        self.addresses.append(address)
+
+    def delete_address(self: Self):
+        for address in self.addresses:
+            if address.id == ...:
+                address.delete()
 
     def add_avatar(self: Self) -> None:
         avatar: Avatar = Avatar.create(uow=self.uow)
@@ -50,5 +61,8 @@ class Profile(UowedEntity[None]):
 
         for social_network in self.social_networks:
             social_network.delete()
+
+        for address in self.addresses:
+            address.delete()
         
         self.mark_deleted()
