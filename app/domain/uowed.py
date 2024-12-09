@@ -14,3 +14,6 @@ class UowedEntity[EntityId]:
     def mark_dirty(self: Self) -> None:
         self.uow.register_dirty(self)
 
+    def mark_deleted(self: Self) -> None:
+        self.uow.register_deleted(self)
+
