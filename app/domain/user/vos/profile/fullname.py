@@ -13,7 +13,7 @@ class Fullname:
         self.middlename: str | None = middlename
 
         self.validate()
-    
+
     def validate(self: Self) -> None:
         if not self.firstname:
             raise ValueError("Firstname cannot be empty")

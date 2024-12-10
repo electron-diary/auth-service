@@ -1,23 +1,21 @@
+from datetime import date
 from typing import Self
 from uuid import UUID
-from datetime import date
 
 from app.domain.unit_of_work import UnitOfWorkInterface
 from app.domain.uowed import UowedEntity
+from app.domain.user.entities.address import Address
+from app.domain.user.entities.avatar import Avatar
 from app.domain.user.entities.profile import Profile
-from app.domain.user.enums.statuses import UserStatus
+from app.domain.user.entities.social_network import SocialNetwork
+from app.domain.user.enums.genders import Genders
+from app.domain.user.enums.statuses import ProfileStatus, UserStatus
+from app.domain.user.vos.profile.peofile_type import ProfileType
+from app.domain.user.vos.profile.profile_status import ProfileStatus
 from app.domain.user.vos.user.contacts import Contacts
 from app.domain.user.vos.user.id import Id
 from app.domain.user.vos.user.user_status import Status
 from app.domain.user.vos.user.username import Username
-from app.domain.user.vos.profile.peofile_type import ProfileType
-from app.domain.user.vos.profile.profile_status import ProfileStatus
-from app.domain.user.enums.genders import Genders
-from app.domain.user.enums.statuses import ProfileStatus
-from app.domain.user.entities.avatar import Avatar
-from app.domain.user.entities.address import Address
-from app.domain.user.entities.social_network import SocialNetwork
-
 
 
 class User(UowedEntity[Id]):
@@ -231,7 +229,7 @@ class User(UowedEntity[Id]):
         for profile in self.profiles:
             if profile.id.value == profile_id:
                 profile.delete_social_network(social_network_id=social_network_id)
-    
+
     def edit_bio(self: Self, bio: str | None, profile_id: UUID) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
@@ -257,7 +255,7 @@ class User(UowedEntity[Id]):
         for profile in self.profiles:
             if profile.id.value == profile_id:
                 profile.edit_fullname(firstname=firstname, lastname=lastname, middlename=middlename)
-    
+
     def edit_gender(self: Self, gender: Genders | None, profile_id: UUID) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
@@ -269,7 +267,7 @@ class User(UowedEntity[Id]):
     def edit_profile_status(self: Self, status: ProfileStatus, profile_id: UUID) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
-        
+
         for profile in self.profiles:
             if profile.id.value == profile_id:
                 profile.edit_status(status=status)

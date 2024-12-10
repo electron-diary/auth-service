@@ -1,21 +1,21 @@
+from datetime import date
 from typing import Self
 from uuid import UUID
-from datetime import date
 
 from app.domain.unit_of_work import UnitOfWorkInterface
 from app.domain.uowed import UowedEntity
 from app.domain.user.entities.address import Address
 from app.domain.user.entities.avatar import Avatar
 from app.domain.user.entities.social_network import SocialNetwork
-from app.domain.user.vos.user.id import Id
+from app.domain.user.enums.genders import Genders
+from app.domain.user.enums.statuses import ProfileStatus
 from app.domain.user.vos.profile.bio import Bio
 from app.domain.user.vos.profile.birth_date import BirthDate
 from app.domain.user.vos.profile.fullname import Fullname
 from app.domain.user.vos.profile.gender import Gender
 from app.domain.user.vos.profile.peofile_type import ProfileType
 from app.domain.user.vos.profile.profile_status import ProfileStatus
-from app.domain.user.enums.genders import Genders
-from app.domain.user.enums.statuses import ProfileStatus
+from app.domain.user.vos.user.id import Id
 
 
 class Profile(UowedEntity[Id]):
@@ -47,7 +47,7 @@ class Profile(UowedEntity[Id]):
 
     @classmethod
     def create(
-        cls: type[Self], 
+        cls: type[Self],
         uow: UnitOfWorkInterface,
         profile_id: UUID,
         fullname: str,
@@ -87,7 +87,7 @@ class Profile(UowedEntity[Id]):
     ) -> None:
         if self.profile_status.value != ProfileStatus.ACTIVE:
             raise Exception("Profile is not active")
-        
+
         address: Address = Address.create(
             uow=self.uow,
             id=address_id,
@@ -106,7 +106,7 @@ class Profile(UowedEntity[Id]):
     ) -> None:
         if self.profile_status.value != ProfileStatus.ACTIVE:
             raise Exception("Profile is not active")
-        
+
         social_network: SocialNetwork = SocialNetwork.create(
             uow=self.uow,
             social_network_id=social_network_id,
@@ -124,7 +124,7 @@ class Profile(UowedEntity[Id]):
     ) -> None:
         if self.profile_status.value != ProfileStatus.ACTIVE:
             raise Exception("Profile is not active")
-        
+
         avatar: Avatar = Avatar.create(
             uow=self.uow,
             file_id=file_id,
@@ -137,7 +137,7 @@ class Profile(UowedEntity[Id]):
     def edit_city(self: Self, address_id: UUID, city: str) -> None:
         if self.profile_status.value != ProfileStatus.ACTIVE:
             raise Exception("Profile is not active")
-        
+
         for address in self.addresses:
             if address.id.value == address_id:
                 address.edit_city(city=city)
@@ -145,7 +145,7 @@ class Profile(UowedEntity[Id]):
     def edit_region(self: Self, address_id: UUID, region: str) -> None:
         if self.profile_status.value != ProfileStatus.ACTIVE:
             raise Exception("Profile is not active")
-        
+
         for address in self.addresses:
             if address.id.value == address_id:
                 address.edit_region(region=region)
@@ -153,7 +153,7 @@ class Profile(UowedEntity[Id]):
     def edit_street(self: Self, address_id: UUID, street: str) -> None:
         if self.profile_status.value != ProfileStatus.ACTIVE:
             raise Exception("Profile is not active")
-        
+
         for address in self.addresses:
             if address.id.value == address_id:
                 address.edit_street(street=street)
@@ -161,7 +161,7 @@ class Profile(UowedEntity[Id]):
     def edit_house_location(self: Self, address_id: UUID, house_location: str) -> None:
         if self.profile_status.value != ProfileStatus.ACTIVE:
             raise Exception("Profile is not active")
-        
+
         for address in self.addresses:
             if address.id.value == address_id:
                 address.edit_house_location(house_location=house_location)
@@ -169,7 +169,7 @@ class Profile(UowedEntity[Id]):
     def delete_avatar(self: Self, file_id: UUID) -> None:
         if self.profile_status.value != ProfileStatus.ACTIVE:
             raise Exception("Profile is not active")
-        
+
         for avatar in self.avatars:
             if avatar.id.value == file_id:
                 avatar.delete()
@@ -177,7 +177,7 @@ class Profile(UowedEntity[Id]):
     def delete_social_network(self: Self, social_network_id: UUID) -> None:
         if self.profile_status.value != ProfileStatus.ACTIVE:
             raise Exception("Profile is not active")
-        
+
         for social_network in self.social_networks:
             if social_network.id.value == social_network_id:
                 social_network.delete()
@@ -185,7 +185,7 @@ class Profile(UowedEntity[Id]):
     def delete_address(self: Self, address_id: UUID) -> None:
         if self.profile_status.value != ProfileStatus.ACTIVE:
             raise Exception("Profile is not active")
-        
+
         for address in self.addresses:
             if address.id.value == address_id:
                 address.delete()
@@ -205,14 +205,14 @@ class Profile(UowedEntity[Id]):
         self.mark_dirty()
 
     def edit_fullname(
-        self: Self, firstname: str, lastname: str, middlename: str | None = None
+        self: Self, firstname: str, lastname: str, middlename: str | None = None,
     ) -> None:
         if self.profile_status.value != ProfileStatus.ACTIVE:
             raise Exception("Profile is not active")
 
         self.fullname = Fullname(firstname=firstname, lastname=lastname, middlename=middlename)
         self.mark_dirty()
-    
+
     def edit_gender(self: Self, gender: Genders | None) -> None:
         if self.profile_status.value != ProfileStatus.ACTIVE:
             raise Exception("Profile is not active")
@@ -223,7 +223,7 @@ class Profile(UowedEntity[Id]):
     def edit_status(self: Self, status: ProfileStatus) -> None:
         self.profile_status = ProfileStatus(status)
         self.mark_dirty()
-    
+
     def delete(self: Self) -> None:
         for avatar in self.avatars:
             avatar.delete()
