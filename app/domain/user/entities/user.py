@@ -97,15 +97,24 @@ class User(UowedEntity[None]):
             if profile.id == ...:
                 profile.delete_avatar(file_id=file_id)
 
-    def add_social_network(self: Self) -> None:
+    def add_social_network(
+        self: Self,
+        social_network_id: UUID,
+        social_network_link: str,
+        social_network_type: str
+    ) -> None:
         for profile in self.profiles:
             if profile.id == ...:
-                profile.add_social_network()
+                profile.add_social_network(
+                    social_network_id=social_network_id,
+                    social_network_link=social_network_link,
+                    social_network_type=social_network_type
+                )
 
-    def delete_social_network(self: Self) -> None:
+    def delete_social_network(self: Self, social_network_id: UUID) -> None:
         for profile in self.profiles:
             if profile.id == ...:
-                profile.delete_social_network()
+                profile.delete_social_network(social_network_id=social_network_id)
 
     def delete(self: Self) -> None:
         self.mark_deleted()

@@ -89,18 +89,28 @@ class Profile(UowedEntity[None]):
         )
         self.avatars.append(avatar)
 
-    def delete_avatar(self: Self, file_id: UUID):
+    def delete_avatar(self: Self, file_id: UUID) -> None:
         for avatar in self.avatars:
             if avatar.id.value == file_id:
                 avatar.delete()
                 
-    def add_social_network(self: Self) -> None:
-        social_network: SocialNetwork = SocialNetwork.create(uow=self.uow)
+    def add_social_network(
+        self: Self, 
+        social_network_id: UUID,
+        social_network_link: str,
+        social_network_type: str
+    ) -> None:
+        social_network: SocialNetwork = SocialNetwork.create(
+            uow=self.uow,
+            social_network_id=social_network_id,
+            social_network_link=social_network_link,
+            social_network_type=social_network_type
+        )
         self.social_networks.append(social_network)
 
-    def delete_social_network(self: Self):
+    def delete_social_network(self: Self, social_network_id: UUID) -> None:
         for social_network in self.social_networks:
-            if social_network.id == ...:
+            if social_network.id.value == social_network_id:
                 social_network.delete()
 
     def delete(self: Self) -> None:
