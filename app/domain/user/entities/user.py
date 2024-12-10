@@ -76,15 +76,26 @@ class User(UowedEntity[None]):
             if profile.id == ...:
                 profile.delete()
 
-    def add_avatar(self: Self) -> None:
+    def add_avatar(
+        self: Self,
+        file_id: UUID,
+        file_name: str,
+        file_size: int,
+        file_extension: str,
+    ) -> None:
         for profile in self.profiles:
             if profile.id == ...:
-                profile.add_avatar()
+                profile.add_avatar(
+                    file_id=file_id,
+                    file_name=file_name,
+                    file_size=file_size,
+                    file_extension=file_extension
+                )
 
-    def delete_avatar(self: Self) -> None:
+    def delete_avatar(self: Self, file_id: UUID) -> None:
         for profile in self.profiles:
             if profile.id == ...:
-                profile.delete_avatar()
+                profile.delete_avatar(file_id=file_id)
 
     def add_social_network(self: Self) -> None:
         for profile in self.profiles:

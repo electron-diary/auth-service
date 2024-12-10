@@ -73,15 +73,27 @@ class Profile(UowedEntity[None]):
             if address.id.value == address_id:
                 address.edit_house_location(house_location=house_location)
 
-    def add_avatar(self: Self) -> None:
-        avatar: Avatar = Avatar.create(uow=self.uow)
+    def add_avatar(
+        self: Self,
+        file_id: UUID,
+        file_name: str,
+        file_size: int,
+        file_extension: str,
+    ) -> None:
+        avatar: Avatar = Avatar.create(
+            uow=self.uow,
+            file_id=file_id,
+            file_name=file_name,
+            file_size=file_size,
+            file_extension=file_extension
+        )
         self.avatars.append(avatar)
 
-    def delete_avatar(self: Self):
+    def delete_avatar(self: Self, file_id: UUID):
         for avatar in self.avatars:
-            if avatar.id == ...:
+            if avatar.id.value == file_id:
                 avatar.delete()
-
+                
     def add_social_network(self: Self) -> None:
         social_network: SocialNetwork = SocialNetwork.create(uow=self.uow)
         self.social_networks.append(social_network)
