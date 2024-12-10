@@ -6,13 +6,14 @@ from app.domain.uowed import UowedEntity
 from app.domain.user.entities.address import Address
 from app.domain.user.entities.avatar import Avatar
 from app.domain.user.entities.social_network import SocialNetwork
+from app.domain.user.vos.user.id import Id
 
 
-class Profile(UowedEntity[None]):
+class Profile(UowedEntity[Id]):
     def __init__(
         self: Self,
         uow: UnitOfWorkInterface,
-        id: ...,
+        id: Id,
         avatars: list[Avatar],
         social_networks: list[SocialNetwork],
         addresses: list[Address],
