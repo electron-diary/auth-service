@@ -1,5 +1,4 @@
-from typing import Self, Literal
-
+from typing import Literal, Self
 
 extensions = Literal["jpg", "png", "gif", "jpeg", "webp"]
 
@@ -12,10 +11,10 @@ class Extension:
         self.value: extensions = value
 
         self.validate()
-    
+
     def validate(self: Self) -> None:
         if not self.value:
             raise ValueError("Extension cannot be empty")
-        
+
         if self.value not in ["jpg", "png", "gif", "jpeg", "webp"]:
             raise ValueError("Extension must be a valid image extension")

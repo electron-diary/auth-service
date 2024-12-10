@@ -1,13 +1,13 @@
 from typing import Self
 from uuid import UUID
 
-from app.domain.uowed import UowedEntity
 from app.domain.unit_of_work import UnitOfWorkInterface
-from app.domain.user.vos.user.id import Id
+from app.domain.uowed import UowedEntity
 from app.domain.user.vos.address.city import City
 from app.domain.user.vos.address.house_location import HouseLocation
 from app.domain.user.vos.address.region import Region
 from app.domain.user.vos.address.street import Street
+from app.domain.user.vos.user.id import Id
 
 
 class Address(UowedEntity[Id]):
@@ -18,7 +18,7 @@ class Address(UowedEntity[Id]):
         city: City,
         region: Region,
         street: Street,
-        house_location: HouseLocation
+        house_location: HouseLocation,
     ) -> None:
         super().__init__(uow=uow, id=id)
 
@@ -29,26 +29,26 @@ class Address(UowedEntity[Id]):
 
     @classmethod
     def create(
-        cls: type[Self], 
+        cls: type[Self],
         uow: UnitOfWorkInterface,
         id: UUID,
         city: str,
         region: str,
         street: str,
-        house_location: str
+        house_location: str,
     ) -> Self:
         address = cls(
-            uow=uow, 
+            uow=uow,
             id=Id(id),
             city=City(city),
             region=Region(region),
             street=Street(street),
-            house_location=HouseLocation(house_location)
+            house_location=HouseLocation(house_location),
         )
         address.mark_new()
 
         return address
-    
+
     def edit_city(self: Self, city: str) -> None:
         self.city = City(city)
         self.mark_dirty()

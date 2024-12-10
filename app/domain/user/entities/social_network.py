@@ -23,14 +23,14 @@ class SocialNetwork(UowedEntity[Id]):
 
     @classmethod
     def create(
-        cls: type[Self], 
+        cls: type[Self],
         uow: UnitOfWorkInterface,
         social_network_id: UUID,
         social_network_type: str,
         social_network_link: str,
     ) -> Self:
         social_network = cls(
-            uow=uow, 
+            uow=uow,
             id=Id(social_network_id),
             type=SocialNetworkType(social_network_type),
             link=SocialNetworkLink(social_network_link),

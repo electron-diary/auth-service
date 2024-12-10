@@ -4,7 +4,7 @@ from typing import Self
 class Street:
     def __init__(
         self: Self,
-        value: str
+        value: str,
     ) -> None:
         self.value: str = value
 
@@ -12,7 +12,7 @@ class Street:
 
     def validate(self: Self) -> None:
         if not isinstance(self.value, str):
-            raise TypeError('Street value must be a string')
+            raise TypeError("Street value must be a string")
 
         if not self.value:
-            raise ValueError('Street value must not be empty')
+            raise ValueError("Street value must not be empty")

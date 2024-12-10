@@ -4,7 +4,7 @@ from typing import Self
 class FileName:
     def __init__(
         self: Self,
-        value: str
+        value: str,
     ) -> None:
         self.value: str = value
 
@@ -12,7 +12,7 @@ class FileName:
 
     def validate(self: Self) -> None:
         if not self.value:
-            raise ValueError('File name must not be empty')
-        
+            raise ValueError("File name must not be empty")
+
         if not isinstance(self.value, str):
-            raise TypeError('File name must be a string')
+            raise TypeError("File name must be a string")

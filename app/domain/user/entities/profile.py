@@ -3,9 +3,9 @@ from uuid import UUID
 
 from app.domain.unit_of_work import UnitOfWorkInterface
 from app.domain.uowed import UowedEntity
+from app.domain.user.entities.address import Address
 from app.domain.user.entities.avatar import Avatar
 from app.domain.user.entities.social_network import SocialNetwork
-from app.domain.user.entities.address import Address
 
 
 class Profile(UowedEntity[None]):
@@ -29,14 +29,14 @@ class Profile(UowedEntity[None]):
         profile.mark_new()
 
         return profile
-    
+
     def add_address(
         self: Self,
         address_id: UUID,
         city: str,
         region: str,
         street: str,
-        house_location: str
+        house_location: str,
     ) -> None:
         address: Address = Address.create(
             uow=self.uow,
@@ -44,14 +44,39 @@ class Profile(UowedEntity[None]):
             city=city,
             region=region,
             street=street,
-            house_location=house_location
+            house_location=house_location,
         )
         self.addresses.append(address)
 
-    def delete_address(self: Self, address_id: UUID) -> None:
-        for address in self.addresses:
-            if address.id.value == address_id:
-                address.delete()
+    def add_social_network(
+        self: Self,
+        social_network_id: UUID,
+        social_network_link: str,
+        social_network_type: str,
+    ) -> None:
+        social_network: SocialNetwork = SocialNetwork.create(
+            uow=self.uow,
+            social_network_id=social_network_id,
+            social_network_link=social_network_link,
+            social_network_type=social_network_type,
+        )
+        self.social_networks.append(social_network)
+
+    def add_avatar(
+        self: Self,
+        file_id: UUID,
+        file_name: str,
+        file_size: int,
+        file_extension: str,
+    ) -> None:
+        avatar: Avatar = Avatar.create(
+            uow=self.uow,
+            file_id=file_id,
+            file_name=file_name,
+            file_size=file_size,
+            file_extension=file_extension,
+        )
+        self.avatars.append(avatar)
 
     def edit_city(self: Self, address_id: UUID, city: str) -> None:
         for address in self.addresses:
@@ -73,45 +98,20 @@ class Profile(UowedEntity[None]):
             if address.id.value == address_id:
                 address.edit_house_location(house_location=house_location)
 
-    def add_avatar(
-        self: Self,
-        file_id: UUID,
-        file_name: str,
-        file_size: int,
-        file_extension: str,
-    ) -> None:
-        avatar: Avatar = Avatar.create(
-            uow=self.uow,
-            file_id=file_id,
-            file_name=file_name,
-            file_size=file_size,
-            file_extension=file_extension
-        )
-        self.avatars.append(avatar)
-
     def delete_avatar(self: Self, file_id: UUID) -> None:
         for avatar in self.avatars:
             if avatar.id.value == file_id:
                 avatar.delete()
-                
-    def add_social_network(
-        self: Self, 
-        social_network_id: UUID,
-        social_network_link: str,
-        social_network_type: str
-    ) -> None:
-        social_network: SocialNetwork = SocialNetwork.create(
-            uow=self.uow,
-            social_network_id=social_network_id,
-            social_network_link=social_network_link,
-            social_network_type=social_network_type
-        )
-        self.social_networks.append(social_network)
 
     def delete_social_network(self: Self, social_network_id: UUID) -> None:
         for social_network in self.social_networks:
             if social_network.id.value == social_network_id:
                 social_network.delete()
+
+    def delete_address(self: Self, address_id: UUID) -> None:
+        for address in self.addresses:
+            if address.id.value == address_id:
+                address.delete()
 
     def delete(self: Self) -> None:
         for avatar in self.avatars:
@@ -122,5 +122,5 @@ class Profile(UowedEntity[None]):
 
         for address in self.addresses:
             address.delete()
-        
+
         self.mark_deleted()

@@ -23,14 +23,18 @@ class User(UowedEntity[None]):
         user.mark_new()
 
         return user
-    
+
+    def add_profile(self: Self) -> None:
+        profile = Profile.create(uow=self.uow)
+        self.profiles.append(profile)
+
     def add_address(
         self: Self,
         address_id: UUID,
         city: str,
         region: str,
         street: str,
-        house_location: str
+        house_location: str,
     ) -> None:
         for profile in self.profiles:
             if profile.id == ...:
@@ -39,14 +43,44 @@ class User(UowedEntity[None]):
                     city=city,
                     region=region,
                     street=street,
-                    house_location=house_location
+                    house_location=house_location,
                 )
-    
+
+    def add_avatar(
+        self: Self,
+        file_id: UUID,
+        file_name: str,
+        file_size: int,
+        file_extension: str,
+    ) -> None:
+        for profile in self.profiles:
+            if profile.id == ...:
+                profile.add_avatar(
+                    file_id=file_id,
+                    file_name=file_name,
+                    file_size=file_size,
+                    file_extension=file_extension,
+                )
+
+    def add_social_network(
+        self: Self,
+        social_network_id: UUID,
+        social_network_link: str,
+        social_network_type: str,
+    ) -> None:
+        for profile in self.profiles:
+            if profile.id == ...:
+                profile.add_social_network(
+                    social_network_id=social_network_id,
+                    social_network_link=social_network_link,
+                    social_network_type=social_network_type,
+                )
+
     def edit_city(self: Self, address_id: UUID, city: str) -> None:
         for profile in self.profiles:
             if profile.id == ...:
                 profile.edit_city(address_id=address_id, city=city)
-    
+
     def edit_region(self: Self, address_id: UUID, region: str) -> None:
         for profile in self.profiles:
             if profile.id == ...:
@@ -66,50 +100,16 @@ class User(UowedEntity[None]):
         for profile in self.profiles:
             if profile.id == ...:
                 profile.delete_address(address_id=address_id)
-    
-    def add_profile(self: Self) -> None:
-        profile = Profile.create(uow=self.uow)
-        self.profiles.append(profile)
 
     def delete_profile(self: Self) -> None:
         for profile in self.profiles:
             if profile.id == ...:
                 profile.delete()
 
-    def add_avatar(
-        self: Self,
-        file_id: UUID,
-        file_name: str,
-        file_size: int,
-        file_extension: str,
-    ) -> None:
-        for profile in self.profiles:
-            if profile.id == ...:
-                profile.add_avatar(
-                    file_id=file_id,
-                    file_name=file_name,
-                    file_size=file_size,
-                    file_extension=file_extension
-                )
-
     def delete_avatar(self: Self, file_id: UUID) -> None:
         for profile in self.profiles:
             if profile.id == ...:
                 profile.delete_avatar(file_id=file_id)
-
-    def add_social_network(
-        self: Self,
-        social_network_id: UUID,
-        social_network_link: str,
-        social_network_type: str
-    ) -> None:
-        for profile in self.profiles:
-            if profile.id == ...:
-                profile.add_social_network(
-                    social_network_id=social_network_id,
-                    social_network_link=social_network_link,
-                    social_network_type=social_network_type
-                )
 
     def delete_social_network(self: Self, social_network_id: UUID) -> None:
         for profile in self.profiles:

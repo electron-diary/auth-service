@@ -12,7 +12,7 @@ class FileSize:
 
     def validate(self: Self) -> None:
         if not isinstance(self.value, int):
-            raise TypeError('File size must be an integer')
+            raise TypeError("File size must be an integer")
 
         if self.value < 0:
-            raise ValueError('File size must be a positive integer')
+            raise ValueError("File size must be a positive integer")

@@ -10,11 +10,10 @@ class HouseLocation:
 
         self.validate()
 
-    def validate(self: Self,) -> None:
+    def validate(self: Self) -> None:
         if not self.value:
-            raise ValueError('House number cannot be empty')
+            raise ValueError("House number cannot be empty")
 
         if not isinstance(self.value, str):
-            raise ValueError('House number must be a string')
+            raise ValueError("House number must be a string")
 
-        
