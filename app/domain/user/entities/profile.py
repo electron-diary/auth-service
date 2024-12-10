@@ -1,4 +1,5 @@
 from typing import Self
+from uuid import UUID
 
 from app.domain.unit_of_work import UnitOfWorkInterface
 from app.domain.uowed import UowedEntity
@@ -29,14 +30,48 @@ class Profile(UowedEntity[None]):
 
         return profile
     
-    def add_address(self: Self) -> None:
-        address: Address = Address.create(uow=self.uow)
+    def add_address(
+        self: Self,
+        address_id: UUID,
+        city: str,
+        region: str,
+        street: str,
+        house_location: str
+    ) -> None:
+        address: Address = Address.create(
+            uow=self.uow,
+            id=address_id,
+            city=city,
+            region=region,
+            street=street,
+            house_location=house_location
+        )
         self.addresses.append(address)
 
-    def delete_address(self: Self):
+    def delete_address(self: Self, address_id: UUID) -> None:
         for address in self.addresses:
-            if address.id == ...:
+            if address.id.value == address_id:
                 address.delete()
+
+    def edit_city(self: Self, address_id: UUID, city: str) -> None:
+        for address in self.addresses:
+            if address.id.value == address_id:
+                address.edit_city(city=city)
+
+    def edit_region(self: Self, address_id: UUID, region: str) -> None:
+        for address in self.addresses:
+            if address.id.value == address_id:
+                address.edit_region(region=region)
+
+    def edit_street(self: Self, address_id: UUID, street: str) -> None:
+        for address in self.addresses:
+            if address.id.value == address_id:
+                address.edit_street(street=street)
+
+    def edit_house_location(self: Self, address_id: UUID, house_location: str) -> None:
+        for address in self.addresses:
+            if address.id.value == address_id:
+                address.edit_house_location(house_location=house_location)
 
     def add_avatar(self: Self) -> None:
         avatar: Avatar = Avatar.create(uow=self.uow)

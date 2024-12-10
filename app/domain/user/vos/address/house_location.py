@@ -1,7 +1,7 @@
 from typing import Self
 
 
-class HouseNumber:
+class HouseLocation:
     def __init__(
         self: Self,
         value: str,
