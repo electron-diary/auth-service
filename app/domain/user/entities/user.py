@@ -16,9 +16,10 @@ from app.domain.user.vos.user.contacts import Contacts
 from app.domain.user.vos.user.id import Id
 from app.domain.user.vos.user.user_status import Status
 from app.domain.user.vos.user.username import Username
+from app.domain.agregate_root import AgregateRoot
 
 
-class User(UowedEntity[Id]):
+class User(UowedEntity[Id], AgregateRoot):
     def __init__(
         self: Self,
         uow: UnitOfWorkInterface,
@@ -43,7 +44,7 @@ class User(UowedEntity[Id]):
         contacts: str,
         status: UserStatus,
         username: str,
-        profiles: list[Profile] = [],
+        profiles: list[Profile],
     ) -> Self:
         user = cls(
             uow=uow,
@@ -247,7 +248,7 @@ class User(UowedEntity[Id]):
                 profile.edit_birth_date(birth_date=birth_date)
 
     def edit_fullname(
-        self: Self,  profile_id: UUID, firstname: str, lastname: str, middlename: str | None = None,
+        self: Self,  profile_id: UUID, firstname: str, lastname: str, middlename: str | None,
     ) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
