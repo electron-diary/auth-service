@@ -89,7 +89,7 @@ class User(UowedEntity[Id], AgregateRoot):
         )
         self.profiles.append(profile)
 
-    def add_address(
+    def add_address_to_profile(
         self: Self,
         address_id: UUID,
         profile_id: UUID,
@@ -111,7 +111,7 @@ class User(UowedEntity[Id], AgregateRoot):
                     house_location=house_location,
                 )
 
-    def add_avatar(
+    def add_avatar_to_profile(
         self: Self,
         file_id: UUID,
         profile_id: UUID,
@@ -131,7 +131,7 @@ class User(UowedEntity[Id], AgregateRoot):
                     file_extension=file_extension,
                 )
 
-    def add_social_network(
+    def add_social_network_to_profile(
         self: Self,
         social_network_id: UUID,
         profile_id: UUID,
@@ -156,18 +156,18 @@ class User(UowedEntity[Id], AgregateRoot):
         self.username = Username(username=username)
         self.mark_dirty()
 
-    def edit_status(self: Self, status: UserStatus) -> None:
+    def edit_user_status(self: Self, status: UserStatus) -> None:
         self.status = Status(status=status)
         self.mark_dirty()
 
-    def edit_contacts(self: Self, phone: int | None = None, email: str | None = None) -> None:
+    def edit_user_contacts(self: Self, phone: int | None = None, email: str | None = None) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
 
         self.contacts = Contacts(phone=phone, email=email)
         self.mark_dirty()
 
-    def edit_city(self: Self, address_id: UUID, city: str, profile_id: UUID) -> None:
+    def edit_city_in_profile(self: Self, address_id: UUID, city: str, profile_id: UUID) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
 
@@ -175,7 +175,7 @@ class User(UowedEntity[Id], AgregateRoot):
             if profile.id.value == profile_id:
                 profile.edit_city(address_id=address_id, city=city)
 
-    def edit_region(self: Self, address_id: UUID, region: str, profile_id: UUID) -> None:
+    def edit_region_in_profile(self: Self, address_id: UUID, region: str, profile_id: UUID) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
 
@@ -183,7 +183,7 @@ class User(UowedEntity[Id], AgregateRoot):
             if profile.id.value == profile_id:
                 profile.edit_region(address_id=address_id, region=region)
 
-    def edit_street(self: Self, address_id: UUID, street: str, profile_id: UUID) -> None:
+    def edit_street_in_profile(self: Self, address_id: UUID, street: str, profile_id: UUID) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
 
@@ -191,7 +191,7 @@ class User(UowedEntity[Id], AgregateRoot):
             if profile.id.value == profile_id:
                 profile.edit_street(address_id=address_id, street=street)
 
-    def edit_house_location(self: Self, address_id: UUID, house_location: str, profile_id: UUID) -> None:
+    def edit_house_location_in_profile(self: Self, address_id: UUID, house_location: str, profile_id: UUID) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
 
@@ -199,7 +199,7 @@ class User(UowedEntity[Id], AgregateRoot):
             if profile.id.value == profile_id:
                 profile.edit_house_location(address_id=address_id, house_location=house_location)
 
-    def delete_address(self: Self, address_id: UUID, profile_id: UUID) -> None:
+    def delete_address_in_profile(self: Self, address_id: UUID, profile_id: UUID) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
 
@@ -215,7 +215,7 @@ class User(UowedEntity[Id], AgregateRoot):
             if profile.id.value == profile_id:
                 profile.delete()
 
-    def delete_avatar(self: Self, file_id: UUID, profile_id: UUID) -> None:
+    def delete_avatar_in_profile(self: Self, file_id: UUID, profile_id: UUID) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
 
@@ -223,7 +223,7 @@ class User(UowedEntity[Id], AgregateRoot):
             if profile.id.value == profile_id:
                 profile.delete_avatar(file_id=file_id)
 
-    def delete_social_network(self: Self, social_network_id: UUID, profile_id: UUID) -> None:
+    def delete_social_network_in_profile(self: Self, social_network_id: UUID, profile_id: UUID) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
 
@@ -231,7 +231,7 @@ class User(UowedEntity[Id], AgregateRoot):
             if profile.id.value == profile_id:
                 profile.delete_social_network(social_network_id=social_network_id)
 
-    def edit_bio(self: Self, bio: str | None, profile_id: UUID) -> None:
+    def edit_bio_in_profile(self: Self, bio: str | None, profile_id: UUID) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
 
@@ -239,7 +239,7 @@ class User(UowedEntity[Id], AgregateRoot):
             if profile.id.value == profile_id:
                 profile.edit_bio(bio=bio)
 
-    def edit_birth_date(self: Self, birth_date: date | None, profile_id: UUID) -> None:
+    def edit_birth_date_in_profile(self: Self, birth_date: date | None, profile_id: UUID) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
 
@@ -247,7 +247,7 @@ class User(UowedEntity[Id], AgregateRoot):
             if profile.id.value == profile_id:
                 profile.edit_birth_date(birth_date=birth_date)
 
-    def edit_fullname(
+    def edit_fullname_in_profle(
         self: Self,  profile_id: UUID, firstname: str, lastname: str, middlename: str | None,
     ) -> None:
         if self.status.value != UserStatus.ACTIVE:
@@ -257,7 +257,7 @@ class User(UowedEntity[Id], AgregateRoot):
             if profile.id.value == profile_id:
                 profile.edit_fullname(firstname=firstname, lastname=lastname, middlename=middlename)
 
-    def edit_gender(self: Self, gender: Genders | None, profile_id: UUID) -> None:
+    def edit_gender_in_profile(self: Self, gender: Genders | None, profile_id: UUID) -> None:
         if self.status.value != UserStatus.ACTIVE:
             raise Exception("User is not active")
 
