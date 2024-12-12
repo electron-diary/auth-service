@@ -1,5 +1,7 @@
 from typing import Self
 
+from app.domain.models.user.exceptions import ErrorType, UserException
+
 
 class Fullname:
     def __init__(
@@ -16,13 +18,13 @@ class Fullname:
 
     def validate(self: Self) -> None:
         if not isinstance(self.first_name, str):
-            raise Exception("First name must be a string")
+            raise UserException(ErrorType.INVALID_FULLNAME, "First name must be a string")
 
         if not isinstance(self.last_name, str):
-            raise Exception("Last name must be a string")
+            raise UserException(ErrorType.INVALID_FULLNAME, "Last name must be a string")
 
         if self.middle_name and not isinstance(self.middle_name, str):
-            raise Exception("Middle name must be a string")
+            raise UserException(ErrorType.INVALID_FULLNAME, "Middle name must be a string")
 
         if not self.first_name or not self.last_name:
             raise Exception("First name and last name must be provided")

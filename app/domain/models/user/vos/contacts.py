@@ -1,5 +1,7 @@
 from typing import Self
 
+from app.domain.models.user.exceptions import ErrorType, UserException
+
 
 class Contacts:
     def __init__(
@@ -14,13 +16,13 @@ class Contacts:
 
     def validate(self: Self) -> None:
         if self.phone_number is None and self.email is None:
-            raise Exception("At least one contact must be provided")
+            raise UserException(ErrorType.INVALID_CONTACTS, "At least one contact must be provided")
         
         if self.phone_number and not isinstance(self.phone_number, int):
-            raise Exception("Phone number must be an integer")
+            raise UserException(ErrorType.INVALID_CONTACTS, "Phone number must be an integer")
         
         if self.email and not isinstance(self.email, str):
-            raise Exception("Email must be a string")
+            raise UserException(ErrorType.INVALID_CONTACTS, "Email must be a string")
         
     def __str__(self: Self) -> str:
         if self.phone_number and self.email:
