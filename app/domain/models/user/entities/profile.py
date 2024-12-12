@@ -8,6 +8,7 @@ from app.domain.models.user.entities.social_netw_profile import SocialNetwProfil
 from app.domain.models.user.enums.statuses import Statuses
 from app.domain.unit_of_work import UnitOfWorkInterface
 from app.domain.uowed import UowedEntity
+from app.domain.models.user.vos.fullname import Fullname
 
 
 class Profile(UowedEntity[UUID], AgregateRoot):
@@ -16,7 +17,7 @@ class Profile(UowedEntity[UUID], AgregateRoot):
         uow: UnitOfWorkInterface,
         profile_id: UUID,
         profile_owner_id: UUID,
-        fullname: str,
+        fullname: Fullname,
         profile_status: Statuses,
         addresses: list[Address],
         social_netw_profiles: list[SocialNetwProfile],
@@ -39,7 +40,9 @@ class Profile(UowedEntity[UUID], AgregateRoot):
         uow: UnitOfWorkInterface,
         profile_id: UUID,
         profile_owner_id: UUID,
-        fullname: str,
+        first_name: str,
+        last_name: str,
+        middle_name: str | None,
         bio: str,
         addresses: list[Address],
         social_netw_profiles: list[SocialNetwProfile],
@@ -49,7 +52,9 @@ class Profile(UowedEntity[UUID], AgregateRoot):
             uow=uow,
             profile_id=profile_id,
             profile_owner_id=profile_owner_id,
-            fullname=fullname,
+            fullname=Fullname(
+                first_name=first_name, last_name=last_name, middle_name=middle_name
+            ),
             profile_status=Statuses.ACTIVE,
             bio=bio,
             addresses=addresses,
@@ -185,22 +190,30 @@ class Profile(UowedEntity[UUID], AgregateRoot):
         self.bio = bio
         self.mark_dirty()
 
-    def change_fullname(self: Self, fullname: str) -> None:
+    def change_fullname(self: Self, first_name: str, last_name: str, middle_name: str| None) -> None:
         if self.status == Statuses.INACTIVE:
             raise Exception("Profile is inactive")
 
-        self.fullname = fullname
+        self.fullname = Fullname(
+            first_name=first_name, last_name=last_name, middle_name=middle_name
+        )
         self.mark_dirty()
 
     def change_status(self: Self, status: Statuses) -> None:
-        if self.status == Statuses.INACTIVE:
-            raise Exception("Profile is inactive")
-
         self.status = status
         self.mark_dirty()
 
     def delete_profile(self: Self) -> None:
         if self.status == Statuses.INACTIVE:
             raise Exception("Profile is inactive")
-
+        
         self.mark_deleted()
+
+        for address in self.addresses:
+            address.delete_address()
+
+        for social_netw_profile in self.social_netw_profiles:
+            social_netw_profile.delete_social_netw_profile()
+
+        for avatar in self.avatars:
+            avatar.delete_avatar()

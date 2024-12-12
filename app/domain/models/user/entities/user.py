@@ -5,6 +5,7 @@ from app.domain.agregate_root import AgregateRoot
 from app.domain.models.user.enums.statuses import Statuses
 from app.domain.unit_of_work import UnitOfWorkInterface
 from app.domain.uowed import UowedEntity
+from app.domain.models.user.vos.contacts import Contacts
 
 
 class User(UowedEntity[UUID], AgregateRoot):
@@ -13,13 +14,13 @@ class User(UowedEntity[UUID], AgregateRoot):
         uow: UnitOfWorkInterface,
         user_id: UUID,
         username: str,
-        email: str,
+        contacts: Contacts,
         status: Statuses,
     ) -> None:
         super().__init__(uow=uow, id=user_id)
 
         self.username = username
-        self.email = email
+        self.contacts = contacts
         self.status = status
 
     @classmethod
@@ -27,11 +28,14 @@ class User(UowedEntity[UUID], AgregateRoot):
         cls: type[Self],
         uow: UnitOfWorkInterface,
         user_id: UUID,
+        email: str | None,
+        phone_number: int | None
     ) -> Self:
         user = cls(
             uow=uow,
             user_id=user_id,
             status=Statuses.INACTIVE,
+            contacts=Contacts(phone_number=phone_number, email=email)
         )
         user.mark_new()
 
@@ -44,11 +48,11 @@ class User(UowedEntity[UUID], AgregateRoot):
         self.username = username
         self.mark_dirty()
 
-    def change_email(self: Self, email: str) -> None:
+    def change_contacts(self: Self, email: str | None, phone_number: str | None) -> None:
         if self.status == Statuses.INACTIVE:
             raise Exception("User is inactive")
 
-        self.email = email
+        self.contacts = Contacts(phone_number=phone_number, email=email)
         self.mark_dirty()
 
     def activate(self: Self) -> None:
