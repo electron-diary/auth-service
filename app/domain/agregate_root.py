@@ -11,7 +11,7 @@ class AgregateRoot:
         self.domain_events.append(event)
 
     def push_events(self: Self) -> list[DomainEvent]:
-        events: list[DomainEvent] = self.domain_events.copy()
+        events = self.domain_events.copy()
         self.domain_events.clear
-        
+
         return events
