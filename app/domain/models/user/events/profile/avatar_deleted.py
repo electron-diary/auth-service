@@ -5,11 +5,7 @@ from app.domain.domain_event import DomainEvent
 
 
 @dataclass(frozen=True)
-class AvatarAddes(DomainEvent):
-    profile_owner_id: UUID
+class AvatarDeleted(DomainEvent):
     profile_id: UUID
+    profile_owner_id: UUID
     avatar_id: UUID
-    file_name: str
-    file_url: str
-    file_extension: str
-    file_size: int
