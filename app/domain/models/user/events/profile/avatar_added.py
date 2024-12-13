@@ -5,7 +5,7 @@ from app.domain.domain_event import DomainEvent
 
 
 @dataclass(frozen=True)
-class AvatarAddes(DomainEvent):
+class AvatarAdded(DomainEvent):
     profile_owner_id: UUID
     profile_id: UUID
     avatar_id: UUID
