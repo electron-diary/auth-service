@@ -1,6 +1,6 @@
 from typing import Self
 
-from app.domain.models.user.exceptions import ErrorType, UserException
+from app.domain.models.user.exceptions import InvalidFullNameError
 
 
 class Fullname:
@@ -18,17 +18,17 @@ class Fullname:
 
     def validate(self: Self) -> None:
         if not isinstance(self.first_name, str):
-            raise UserException(ErrorType.INVALID_FULLNAME, "First name must be a string")
+            raise InvalidFullNameError("First name must be a string")
 
         if not isinstance(self.last_name, str):
-            raise UserException(ErrorType.INVALID_FULLNAME, "Last name must be a string")
+            raise InvalidFullNameError("Last name must be a string")
 
         if self.middle_name and not isinstance(self.middle_name, str):
-            raise UserException(ErrorType.INVALID_FULLNAME, "Middle name must be a string")
+            raise InvalidFullNameError("Middle name must be a string")
 
         if not self.first_name or not self.last_name:
-            raise Exception("First name and last name must be provided")
-        
+            raise InvalidFullNameError("First name and last name must be provided")
+
     def __str__(self: Self) -> str:
         if self.middle_name:
             return f"{self.first_name} {self.middle_name} {self.last_name}"

@@ -1,21 +1,23 @@
-from typing import Self
-from enum import Enum
+from app.domain.exception import DomainException
 
 
-class ErrorType(Enum):
-    USER_INACTIVE = "user_inactive"
-    INVALID_CONTACTS = 'invalid_contacts'
-    INVALID_FULLNAME = 'invalid_fullname'
-    PROFILE_INACTIVE = 'profile_inactive'
-    NOT_FOUND = 'not_found'
+class InvalidContactsError(DomainException):
+    ...
 
+class InvalidFullNameError(DomainException):
+    ...
 
-class UserException(Exception):
-    def __init__(
-        self: Self, 
-        error_type: ErrorType, 
-        message: str
-    ) -> None:
-        super().__init__(message)
+class UserInactiveError(DomainException):
+    ...
 
-        self.error_type = error_type
+class ProfileInactiveError(DomainException):
+    ...
+
+class SocialNetwProfileNotFoundError(DomainException):
+    ...
+
+class AddressNotFoundError(DomainException):
+    ...
+
+class AvatarNotFoundError(DomainException):
+    ...
