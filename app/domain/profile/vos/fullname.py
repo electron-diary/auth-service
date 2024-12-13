@@ -1,6 +1,6 @@
 from typing import Self
 
-from app.domain.models.user.exceptions import InvalidFullNameError
+from app.domain.profile.exceptions import InvalidFullNameError
 
 
 class Fullname:

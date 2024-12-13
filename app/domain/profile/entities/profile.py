@@ -2,29 +2,29 @@ from typing import Self
 from uuid import UUID
 
 from app.domain.agregate_root import AgregateRoot
-from app.domain.models.user.entities.profile.address import Address
-from app.domain.models.user.entities.profile.avatar import Avatar
-from app.domain.models.user.entities.profile.social_netw_profile import SocialNetwProfile
-from app.domain.models.user.enums.statuses import Statuses
-from app.domain.models.user.events.profile.address_added import AddressAdded
-from app.domain.models.user.events.profile.address_changed import AddressChanged
-from app.domain.models.user.events.profile.address_deleted import AddressDeleted
-from app.domain.models.user.events.profile.avatar_added import AvatarAdded
-from app.domain.models.user.events.profile.avatar_deleted import AvatarDeleted
-from app.domain.models.user.events.profile.bio_changed import BioChanged
-from app.domain.models.user.events.profile.fullname_changed import FullnameChanged
-from app.domain.models.user.events.profile.profile_created import ProfileCreated
-from app.domain.models.user.events.profile.profile_deleted import ProfileDeleted
-from app.domain.models.user.events.profile.profile_status_changed import ProfileStatusChanged
-from app.domain.models.user.events.profile.social_netw_profile_added import SocialNetwProfileAdded
-from app.domain.models.user.events.profile.social_netw_profile_deleted import SocialNetwProfileDeleted
-from app.domain.models.user.exceptions import (
+from app.domain.profile.entities.address import Address
+from app.domain.profile.entities.avatar import Avatar
+from app.domain.profile.entities.social_netw_profile import SocialNetwProfile
+from app.domain.profile.enums.statuses import Statuses
+from app.domain.profile.events.address_added import AddressAdded
+from app.domain.profile.events.address_changed import AddressChanged
+from app.domain.profile.events.address_deleted import AddressDeleted
+from app.domain.profile.events.avatar_added import AvatarAdded
+from app.domain.profile.events.avatar_deleted import AvatarDeleted
+from app.domain.profile.events.bio_changed import BioChanged
+from app.domain.profile.events.fullname_changed import FullnameChanged
+from app.domain.profile.events.profile_created import ProfileCreated
+from app.domain.profile.events.profile_deleted import ProfileDeleted
+from app.domain.profile.events.profile_status_changed import ProfileStatusChanged
+from app.domain.profile.events.social_netw_profile_added import SocialNetwProfileAdded
+from app.domain.profile.events.social_netw_profile_deleted import SocialNetwProfileDeleted
+from app.domain.profile.exceptions import (
     AddressNotFoundError,
     AvatarNotFoundError,
     ProfileInactiveError,
     SocialNetwProfileNotFoundError,
 )
-from app.domain.models.user.vos.fullname import Fullname
+from app.domain.profile.vos.fullname import Fullname
 from app.domain.unit_of_work import UnitOfWorkInterface
 from app.domain.uowed import UowedEntity
 

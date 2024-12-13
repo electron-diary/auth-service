@@ -1,6 +1,6 @@
 from typing import Self
 
-from app.domain.models.user.exceptions import InvalidContactsError
+from app.domain.user.exceptions import InvalidContactsError
 
 
 class Contacts:

@@ -2,14 +2,14 @@ from typing import Self
 from uuid import UUID
 
 from app.domain.agregate_root import AgregateRoot
-from app.domain.models.user.enums.statuses import Statuses
-from app.domain.models.user.events.user.contacts_changed import ContactsChanged
-from app.domain.models.user.events.user.user_created import UserCreated
-from app.domain.models.user.events.user.user_deleted import UserDeleted
-from app.domain.models.user.events.user.user_status_changed import UserStatusChanged
-from app.domain.models.user.events.user.username_changed import UsernameChanged
-from app.domain.models.user.exceptions import UserInactiveError
-from app.domain.models.user.vos.contacts import Contacts
+from app.domain.user.enums.statuses import Statuses
+from app.domain.user.events.contacts_changed import ContactsChanged
+from app.domain.user.events.user_created import UserCreated
+from app.domain.user.events.user_deleted import UserDeleted
+from app.domain.user.events.user_status_changed import UserStatusChanged
+from app.domain.user.events.username_changed import UsernameChanged
+from app.domain.user.exceptions import UserInactiveError
+from app.domain.user.vos.contacts import Contacts
 from app.domain.unit_of_work import UnitOfWorkInterface
 from app.domain.uowed import UowedEntity
 

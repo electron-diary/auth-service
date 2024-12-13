@@ -1,13 +1,7 @@
 from app.domain.exception import DomainException
 
 
-class InvalidContactsError(DomainException):
-    ...
-
 class InvalidFullNameError(DomainException):
-    ...
-
-class UserInactiveError(DomainException):
     ...
 
 class ProfileInactiveError(DomainException):
