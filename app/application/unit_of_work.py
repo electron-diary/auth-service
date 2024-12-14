@@ -1,16 +1,22 @@
 from abc import abstractmethod
 from typing import Protocol, Self
 
+from app.domain.unit_of_work import UnitOfWorkTrackerInterface
 
-class UnitOfWorkTrackerInterface(Protocol):
+
+class UnitOfWorkCommitterInterace(Protocol):
     @abstractmethod
-    def register_new(self: Self) -> None:
+    async def commit(self: Self) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
 
     @abstractmethod
-    def register_dirty(self: Self) -> None:
+    async def rollback(self: Self) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
 
     @abstractmethod
-    def register_deleted(self: Self) -> None:
+    async def flush(self: Self) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
+
+
+class UnitOfWorkInterface(UnitOfWorkCommitterInterace, UnitOfWorkTrackerInterface):
+    ...

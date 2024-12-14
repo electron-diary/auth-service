@@ -3,10 +3,10 @@ from uuid import UUID, uuid4
 
 from app.application.event_bus import EventBus
 from app.application.profile.commands.create_profile import CreateProfileCommand
+from app.application.unit_of_work import UnitOfWorkCommitterInterace
 from app.application.user.exceptions import UserNotFound
 from app.domain.profile.entities.profile import Profile
 from app.domain.profile.repositories.profile_repository import ProfileRepository
-from app.domain.unit_of_work import UnitOfWorkInterface
 from app.domain.user.enums.statuses import Statuses
 from app.domain.user.exceptions import UserInactiveError
 from app.domain.user.repositories.user_repository import UserRepository
@@ -15,7 +15,7 @@ from app.domain.user.repositories.user_repository import UserRepository
 class CreateProfile:
     def __init__(
         self: Self,
-        unit_of_work: UnitOfWorkInterface,
+        unit_of_work: UnitOfWorkCommitterInterace,
         user_repository: UserRepository,
         profile_repository: ProfileRepository,
         event_bus: EventBus,

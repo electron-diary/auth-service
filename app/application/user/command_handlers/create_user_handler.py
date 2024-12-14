@@ -2,9 +2,9 @@ from typing import Self
 from uuid import UUID, uuid4
 
 from app.application.event_bus import EventBus
+from app.application.unit_of_work import UnitOfWorkCommitterInterace
 from app.application.user.commands.create_user import CreateUserCommand
 from app.application.user.exceptions import UserAlreadyExists
-from app.domain.unit_of_work import UnitOfWorkInterface
 from app.domain.user.entities.user import User
 from app.domain.user.repositories.user_repository import UserRepository
 
@@ -12,7 +12,7 @@ from app.domain.user.repositories.user_repository import UserRepository
 class CreateUser:
     def __init__(
         self: Self,
-        unit_of_work: UnitOfWorkInterface,
+        unit_of_work: UnitOfWorkCommitterInterace,
         user_repository: UserRepository,
         event_bus: EventBus,
     ) -> None:

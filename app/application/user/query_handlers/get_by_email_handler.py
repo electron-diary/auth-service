@@ -1,7 +1,6 @@
 from typing import Self
 
 from app.application.user.dtos.user_dto import UserDto
-from app.application.user.exceptions import UserNotFound
 from app.application.user.protocols.user_reader import UserReaderInterface
 from app.application.user.queries.get_by_email import GetUserByEmailQuery
 

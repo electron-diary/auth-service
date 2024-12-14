@@ -1,16 +1,16 @@
 from typing import Self
 
 from app.application.event_bus import EventBus
+from app.application.unit_of_work import UnitOfWorkCommitterInterace
 from app.application.user.commands.change_contacts import ChangeContactsCommand
 from app.application.user.exceptions import UserAlreadyExists
-from app.domain.unit_of_work import UnitOfWorkInterface
 from app.domain.user.repositories.user_repository import UserRepository
 
 
 class ChangeContacts:
     def __init__(
         self: Self,
-        unit_of_work: UnitOfWorkInterface,
+        unit_of_work: UnitOfWorkCommitterInterace,
         user_repository: UserRepository,
         event_bus: EventBus,
     ) -> None:

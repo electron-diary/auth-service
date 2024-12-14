@@ -1,14 +1,14 @@
 from typing import Self
 from uuid import UUID
 
-from app.domain.unit_of_work import UnitOfWorkInterface
+from app.domain.unit_of_work import UnitOfWorkTrackerInterface
 from app.domain.uowed import UowedEntity
 
 
 class Avatar(UowedEntity[UUID]):
     def __init__(
         self: Self,
-        uow: UnitOfWorkInterface,
+        uow: UnitOfWorkTrackerInterface,
         avatar_id: UUID,
         url: str,
         file_name: str,
@@ -25,7 +25,7 @@ class Avatar(UowedEntity[UUID]):
     @classmethod
     def create_avatar(
         cls: type[Self],
-        uow: UnitOfWorkInterface,
+        uow: UnitOfWorkTrackerInterface,
         avatar_id: UUID,
         url: str,
         file_name: str,

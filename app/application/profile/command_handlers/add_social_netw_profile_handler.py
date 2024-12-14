@@ -4,9 +4,9 @@ from uuid import uuid4
 from app.application.event_bus import EventBus
 from app.application.profile.commands.add_social_netw_profile import AddSocialNetwProfileCommand
 from app.application.profile.exceptions import ProfileNotFound
+from app.application.unit_of_work import UnitOfWorkCommitterInterace
 from app.application.user.exceptions import UserNotFound
 from app.domain.profile.repositories.profile_repository import ProfileRepository
-from app.domain.unit_of_work import UnitOfWorkInterface
 from app.domain.user.enums.statuses import Statuses
 from app.domain.user.exceptions import UserInactiveError
 from app.domain.user.repositories.user_repository import UserRepository
@@ -17,7 +17,7 @@ class AddSocialNetwProfile:
         self: Self,
         user_repository: UserRepository,
         profile_repository: ProfileRepository,
-        unit_of_work: UnitOfWorkInterface,
+        unit_of_work: UnitOfWorkCommitterInterace,
         event_bus: EventBus,
     ):
         self.user_repository = user_repository
