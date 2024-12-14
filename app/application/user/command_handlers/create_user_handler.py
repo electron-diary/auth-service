@@ -40,7 +40,6 @@ class CreateUser:
             phone=command.phone,
         )
 
-        await self.user_repository.add(user=user)
         await self.event_bus.publish(user.push_events())
         await self.unit_of_work.commit()
 

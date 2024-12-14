@@ -2,14 +2,14 @@ from abc import abstractmethod
 from typing import Protocol, Self
 from uuid import UUID
 
-from app.domain.profile.entities.profile import Profile
+from app.application.profile.dtos.profile_dto import ProfileDto
 
 
-class ProfileRepository(Protocol):
+class ProfileReaderInterface(Protocol):
     @abstractmethod
-    async def load(self: Self, profile_id: UUID) -> Profile | None:
+    async def get_profile_by_id(self: Self, profile_id: UUID) -> ProfileDto:
         raise NotImplementedError("Method must be implemented by subclasses")
 
     @abstractmethod
-    async def load_all_user_profiles(self: Self, profile_owner_id: UUID) -> list[Profile]:
+    async def get_user_profiles(self: Self, user_id: UUID) -> list[ProfileDto]:
         raise NotImplementedError("Method must be implemented by subclasses")

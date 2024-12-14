@@ -37,10 +37,10 @@ class Profile(UowedEntity[UUID], AgregateRoot):
         profile_owner_id: UUID,
         fullname: Fullname,
         profile_status: Statuses,
-        addresses: list[Address],
-        social_netw_profiles: list[SocialNetwProfile],
-        avatars: list[Avatar],
         bio: str,
+        addresses: list[Address] = [],
+        social_netw_profiles: list[SocialNetwProfile] = [],
+        avatars: list[Avatar] = [],
     ) -> None:
         super().__init__(uow=uow, id=profile_id)
 
@@ -62,9 +62,6 @@ class Profile(UowedEntity[UUID], AgregateRoot):
         last_name: str,
         middle_name: str | None,
         bio: str,
-        addresses: list[Address],
-        social_netw_profiles: list[SocialNetwProfile],
-        avatars: list[Avatar],
     ) -> Self:
         profile = cls(
             uow=uow,
@@ -75,9 +72,6 @@ class Profile(UowedEntity[UUID], AgregateRoot):
             ),
             profile_status=Statuses.ACTIVE,
             bio=bio,
-            addresses=addresses,
-            social_netw_profiles=social_netw_profiles,
-            avatars=avatars,
         )
         profile.mark_new()
         profile.record_event(
@@ -355,9 +349,6 @@ class Profile(UowedEntity[UUID], AgregateRoot):
         )
 
     def delete_profile(self: Self) -> None:
-        if self.status == Statuses.INACTIVE:
-            raise ProfileInactiveError( "Profile is inactive")
-
         self.mark_deleted()
 
         for address in self.addresses:

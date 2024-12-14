@@ -11,18 +11,6 @@ class UserRepository(Protocol):
         raise NotImplementedError("Method must be implemented by subclasses")
 
     @abstractmethod
-    async def add(self: Self, user: User) -> None:
-        raise NotImplementedError("Method must be implemented by subclasses")
-
-    @abstractmethod
-    async def update(self: Self, user: User) -> None:
-        raise NotImplementedError("Method must be implemented by subclasses")
-
-    @abstractmethod
-    async def delete(self: Self, user_id: UUID) -> None:
-        raise NotImplementedError("Method must be implemented by subclasses")
-
-    @abstractmethod
     async def check_phone_number_exists(self: Self, phone_number: int) -> User | None:
         raise NotImplementedError("Method must be implemented by subclasses")
 

@@ -28,6 +28,5 @@ class ChangeUsername:
 
         user.change_username(command.username)
 
-        await self.user_repository.update(user)
         await self.event_bus.publish(user.push_events())
         await self.unit_of_work.commit()
