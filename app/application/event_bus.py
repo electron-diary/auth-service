@@ -1,5 +1,5 @@
-from typing import Self, Protocol
 from abc import abstractmethod
+from typing import Protocol, Self
 
 from app.domain.domain_event import DomainEvent
 

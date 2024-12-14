@@ -14,7 +14,7 @@ class UnitOfWorkInterface(Protocol):
     @abstractmethod
     async def flush(self: Self) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
-    
+
     @abstractmethod
     def register_new(self: Self) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")

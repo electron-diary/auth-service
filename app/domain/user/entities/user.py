@@ -2,6 +2,8 @@ from typing import Self
 from uuid import UUID
 
 from app.domain.agregate_root import AgregateRoot
+from app.domain.unit_of_work import UnitOfWorkInterface
+from app.domain.uowed import UowedEntity
 from app.domain.user.enums.statuses import Statuses
 from app.domain.user.events.contacts_changed import ContactsChanged
 from app.domain.user.events.user_created import UserCreated
@@ -10,8 +12,6 @@ from app.domain.user.events.user_status_changed import UserStatusChanged
 from app.domain.user.events.username_changed import UsernameChanged
 from app.domain.user.exceptions import UserInactiveError
 from app.domain.user.vos.contacts import Contacts
-from app.domain.unit_of_work import UnitOfWorkInterface
-from app.domain.uowed import UowedEntity
 
 
 class User(UowedEntity[UUID], AgregateRoot):
