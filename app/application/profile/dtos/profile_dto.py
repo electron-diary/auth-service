@@ -4,7 +4,7 @@ from uuid import UUID
 
 @dataclass(frozen=True)
 class AddressData:
-    profile_id: UUID
+    address_id: UUID
     city: str
     country: str
     street: str
