@@ -41,9 +41,9 @@ class User(UowedEntity[UUID], AgregateRoot):
         user = cls(
             uow=uow,
             user_id=user_id,
-            status=Statuses.INACTIVE,
-            contacts=Contacts(phone_number=phone_number, email=email),
             username=username,
+            contacts=Contacts(phone_number=phone_number, email=email),
+            status=Statuses.INACTIVE,
         )
         user.mark_new()
         user.record_event(
@@ -55,7 +55,7 @@ class User(UowedEntity[UUID], AgregateRoot):
                 username=user.username,
                 email=user.contacts.email,
                 phone=user.contacts.phone_number,
-                status=user.status.value,
+                status=user.status,
             ),
         )
         return user
@@ -76,7 +76,7 @@ class User(UowedEntity[UUID], AgregateRoot):
         )
         self.mark_dirty()
 
-    def change_contacts(self: Self, email: str | None, phone_number: str | None) -> None:
+    def change_contacts(self: Self, email: str | None, phone_number: int | None) -> None:
         if self.status == Statuses.INACTIVE:
             raise UserInactiveError("User is inactive")
 
@@ -101,7 +101,7 @@ class User(UowedEntity[UUID], AgregateRoot):
                 event_type="UserStatusChanged",
                 agregate_name="User",
                 user_id=self.id,
-                status=self.status.value,
+                status=self.statusSS,
             ),
         )
         self.mark_dirty()
