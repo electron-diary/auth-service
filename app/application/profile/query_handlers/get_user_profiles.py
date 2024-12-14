@@ -9,8 +9,7 @@ from app.application.profile.queries.get_user_profiles import GetUserProfilesQue
 class GetUserProfiles:
     def __init__(
         self: Self,
-        profile_reader:
-        ProfileReaderInterface,
+        profile_reader: ProfileReaderInterface,
     ) -> None:
         self.profile_reader = profile_reader
 
