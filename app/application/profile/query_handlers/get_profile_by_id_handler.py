@@ -13,9 +13,7 @@ class GetProfileById:
     ) -> None:
         self.profile_reader = profile_reader
 
-    async def handle(self: Self, query: GetProfileByIdQuery) -> ProfileDto:
+    async def handle(self: Self, query: GetProfileByIdQuery) -> ProfileDto | None:
         profile = await self.profile_reader.get_profile_by_id(query.profile_id)
-        if not profile:
-            raise ProfileNotFound("Profile not found")
 
         return profile

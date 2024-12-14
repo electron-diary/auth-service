@@ -15,7 +15,5 @@ class GetUserById:
 
     async def handle(self: Self, query: GetUserByIdQuery) -> UserDto:
         user = await self.user_reader.get_user_by_id(query.id)
-        if not user:
-            raise UserNotFound("User not found")
 
         return user

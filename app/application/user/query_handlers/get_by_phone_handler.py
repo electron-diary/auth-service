@@ -15,7 +15,5 @@ class GetUserByPhone:
 
     async def handle(self: Self, query: GetUserByPhoneQuery) -> UserDto:
         user = await self.user_reader.get_by_phone_number(query.phone_number)
-        if not user:
-            raise UserNotFound("User not found")
-
+    
         return user

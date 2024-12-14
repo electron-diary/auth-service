@@ -15,7 +15,5 @@ class GetUserProfiles:
 
     async def handle(self: Self, query: GetUserProfilesQuery) -> list[ProfileDto]:
         profiles = await self.profile_reader.get_user_profiles(query.user_id)
-        if not profiles:
-            raise ProfileNotFound("Profiles not found")
 
         return profiles
