@@ -4,15 +4,15 @@ from abc import abstractmethod
 from app.domain.uowed import UowedEntity
 
 
-class DataMapperInterface[T: UowedEntity](Protocol):
+class DataMapperInterface(Protocol):
     @abstractmethod
-    async def add(self: Self, entity: T) -> None:
+    async def add(self: Self, entity: UowedEntity) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
     
     @abstractmethod
-    async def delete(self: Self, entity: T) -> None:
+    async def delete(self: Self, entity: UowedEntity) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
     
     @abstractmethod
-    async def update(self: Self, entity: T) -> None:
+    async def update(self: Self, entity: UowedEntity) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")

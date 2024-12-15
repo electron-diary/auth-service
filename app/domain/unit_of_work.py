@@ -1,16 +1,18 @@
 from abc import abstractmethod
 from typing import Protocol, Self
 
+from app.domain.uowed import UowedEntity
+
 
 class UnitOfWorkTrackerInterface(Protocol):
     @abstractmethod
-    def register_new(self: Self) -> None:
+    def register_new(self: Self, entity: UowedEntity) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
 
     @abstractmethod
-    def register_dirty(self: Self) -> None:
+    def register_dirty(self: Self, entity: UowedEntity) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
 
     @abstractmethod
-    def register_deleted(self: Self) -> None:
+    def register_deleted(self: Self, entity: UowedEntity) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
