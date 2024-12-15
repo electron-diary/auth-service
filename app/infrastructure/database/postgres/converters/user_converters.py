@@ -1,5 +1,5 @@
-from app.application.user.dtos.user_dto import UserDto
-from app.domain.unit_of_work import UnitOfWorkTrackerInterface
+from app.application.dto.user_dto import UserDto
+from app.domain.common.unit_of_work import UnitOfWorkTrackerInterface
 from app.domain.user.entities.user import User
 from app.domain.user.value_objects.contacts import Contacts
 

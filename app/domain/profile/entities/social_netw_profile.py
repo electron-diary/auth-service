@@ -1,8 +1,8 @@
 from typing import Self
 from uuid import UUID
 
-from app.domain.unit_of_work import UnitOfWorkTracker
-from app.domain.uowed import UowedEntity
+from app.domain.common.unit_of_work import UnitOfWorkTracker
+from app.domain.common.uowed import UowedEntity
 
 
 class SocialNetwProfile(UowedEntity[UUID]):

@@ -1,6 +1,6 @@
 from typing import Self
 
-from app.domain.uowed import UowedEntity
+from app.domain.common.uowed import UowedEntity
 from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapper
 from app.infrastructure.database.postgres.interfaces.registry import Registry
 

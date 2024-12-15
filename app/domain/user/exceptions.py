@@ -1,4 +1,4 @@
-from app.domain.exception import DomainException
+from app.domain.common.exception import DomainException
 
 
 class InvalidContactsError(DomainException):

@@ -2,8 +2,8 @@ from typing import Self
 
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from app.application.unit_of_work import UnitOfWork
-from app.domain.uowed import UowedEntity
+from app.application.common.unit_of_work import UnitOfWork
+from app.domain.common.uowed import UowedEntity
 from app.infrastructure.database.postgres.interfaces.registry import Registry
 
 

@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import Protocol, Self
 
-from app.domain.uowed import UowedEntity
+from app.domain.common.uowed import UowedEntity
 from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapper
 
 

@@ -1,18 +1,22 @@
 from abc import abstractmethod
 from typing import Protocol, Self
 
-from app.domain.common.uowed import UowedEntity
+from app.domain.common.unit_of_work import UnitOfWorkTracker
 
 
-class DataMapper(Protocol):
+class UnitOfWorkCommitter(Protocol):
     @abstractmethod
-    async def add(self: Self, entity: UowedEntity) -> None:
+    async def commit(self: Self) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
 
     @abstractmethod
-    async def delete(self: Self, entity: UowedEntity) -> None:
+    async def rollback(self: Self) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
 
     @abstractmethod
-    async def update(self: Self, entity: UowedEntity) -> None:
+    async def flush(self: Self) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
+
+
+class UnitOfWork(UnitOfWorkCommitter, UnitOfWorkTracker):
+    ...

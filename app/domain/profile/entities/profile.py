@@ -1,7 +1,9 @@
 from typing import Self
 from uuid import UUID
 
-from app.domain.agregate_root import AgregateRoot
+from app.domain.common.agregate_root import AgregateRoot
+from app.domain.common.unit_of_work import UnitOfWorkTracker
+from app.domain.common.uowed import UowedEntity
 from app.domain.profile.entities.address import Address
 from app.domain.profile.entities.social_netw_profile import SocialNetwProfile
 from app.domain.profile.enums.statuses import Statuses
@@ -20,8 +22,6 @@ from app.domain.profile.exceptions import (
     SocialNetwProfileNotFoundError,
 )
 from app.domain.profile.value_objects.fullname import Fullname
-from app.domain.unit_of_work import UnitOfWorkTracker
-from app.domain.uowed import UowedEntity
 
 
 class Profile(UowedEntity[UUID], AgregateRoot):
