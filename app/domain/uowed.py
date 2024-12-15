@@ -1,10 +1,10 @@
 from typing import Self
 
-from app.domain.unit_of_work import UnitOfWorkTrackerInterface
+from app.domain.unit_of_work import UnitOfWorkTracker
 
 
 class UowedEntity[EntityId]:
-    def __init__(self: Self, uow: UnitOfWorkTrackerInterface, id: EntityId) -> None:
+    def __init__(self: Self, uow: UnitOfWorkTracker, id: EntityId) -> None:
         self.id: EntityId = id
         self.uow = uow
 
