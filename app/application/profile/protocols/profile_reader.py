@@ -5,7 +5,7 @@ from uuid import UUID
 from app.application.profile.dtos.profile_dto import ProfileDto
 
 
-class ProfileReaderInterface(Protocol):
+class ProfileReader(Protocol):
     @abstractmethod
     async def get_profile_by_id(self: Self, profile_id: UUID) -> ProfileDto:
         raise NotImplementedError("Method must be implemented by subclasses")

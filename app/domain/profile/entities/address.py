@@ -1,14 +1,14 @@
 from typing import Self
 from uuid import UUID
 
-from app.domain.unit_of_work import UnitOfWorkTrackerInterface
+from app.domain.unit_of_work import UnitOfWorkTracker
 from app.domain.uowed import UowedEntity
 
 
 class Address(UowedEntity[UUID]):
     def __init__(
         self: Self,
-        uow: UnitOfWorkTrackerInterface,
+        uow: UnitOfWorkTracker,
         address_id: UUID,
         profile_id: UUID,
         city: str,
@@ -31,7 +31,7 @@ class Address(UowedEntity[UUID]):
     @classmethod
     def create_address(
         cls: type[Self],
-        uow: UnitOfWorkTrackerInterface,
+        uow: UnitOfWorkTracker,
         address_id: UUID,
         profile_id: UUID,
         city: str,

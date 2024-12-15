@@ -4,7 +4,7 @@ from uuid import UUID
 from sqlalchemy import CursorResult
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from app.application.unit_of_work import UnitOfWorkInterface
+from app.application.unit_of_work import UnitOfWork
 from app.domain.user.entities.user import User
 from app.domain.user.repositories.user_repository import UserRepository
 from app.infrastructure.database.postgres.converters.user_converters import result_to_user_entity
@@ -14,7 +14,7 @@ class UserRepositoryImpl(UserRepository):
     def __init__(
         self: Self,
         connection: AsyncConnection,
-        uow: UnitOfWorkInterface,
+        uow: UnitOfWork,
     ) -> None:
         self.connection = connection
         self.unit_of_work = uow

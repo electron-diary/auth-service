@@ -3,9 +3,9 @@ from uuid import uuid4
 
 from app.application.event_bus import EventBus
 from app.application.profile.commands.add_social_netw_profile import AddSocialNetwProfileCommand
-from app.application.profile.exceptions import ProfileNotFound
-from app.application.unit_of_work import UnitOfWorkCommitterInterace
-from app.application.user.exceptions import UserNotFound
+from app.application.profile.exceptions import ProfileNotFoundError
+from app.application.unit_of_work import UnitOfWorkCommitter
+from app.application.user.exceptions import UserNotFoundError
 from app.domain.profile.repositories.profile_repository import ProfileRepository
 from app.domain.user.enums.statuses import Statuses
 from app.domain.user.exceptions import UserInactiveError
@@ -17,7 +17,7 @@ class AddSocialNetwProfile:
         self: Self,
         user_repository: UserRepository,
         profile_repository: ProfileRepository,
-        unit_of_work: UnitOfWorkCommitterInterace,
+        unit_of_work: UnitOfWorkCommitter,
         event_bus: EventBus,
     ):
         self.user_repository = user_repository
@@ -28,14 +28,14 @@ class AddSocialNetwProfile:
     async def handler(self: Self, command: AddSocialNetwProfileCommand) -> None:
         user = await self.user_repository.load(command.profile_owner_id)
         if not user:
-            raise UserNotFound("User not found")
+            raise UserNotFoundError("User not found")
 
         if user.status == Statuses.INACTIVE:
             raise UserInactiveError("User is inactive")
 
         profile = await self.profile_repository.load(command.profile_id)
         if not profile:
-            raise ProfileNotFound("Profile not found")
+            raise ProfileNotFoundError("Profile not found")
 
         social_netw_profile_id = uuid4()
 

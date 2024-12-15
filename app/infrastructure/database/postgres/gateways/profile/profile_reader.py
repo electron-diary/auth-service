@@ -5,10 +5,10 @@ from sqlalchemy import CursorResult
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app.application.profile.dtos.profile_dto import ProfileDto
-from app.application.profile.protocols.profile_reader import ProfileReaderInterface
+from app.application.profile.protocols.profile_reader import ProfileReader
 
 
-class ProfileReaderImpl(ProfileReaderInterface):
+class ProfileReaderImpl(ProfileReader):
     def __init__(
         self: Self,
         connection: AsyncConnection,

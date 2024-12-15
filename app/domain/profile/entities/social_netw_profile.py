@@ -1,14 +1,14 @@
 from typing import Self
 from uuid import UUID
 
-from app.domain.unit_of_work import UnitOfWorkTrackerInterface
+from app.domain.unit_of_work import UnitOfWorkTracker
 from app.domain.uowed import UowedEntity
 
 
 class SocialNetwProfile(UowedEntity[UUID]):
     def __init__(
         self: Self,
-        uow: UnitOfWorkTrackerInterface,
+        uow: UnitOfWorkTracker,
         social_netw_id: UUID,
         profile_id: UUID,
         social_profile_link: str,
@@ -23,7 +23,7 @@ class SocialNetwProfile(UowedEntity[UUID]):
     @classmethod
     def create_social_netw_profile(
         cls: type[Self],
-        uow: UnitOfWorkTrackerInterface,
+        uow: UnitOfWorkTracker,
         social_netw_id: UUID,
         social_profile_link: str,
         profile_id: UUID,

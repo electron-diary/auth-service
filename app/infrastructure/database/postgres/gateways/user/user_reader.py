@@ -5,11 +5,11 @@ from sqlalchemy import CursorResult
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app.application.user.dtos.user_dto import UserDto
-from app.application.user.protocols.user_reader import UserReaderInterface
+from app.application.user.protocols.user_reader import UserReader
 from app.infrastructure.database.postgres.converters.user_converters import result_to_dto
 
 
-class UserReaderImpl(UserReaderInterface):
+class UserReaderImpl(UserReader):
     def __init__(
         self: Self,
         connection: AsyncConnection,

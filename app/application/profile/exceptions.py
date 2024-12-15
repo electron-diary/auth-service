@@ -1,5 +1,5 @@
 from app.application.exception import ApplicationError
 
 
-class ProfileNotFound(ApplicationError):
+class ProfileNotFoundError(ApplicationError):
     ...

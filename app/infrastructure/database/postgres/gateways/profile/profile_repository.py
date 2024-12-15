@@ -4,7 +4,7 @@ from uuid import UUID
 from sqlalchemy import CursorResult
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from app.application.unit_of_work import UnitOfWorkInterface
+from app.application.unit_of_work import UnitOfWork
 from app.domain.profile.entities.profile import Profile
 from app.domain.profile.repositories.profile_repository import ProfileRepository
 
@@ -12,7 +12,7 @@ from app.domain.profile.repositories.profile_repository import ProfileRepository
 class ProfileRepositoryImpl(ProfileRepository):
     def __init__(
         self: Self,
-        unit_of_work: UnitOfWorkInterface,
+        unit_of_work: UnitOfWork,
         connection: AsyncConnection,
     ) -> None:
         self.unit_of_work = unit_of_work

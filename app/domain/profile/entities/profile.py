@@ -19,15 +19,15 @@ from app.domain.profile.exceptions import (
     ProfileInactiveError,
     SocialNetwProfileNotFoundError,
 )
-from app.domain.profile.vos.fullname import Fullname
-from app.domain.unit_of_work import UnitOfWorkTrackerInterface
+from app.domain.profile.value_objects.fullname import Fullname
+from app.domain.unit_of_work import UnitOfWorkTracker
 from app.domain.uowed import UowedEntity
 
 
 class Profile(UowedEntity[UUID], AgregateRoot):
     def __init__(
         self: Self,
-        uow: UnitOfWorkTrackerInterface,
+        uow: UnitOfWorkTracker,
         profile_id: UUID,
         profile_owner_id: UUID,
         fullname: Fullname,
@@ -48,7 +48,7 @@ class Profile(UowedEntity[UUID], AgregateRoot):
     @classmethod
     def create_profile(
         cls: type[Self],
-        uow: UnitOfWorkTrackerInterface,
+        uow: UnitOfWorkTracker,
         profile_id: UUID,
         profile_owner_id: UUID,
         first_name: str,

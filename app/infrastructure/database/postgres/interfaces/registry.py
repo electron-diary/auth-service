@@ -1,15 +1,15 @@
 from abc import abstractmethod
 from typing import Protocol, Self
 
-from app.application.data_mapper import DataMapperInterface
+from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapper
 from app.domain.uowed import UowedEntity
 
 
-class RegistryInterface(Protocol):
+class Registry(Protocol):
     @abstractmethod
-    def register_mapper(self: Self, entity: type[UowedEntity], mapper: DataMapperInterface) -> None:
+    def register_mapper(self: Self, entity: type[UowedEntity], mapper: DataMapper) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
 
     @abstractmethod
-    def get_mapper(self: Self, entity: type[UowedEntity]) -> DataMapperInterface:
+    def get_mapper(self: Self, entity: type[UowedEntity]) -> DataMapper:
         raise NotImplementedError("Method must be implemented by subclasses")

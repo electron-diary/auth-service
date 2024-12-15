@@ -1,7 +1,7 @@
 from app.application.user.dtos.user_dto import UserDto
 from app.domain.unit_of_work import UnitOfWorkTrackerInterface
 from app.domain.user.entities.user import User
-from app.domain.user.vos.contacts import Contacts
+from app.domain.user.value_objects.contacts import Contacts
 
 
 def result_to_dto(result: dict) -> UserDto:

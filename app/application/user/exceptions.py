@@ -1,8 +1,8 @@
 from app.application.exception import ApplicationError
 
 
-class UserAlreadyExists(ApplicationError):
+class UserAlreadyExistsError(ApplicationError):
     ...
 
-class UserNotFound(ApplicationError):
+class UserNotFoundError(ApplicationError):
     ...

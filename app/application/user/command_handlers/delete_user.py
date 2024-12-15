@@ -1,9 +1,9 @@
 from typing import Self
 
 from app.application.event_bus import EventBus
-from app.application.unit_of_work import UnitOfWorkCommitterInterace
+from app.application.unit_of_work import UnitOfWorkCommitter
 from app.application.user.commands.delete_user import DeleteUserCommand
-from app.application.user.exceptions import UserNotFound
+from app.application.user.exceptions import UserNotFoundError
 from app.domain.profile.repositories.profile_repository import ProfileRepository
 from app.domain.user.repositories.user_repository import UserRepository
 
@@ -11,7 +11,7 @@ from app.domain.user.repositories.user_repository import UserRepository
 class DeleteUser:
     def __init__(
         self: Self,
-        unit_of_work: UnitOfWorkCommitterInterace,
+        unit_of_work: UnitOfWorkCommitter,
         user_repository: UserRepository,
         event_bus: EventBus,
         profile_repository: ProfileRepository,
@@ -24,7 +24,7 @@ class DeleteUser:
     async def handle(self: Self, command: DeleteUserCommand) -> None:
         user = await self.user_repository.load(command.id)
         if not user:
-            raise UserNotFound("User not found")
+            raise UserNotFoundError("User not found")
 
         profiles = await self.profile_repository.load_all_user_profiles(user.id)
 

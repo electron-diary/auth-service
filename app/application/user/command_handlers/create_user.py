@@ -2,9 +2,9 @@ from typing import Self
 from uuid import UUID, uuid4
 
 from app.application.event_bus import EventBus
-from app.application.unit_of_work import UnitOfWorkCommitterInterace
+from app.application.unit_of_work import UnitOfWorkCommitter
 from app.application.user.commands.create_user import CreateUserCommand
-from app.application.user.exceptions import UserAlreadyExists
+from app.application.user.exceptions import UserAlreadyExistsError
 from app.domain.user.entities.user import User
 from app.domain.user.repositories.user_repository import UserRepository
 
@@ -12,7 +12,7 @@ from app.domain.user.repositories.user_repository import UserRepository
 class CreateUser:
     def __init__(
         self: Self,
-        unit_of_work: UnitOfWorkCommitterInterace,
+        unit_of_work: UnitOfWorkCommitter,
         user_repository: UserRepository,
         event_bus: EventBus,
     ) -> None:
@@ -22,13 +22,13 @@ class CreateUser:
 
     async def handle(self: Self, command: CreateUserCommand) -> UUID:
         if command.email and await self.user_repository.check_email_exists(command.email):
-            raise UserAlreadyExists("User already exists")
+            raise UserAlreadyExistsError("User already exists")
 
         if command.phone and await self.user_repository.check_phone_number_exists(command.phone):
-            raise UserAlreadyExists("User already exists")
+            raise UserAlreadyExistsError("User already exists")
 
         if await self.user_repository.check_username_exists(command.username):
-            raise UserAlreadyExists("User already exists")
+            raise UserAlreadyExistsError("User already exists")
 
         user_uuid = uuid4()
 

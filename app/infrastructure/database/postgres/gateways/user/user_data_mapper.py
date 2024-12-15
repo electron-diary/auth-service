@@ -2,11 +2,11 @@ from typing import Self
 
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from app.application.data_mapper import DataMapperInterface
+from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapper
 from app.domain.user.entities.user import User
 
 
-class UserDataMapper(DataMapperInterface):
+class UserDataMapper(DataMapper):
     def __init__(
         self: Self,
         connection: AsyncConnection,

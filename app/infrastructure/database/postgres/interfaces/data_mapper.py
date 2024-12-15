@@ -4,7 +4,7 @@ from typing import Protocol, Self
 from app.domain.uowed import UowedEntity
 
 
-class DataMapperInterface(Protocol):
+class DataMapper(Protocol):
     @abstractmethod
     async def add(self: Self, entity: UowedEntity) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")

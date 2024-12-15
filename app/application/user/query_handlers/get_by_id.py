@@ -1,14 +1,14 @@
 from typing import Self
 
 from app.application.user.dtos.user_dto import UserDto
-from app.application.user.protocols.user_reader import UserReaderInterface
+from app.application.user.protocols.user_reader import UserReader
 from app.application.user.queries.get_by_id import GetUserByIdQuery
 
 
 class GetUserById:
     def __init__(
         self: Self,
-        user_reader: UserReaderInterface,
+        user_reader: UserReader,
     ) -> None:
         self.user_reader = user_reader
 

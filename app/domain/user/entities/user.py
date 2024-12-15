@@ -2,7 +2,7 @@ from typing import Self
 from uuid import UUID
 
 from app.domain.agregate_root import AgregateRoot
-from app.domain.unit_of_work import UnitOfWorkTrackerInterface
+from app.domain.unit_of_work import UnitOfWorkTracker
 from app.domain.uowed import UowedEntity
 from app.domain.user.enums.statuses import Statuses
 from app.domain.user.events.contacts_changed import ContactsChanged
@@ -11,13 +11,13 @@ from app.domain.user.events.user_deleted import UserDeleted
 from app.domain.user.events.user_status_changed import UserStatusChanged
 from app.domain.user.events.username_changed import UsernameChanged
 from app.domain.user.exceptions import UserInactiveError
-from app.domain.user.vos.contacts import Contacts
+from app.domain.user.value_objects.contacts import Contacts
 
 
 class User(UowedEntity[UUID], AgregateRoot):
     def __init__(
         self: Self,
-        uow: UnitOfWorkTrackerInterface,
+        uow: UnitOfWorkTracker,
         user_id: UUID,
         username: str,
         contacts: Contacts,
@@ -32,7 +32,7 @@ class User(UowedEntity[UUID], AgregateRoot):
     @classmethod
     def create_user(
         cls: type[Self],
-        uow: UnitOfWorkTrackerInterface,
+        uow: UnitOfWorkTracker,
         user_id: UUID,
         email: str | None,
         phone_number: int | None,

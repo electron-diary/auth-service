@@ -1,10 +1,10 @@
 from abc import abstractmethod
 from typing import Protocol, Self
 
-from app.domain.unit_of_work import UnitOfWorkTrackerInterface
+from app.domain.unit_of_work import UnitOfWorkTracker
 
 
-class UnitOfWorkCommitterInterace(Protocol):
+class UnitOfWorkCommitter(Protocol):
     @abstractmethod
     async def commit(self: Self) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
@@ -18,5 +18,5 @@ class UnitOfWorkCommitterInterace(Protocol):
         raise NotImplementedError("Method must be implemented by subclasses")
 
 
-class UnitOfWorkInterface(UnitOfWorkCommitterInterace, UnitOfWorkTrackerInterface):
+class UnitOfWork(UnitOfWorkCommitter, UnitOfWorkTracker):
     ...
