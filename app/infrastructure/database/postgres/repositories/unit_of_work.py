@@ -2,15 +2,15 @@ from typing import Self
 
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from app.application.unit_of_work import UnitOfWorkInterface
+from app.application.unit_of_work import UnitOfWork
 from app.domain.uowed import UowedEntity
-from app.infrastructure.database.postgres.interfaces.registry import RegistryInterface
+from app.infrastructure.database.postgres.interfaces.registry import Registry
 
 
-class UnitOfWorkImpl(UnitOfWorkInterface):
+class UnitOfWorkImpl(UnitOfWork):
     def __init__(
         self: Self,
-        registry: RegistryInterface,
+        registry: Registry,
         connection: AsyncConnection,
     ) -> None:
         self.new: dict[type[UowedEntity], list[UowedEntity]] = dict()
