@@ -1,8 +1,8 @@
 from typing import Self
 
 from app.application.data_mapper import DataMapperInterface
-from app.domain.uowed import UowedEntity
 from app.application.registry import RegistryInterface
+from app.domain.uowed import UowedEntity
 
 
 class Registry(RegistryInterface):
@@ -16,5 +16,5 @@ class Registry(RegistryInterface):
         mapper = self.data_mappers[entity]
         if not mapper:
             raise ValueError(f"Mapper for {entity} not registered")
-        
+
         return mapper

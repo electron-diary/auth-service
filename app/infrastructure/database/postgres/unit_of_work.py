@@ -2,16 +2,16 @@ from typing import Self
 
 from sqlalchemy.ext.asyncio import AsyncConnection
 
+from app.application.registry import RegistryInterface
 from app.application.unit_of_work import UnitOfWorkInterface
 from app.domain.uowed import UowedEntity
-from app.application.registry import RegistryInterface
 
 
 class UnitOfWorkImpl(UnitOfWorkInterface):
     def __init__(
-        self: Self, 
-        registry: RegistryInterface, 
-        connection: AsyncConnection
+        self: Self,
+        registry: RegistryInterface,
+        connection: AsyncConnection,
     ) -> None:
         self.new: dict[type[UowedEntity], list[UowedEntity]] = dict()
         self.dirty: dict[type[UowedEntity], list[UowedEntity]] = dict()
@@ -41,6 +41,5 @@ class UnitOfWorkImpl(UnitOfWorkInterface):
             mapper = self.registry.get_mapper(entity_type)
             await mapper.delete(entity)
 
-        await self.connection.execute('COMMIT')
+        await self.connection.execute("COMMIT")
 
-        
