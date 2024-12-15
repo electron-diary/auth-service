@@ -17,6 +17,7 @@ profile_table = Table(
     Column("profile_owner_id", UUID, ForeignKey("users.user_id")),
     Column("first_name", String(255), nullable=False),
     Column("last_name", String(255), nullable=True),
+    Column("middle_name", String(255), nullable=True),
     Column("bio", String(255), nullable=False),
     Column("status", String(255), nullable=False),
 )
@@ -37,6 +38,6 @@ address_table = Table(
     Column("city", String(255), nullable=False),
     Column("street", String(255), nullable=False),
     Column("house_number", Integer, nullable=False),
-    Column("apartment_number", Integer, nullable=True),
+    Column("apartament_number", Integer, nullable=True),
     Column("postal_code", String(255), nullable=False),
 )

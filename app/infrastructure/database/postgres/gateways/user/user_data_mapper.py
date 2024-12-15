@@ -21,7 +21,7 @@ class UserDataMapper(DataMapperInterface):
         await self.connection.execute(
             stmt,
             (
-                entity.user_id,
+                entity.id,
                 entity.contacts.email,
                 entity.contacts.phone_number,
                 entity.username,

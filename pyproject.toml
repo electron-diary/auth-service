@@ -13,6 +13,7 @@ pytest = "^8.3.4"
 asyncpg = "^0.30.0"
 sqlalchemy = "^2.0.36"
 alembic = "^1.14.0"
+dishka = "^1.4.2"
 
 
 [build-system]

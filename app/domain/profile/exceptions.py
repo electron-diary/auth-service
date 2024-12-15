@@ -12,6 +12,3 @@ class SocialNetwProfileNotFoundError(DomainException):
 
 class AddressNotFoundError(DomainException):
     ...
-
-class AvatarNotFoundError(DomainException):
-    ...

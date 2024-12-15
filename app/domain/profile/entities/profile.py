@@ -3,14 +3,10 @@ from uuid import UUID
 
 from app.domain.agregate_root import AgregateRoot
 from app.domain.profile.entities.address import Address
-from app.domain.profile.entities.avatar import Avatar
 from app.domain.profile.entities.social_netw_profile import SocialNetwProfile
 from app.domain.profile.enums.statuses import Statuses
 from app.domain.profile.events.address_added import AddressAdded
-from app.domain.profile.events.address_changed import AddressChanged
 from app.domain.profile.events.address_deleted import AddressDeleted
-from app.domain.profile.events.avatar_added import AvatarAdded
-from app.domain.profile.events.avatar_deleted import AvatarDeleted
 from app.domain.profile.events.bio_changed import BioChanged
 from app.domain.profile.events.fullname_changed import FullnameChanged
 from app.domain.profile.events.profile_created import ProfileCreated
@@ -20,7 +16,6 @@ from app.domain.profile.events.social_netw_profile_added import SocialNetwProfil
 from app.domain.profile.events.social_netw_profile_deleted import SocialNetwProfileDeleted
 from app.domain.profile.exceptions import (
     AddressNotFoundError,
-    AvatarNotFoundError,
     ProfileInactiveError,
     SocialNetwProfileNotFoundError,
 )
@@ -40,7 +35,6 @@ class Profile(UowedEntity[UUID], AgregateRoot):
         bio: str,
         addresses: list[Address] = [],
         social_netw_profiles: list[SocialNetwProfile] = [],
-        avatars: list[Avatar] = [],
     ) -> None:
         super().__init__(uow=uow, id=profile_id)
 
@@ -50,7 +44,6 @@ class Profile(UowedEntity[UUID], AgregateRoot):
         self.bio = bio
         self.addresses = addresses
         self.social_netw_profiles = social_netw_profiles
-        self.avatars = avatars
 
     @classmethod
     def create_profile(
@@ -106,6 +99,7 @@ class Profile(UowedEntity[UUID], AgregateRoot):
 
         address = Address.create_address(
             uow=self.uow,
+            profile_id=self.id,
             address_id=address_id,
             city=city,
             country=country,
@@ -129,48 +123,6 @@ class Profile(UowedEntity[UUID], AgregateRoot):
                 postal_code=address.postal_code,
             ),
         )
-
-    def change_address(
-        self: Self,
-        address_id: UUID,
-        city: str,
-        country: str,
-        street: str,
-        house_number: str,
-        apartment_number: str,
-        postal_code: str,
-    ) -> None:
-        if self.status == Statuses.INACTIVE:
-            raise ProfileInactiveError( "Profile is inactive")
-
-        for address in self.addresses:
-            if address.id == address_id:
-                address.change_address(
-                    city=city,
-                    country=country,
-                    street=street,
-                    house_number=house_number,
-                    apartment_number=apartment_number,
-                    postal_code=postal_code,
-                )
-                self.record_event(
-                    AddressChanged(
-                        aggregate_id=self.id,
-                        event_type="AddressChanged",
-                        agregate_name="Profile",
-                        profile_id=self.id,
-                        profile_owner_id=self.profile_owner_id,
-                        address_id=address.id,
-                        city=address.city,
-                        country=address.country,
-                        street=address.street,
-                        house_number=address.house_number,
-                        apartment_number=address.apartament_number,
-                        postal_code=address.postal_code,
-                    ),
-                )
-
-        raise AddressNotFoundError("Address not found")
 
     def delete_address(self: Self, address_id: UUID) -> None:
         if self.status == Statuses.INACTIVE:
@@ -206,6 +158,7 @@ class Profile(UowedEntity[UUID], AgregateRoot):
             social_netw_profile_id=social_netw_profile_id,
             social_netw_profile_name=social_netw_profile_name,
             social_netw_profile_url=social_netw_profile_url,
+            profile_id=self.id,
         )
         self.social_netw_profiles.append(social_netw_profile)
         self.record_event(
@@ -240,61 +193,6 @@ class Profile(UowedEntity[UUID], AgregateRoot):
                 )
 
         raise SocialNetwProfileNotFoundError("Social netw profile not found")
-
-    def add_avatar(
-        self: Self,
-        avatar_id: UUID,
-        avatar_url: str,
-        file_name: str,
-        file_extension: str,
-        file_size: int,
-    ) -> None:
-        if self.status == Statuses.INACTIVE:
-            raise ProfileInactiveError( "Profile is inactive")
-
-        avatar = Avatar.create_avatar(
-            uow=self.uow,
-            avatar_id=avatar_id,
-            url=avatar_url,
-            file_name=file_name,
-            file_extension=file_extension,
-            file_size=file_size,
-        )
-        self.avatars.append(avatar)
-        self.record_event(
-            AvatarAdded(
-                aggregate_id=self.id,
-                event_type="AvatarAdded",
-                agregate_name="Profile",
-                profile_id=self.id,
-                profile_owner_id=self.profile_owner_id,
-                avatar_id=avatar_id,
-                file_url=avatar_url,
-                file_name=file_name,
-                file_extension=file_extension,
-                file_size=file_size,
-            ),
-        )
-
-    def delete_avatar(self: Self, avatar_id: UUID) -> None:
-        if self.status == Statuses.INACTIVE:
-            raise ProfileInactiveError( "Profile is inactive")
-
-        for avatar in self.avatars:
-            if avatar.id == avatar_id:
-                avatar.delete_avatar()
-                self.record_event(
-                    AvatarDeleted(
-                        aggregate_id=self.id,
-                        event_type="AvatarDeleted",
-                        agregate_name="Profile",
-                        profile_id=self.id,
-                        profile_owner_id=self.profile_owner_id,
-                        avatar_id=avatar_id,
-                    ),
-                )
-
-        raise AvatarNotFoundError("Avatar not found")
 
     def change_bio(self: Self, bio: str) -> None:
         if self.status == Statuses.INACTIVE:
