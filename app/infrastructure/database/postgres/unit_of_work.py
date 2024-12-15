@@ -2,9 +2,9 @@ from typing import Self
 
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from app.infrastructure.database.postgres.interfaces.registry import Registry
 from app.application.unit_of_work import UnitOfWork
 from app.domain.uowed import UowedEntity
+from app.infrastructure.database.postgres.interfaces.registry import Registry
 
 
 class UnitOfWorkImpl(UnitOfWork):

@@ -1,8 +1,8 @@
 from abc import abstractmethod
 from typing import Protocol, Self
 
-from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapper
 from app.domain.uowed import UowedEntity
+from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapper
 
 
 class Registry(Protocol):

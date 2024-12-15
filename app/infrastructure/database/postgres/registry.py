@@ -1,8 +1,8 @@
 from typing import Self
 
+from app.domain.uowed import UowedEntity
 from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapper
 from app.infrastructure.database.postgres.interfaces.registry import Registry
-from app.domain.uowed import UowedEntity
 
 
 class RegistryImpl(Registry):

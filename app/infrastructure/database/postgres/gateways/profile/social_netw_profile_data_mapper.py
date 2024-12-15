@@ -2,8 +2,8 @@ from typing import Self
 
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapper
 from app.domain.profile.entities.social_netw_profile import SocialNetwProfile
+from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapper
 
 
 class SocialNetwProfileDataMapper(DataMapper):

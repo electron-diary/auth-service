@@ -9,9 +9,9 @@ from app.infrastructure.database.postgres.interfaces.registry import RegistryInt
 
 class UnitOfWorkImpl(UnitOfWorkInterface):
     def __init__(
-        self: Self, 
-        registry: RegistryInterface, 
-        connection: AsyncConnection
+        self: Self,
+        registry: RegistryInterface,
+        connection: AsyncConnection,
     ) -> None:
         self.new: dict[type[UowedEntity], list[UowedEntity]] = dict()
         self.dirty: dict[type[UowedEntity], list[UowedEntity]] = dict()
@@ -41,6 +41,5 @@ class UnitOfWorkImpl(UnitOfWorkInterface):
             mapper = self.registry.get_mapper(entity_type)
             await mapper.delete(entity)
 
-        await self.connection.execute('COMMIT')
+        await self.connection.execute("COMMIT")
 
-        

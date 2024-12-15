@@ -2,8 +2,8 @@ from typing import Self
 
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapper
 from app.domain.user.entities.user import User
+from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapper
 
 
 class UserDataMapper(DataMapper):
