@@ -6,7 +6,6 @@ from app.domain.common.unit_of_work import UnitOfWorkTracker
 from app.domain.common.uowed import UowedEntity
 from app.domain.profile.entities.address import Address
 from app.domain.profile.entities.social_netw_profile import SocialNetwProfile
-from app.domain.profile.statuses import Statuses
 from app.domain.profile.events.address_added import AddressAdded
 from app.domain.profile.events.address_deleted import AddressDeleted
 from app.domain.profile.events.bio_changed import BioChanged
@@ -21,6 +20,7 @@ from app.domain.profile.exceptions import (
     ProfileInactiveError,
     SocialNetwProfileNotFoundError,
 )
+from app.domain.profile.statuses import Statuses
 from app.domain.profile.value_objects.fullname import Fullname
 
 

@@ -1,14 +1,14 @@
-from app.domain.common.exception import DomainException
+from app.domain.common.exception import DomainError
 
 
-class InvalidFullNameError(DomainException):
+class InvalidFullNameError(DomainError):
     ...
 
-class ProfileInactiveError(DomainException):
+class ProfileInactiveError(DomainError):
     ...
 
-class SocialNetwProfileNotFoundError(DomainException):
+class SocialNetwProfileNotFoundError(DomainError):
     ...
 
-class AddressNotFoundError(DomainException):
+class AddressNotFoundError(DomainError):
     ...

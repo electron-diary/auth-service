@@ -4,13 +4,13 @@ from uuid import UUID
 from app.domain.common.agregate_root import AgregateRoot
 from app.domain.common.unit_of_work import UnitOfWorkTracker
 from app.domain.common.uowed import UowedEntity
-from app.domain.user.statuses import Statuses
 from app.domain.user.events.contacts_changed import ContactsChanged
 from app.domain.user.events.user_created import UserCreated
 from app.domain.user.events.user_deleted import UserDeleted
 from app.domain.user.events.user_status_changed import UserStatusChanged
 from app.domain.user.events.username_changed import UsernameChanged
 from app.domain.user.exceptions import UserInactiveError
+from app.domain.user.statuses import Statuses
 from app.domain.user.value_objects.contacts import Contacts
 
 

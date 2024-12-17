@@ -6,9 +6,9 @@ from app.application.common.event_bus import EventBus
 from app.application.common.exceptions import ProfileNotFoundError, UserNotFoundError
 from app.application.common.unit_of_work import UnitOfWorkCommitter
 from app.domain.profile.repositories.profile_repository import ProfileRepository
-from app.domain.user.statuses import Statuses
 from app.domain.user.exceptions import UserInactiveError
 from app.domain.user.repositories.user_repository import UserRepository
+from app.domain.user.statuses import Statuses
 
 
 @dataclass(frozen=True)
@@ -32,7 +32,7 @@ class AddSocialNetwProfile:
         self.unit_of_work = unit_of_work
         self.event_bus = event_bus
 
-    async def handler(self: Self, command: AddSocialNetwProfileCommand) -> None:
+    async def handle(self: Self, command: AddSocialNetwProfileCommand) -> None:
         user = await self.user_repository.load(command.profile_owner_id)
         if not user:
             raise UserNotFoundError("User not found")

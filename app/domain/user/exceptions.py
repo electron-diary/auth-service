@@ -1,8 +1,8 @@
-from app.domain.common.exception import DomainException
+from app.domain.common.exception import DomainError
 
 
-class InvalidContactsError(DomainException):
+class InvalidContactsError(DomainError):
     ...
 
-class UserInactiveError(DomainException):
+class UserInactiveError(DomainError):
     ...
