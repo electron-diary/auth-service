@@ -8,7 +8,7 @@ from app.application.dto.profile_dto import ProfileDto
 from app.application.queries.get_profile_by_id import GetProfileById, GetProfileByIdQuery
 from app.presentation.api.controllers.responses import SuccessfulResponse
 
-router = APIRouter(prefix="/profile")
+router = APIRouter()
 
 
 @router.get(

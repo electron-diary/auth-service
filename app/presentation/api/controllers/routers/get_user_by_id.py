@@ -8,7 +8,7 @@ from app.application.dto.user_dto import UserDto
 from app.application.queries.get_user_by_id import GetUserById, GetUserByIdQuery
 from app.presentation.api.controllers.responses import SuccessfulResponse
 
-router = APIRouter(prefix="/user")
+router = APIRouter()
 
 
 @router.get(

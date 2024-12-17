@@ -8,7 +8,7 @@ from app.application.commands.create_user import CreateUser, CreateUserCommand
 from app.application.common.exceptions import UserAlreadyExistsError
 from app.presentation.api.controllers.responses import ErrorResponse, SuccessfulResponse
 
-router = APIRouter(prefix="/user")
+router = APIRouter()
 
 
 @router.post(

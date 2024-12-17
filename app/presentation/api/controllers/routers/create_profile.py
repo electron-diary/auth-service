@@ -9,7 +9,7 @@ from app.application.common.exceptions import UserNotFoundError
 from app.domain.user.exceptions import UserInactiveError
 from app.presentation.api.controllers.responses import ErrorResponse, SuccessfulResponse
 
-router = APIRouter(prefix="/profile")
+router = APIRouter()
 
 
 @router.post(
