@@ -16,7 +16,7 @@ from app.domain.user.value_objects.contacts import Contacts
 
 class User(UowedEntity[UUID], AgregateRoot):
     def __init__(
-        self: Self,
+        self,
         uow: UnitOfWorkTracker,
         user_id: UUID,
         username: str,
@@ -60,7 +60,7 @@ class User(UowedEntity[UUID], AgregateRoot):
         )
         return user
 
-    def change_username(self: Self, username: str) -> None:
+    def change_username(self, username: str) -> None:
         if self.status == Statuses.INACTIVE:
             raise UserInactiveError("User is inactive")
 
@@ -76,7 +76,7 @@ class User(UowedEntity[UUID], AgregateRoot):
         )
         self.mark_dirty()
 
-    def change_contacts(self: Self, email: str | None, phone_number: int | None) -> None:
+    def change_contacts(self, email: str | None, phone_number: int | None) -> None:
         if self.status == Statuses.INACTIVE:
             raise UserInactiveError("User is inactive")
 
@@ -93,7 +93,7 @@ class User(UowedEntity[UUID], AgregateRoot):
         )
         self.mark_dirty()
 
-    def chnage_status(self: Self, status: Statuses) -> None:
+    def chnage_status(self, status: Statuses) -> None:
         self.status = status
         self.record_event(
             UserStatusChanged(
@@ -106,7 +106,7 @@ class User(UowedEntity[UUID], AgregateRoot):
         )
         self.mark_dirty()
 
-    def delete_user(self: Self) -> None:
+    def delete_user(self) -> None:
         self.record_event(
             UserDeleted(
                 aggregate_id=self.id,

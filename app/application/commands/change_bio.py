@@ -20,7 +20,7 @@ class ChangeBioCommand:
 
 class ChangeBio:
     def __init__(
-        self: Self,
+        self,
         unit_of_work: UnitOfWorkCommitter,
         profile_repository: ProfileRepository,
         user_repository: UserRepository,

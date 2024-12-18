@@ -23,7 +23,7 @@ class CreateProfileCommand:
 
 class CreateProfile:
     def __init__(
-        self: Self,
+        self,
         unit_of_work: UnitOfWorkCommitter,
         user_repository: UserRepository,
         profile_repository: ProfileRepository,

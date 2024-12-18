@@ -21,7 +21,7 @@ class AddSocialNetwProfileCommand:
 
 class AddSocialNetwProfile:
     def __init__(
-        self: Self,
+        self,
         user_repository: UserRepository,
         profile_repository: ProfileRepository,
         unit_of_work: UnitOfWorkCommitter,

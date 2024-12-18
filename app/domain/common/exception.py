@@ -1,11 +1,6 @@
-from typing import Self
+from dataclasses import dataclass
 
 
+@dataclass(eq=False)
 class DomainError(Exception):
-    def __init__(
-        self: Self,
-        message: str,
-    ) -> None:
-        super().__init__(message)
-
-        self.message = message
+    message: str

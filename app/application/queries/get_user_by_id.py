@@ -13,12 +13,12 @@ class GetUserByIdQuery:
 
 class GetUserById:
     def __init__(
-        self: Self,
+        self,
         user_reader: UserReader,
     ) -> None:
         self.user_reader = user_reader
 
     async def handle(self: Self, query: GetUserByIdQuery) -> UserDto:
-        user = await self.user_reader.get_user_by_id(query.id)
+        user = await self.user_reader.get_user_by_id(query.user_id)
 
         return user

@@ -1,4 +1,3 @@
-from typing import Self
 
 from app.application.common.event_bus import EventBus
 from app.domain.common.domain_event import DomainEvent
@@ -8,12 +7,12 @@ from app.infrastructure.event_queue.converters import domain_event_to_integratio
 
 class EventBusImpl(EventBus):
     def __init__(
-        self: Self,
+        self,
         message_publisher: MessagePublisher,
     ) -> None:
         self.message_publisher = message_publisher
 
-    async def publish(self: Self, events: list[DomainEvent]) -> None:
+    async def publish(self, events: list[DomainEvent]) -> None:
         for domain_event in events:
             integration_event = domain_event_to_integration_event(domain_event)
             message = integration_event_to_message(integration_event)

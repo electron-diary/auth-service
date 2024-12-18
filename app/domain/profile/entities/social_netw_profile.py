@@ -7,7 +7,7 @@ from app.domain.common.uowed import UowedEntity
 
 class SocialNetwProfile(UowedEntity[UUID]):
     def __init__(
-        self: Self,
+        self,
         uow: UnitOfWorkTracker,
         social_netw_id: UUID,
         profile_id: UUID,
@@ -40,5 +40,5 @@ class SocialNetwProfile(UowedEntity[UUID]):
 
         return social_netw_profile
 
-    def delete_social_netw_profile(self: Self) -> None:
+    def delete_social_netw_profile(self) -> None:
         self.mark_deleted()

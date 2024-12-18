@@ -1,4 +1,3 @@
-from typing import Self
 
 from sqlalchemy.ext.asyncio import AsyncConnection
 
@@ -8,12 +7,12 @@ from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapp
 
 class ProfileDataMapper(DataMapper):
     def __init__(
-        self: Self,
+        self,
         connection: AsyncConnection,
     ) -> None:
         self.connection = connection
 
-    async def add(self: Self, entity: Profile) -> None:
+    async def add(self, entity: Profile) -> None:
         stmt = """
             INSERT INTO profiles
                 profile_id,
@@ -38,7 +37,7 @@ class ProfileDataMapper(DataMapper):
             ),
         )
 
-    async def update(self: Self, entity: Profile) -> None:
+    async def update(self, entity: Profile) -> None:
         stmt = """
             UPDATE profiles
             SET
@@ -50,7 +49,7 @@ class ProfileDataMapper(DataMapper):
                 status = ?
             WHERE profile_id = ?
         """
-        await self._connection.execute(
+        await self.connection.execute(
             stmt,
             (
                 entity.profile_owner_id,
@@ -63,9 +62,9 @@ class ProfileDataMapper(DataMapper):
             ),
         )
 
-    async def delete(self: Self, entity: Profile) -> None:
+    async def delete(self, entity: Profile) -> None:
         stmt = """
             DELETE FROM profiles
             WHERE profile_id = ?
         """
-        await self._connection.execute(stmt, (entity.id, ))
+        await self.connection.execute(stmt, (entity.id, ))

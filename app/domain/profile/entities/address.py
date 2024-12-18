@@ -7,7 +7,7 @@ from app.domain.common.uowed import UowedEntity
 
 class Address(UowedEntity[UUID]):
     def __init__(
-        self: Self,
+        self,
         uow: UnitOfWorkTracker,
         address_id: UUID,
         profile_id: UUID,
@@ -56,5 +56,5 @@ class Address(UowedEntity[UUID]):
 
         return address
 
-    def delete_address(self: Self) -> None:
+    def delete_address(self) -> None:
         self.mark_deleted()

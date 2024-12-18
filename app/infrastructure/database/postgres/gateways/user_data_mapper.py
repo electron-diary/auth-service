@@ -1,4 +1,3 @@
-from typing import Self
 
 from sqlalchemy.ext.asyncio import AsyncConnection
 
@@ -8,12 +7,12 @@ from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapp
 
 class UserDataMapper(DataMapper):
     def __init__(
-        self: Self,
+        self,
         connection: AsyncConnection,
     ) -> None:
         self.connection = connection
 
-    async def add(self: Self, entity: User) -> None:
+    async def add(self, entity: User) -> None:
         stmt = """
             INSERT INTO users (user_id, email, phone_number, username, status)
             VALUES (?, ?, ?, ?, ?)
@@ -29,7 +28,7 @@ class UserDataMapper(DataMapper):
             ),
         )
 
-    async def update(self: Self, entity: User) -> None:
+    async def update(self, entity: User) -> None:
         stmt = """
             UPDATE users
             SET email = ?, phone_number = ?, username = ?, status = ?
@@ -46,7 +45,7 @@ class UserDataMapper(DataMapper):
             ),
         )
 
-    async def delete(self: Self, entity: User) -> None:
+    async def delete(self, entity: User) -> None:
         stmt = """
             DELETE FROM users
             WHERE user_id = ?

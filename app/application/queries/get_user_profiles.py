@@ -13,7 +13,7 @@ class GetUserProfilesQuery:
 
 class GetUserProfiles:
     def __init__(
-        self: Self,
+        self,
         profile_reader: ProfileReader,
     ) -> None:
         self.profile_reader = profile_reader

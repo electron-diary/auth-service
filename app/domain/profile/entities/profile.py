@@ -26,7 +26,7 @@ from app.domain.profile.value_objects.fullname import Fullname
 
 class Profile(UowedEntity[UUID], AgregateRoot):
     def __init__(
-        self: Self,
+        self,
         uow: UnitOfWorkTracker,
         profile_id: UUID,
         profile_owner_id: UUID,
@@ -85,7 +85,7 @@ class Profile(UowedEntity[UUID], AgregateRoot):
         return profile
 
     def add_address(
-        self: Self,
+        self,
         address_id: UUID,
         city: str,
         country: str,
@@ -124,7 +124,7 @@ class Profile(UowedEntity[UUID], AgregateRoot):
             ),
         )
 
-    def delete_address(self: Self, address_id: UUID) -> None:
+    def delete_address(self, address_id: UUID) -> None:
         if self.status == Statuses.INACTIVE:
             raise ProfileInactiveError( "Profile is inactive")
 
@@ -145,7 +145,7 @@ class Profile(UowedEntity[UUID], AgregateRoot):
         raise AddressNotFoundError("Address not found")
 
     def add_social_netw_profile(
-        self: Self,
+        self,
         social_netw_profile_id: UUID,
         social_netw_profile_name: str,
         social_netw_profile_url: str,
@@ -174,7 +174,7 @@ class Profile(UowedEntity[UUID], AgregateRoot):
             ),
         )
 
-    def delete_social_netw_profile(self: Self, social_netw_profile_id: UUID) -> None:
+    def delete_social_netw_profile(self, social_netw_profile_id: UUID) -> None:
         if self.status == Statuses.INACTIVE:
             raise ProfileInactiveError( "Profile is inactive")
 
@@ -194,7 +194,7 @@ class Profile(UowedEntity[UUID], AgregateRoot):
 
         raise SocialNetwProfileNotFoundError("Social netw profile not found")
 
-    def change_bio(self: Self, bio: str) -> None:
+    def change_bio(self, bio: str) -> None:
         if self.status == Statuses.INACTIVE:
             raise ProfileInactiveError( "Profile is inactive")
 
@@ -211,7 +211,7 @@ class Profile(UowedEntity[UUID], AgregateRoot):
             ),
         )
 
-    def change_fullname(self: Self, first_name: str, last_name: str, middle_name: str| None) -> None:
+    def change_fullname(self, first_name: str, last_name: str, middle_name: str| None) -> None:
         if self.status == Statuses.INACTIVE:
             raise ProfileInactiveError( "Profile is inactive")
 
@@ -232,7 +232,7 @@ class Profile(UowedEntity[UUID], AgregateRoot):
             ),
         )
 
-    def change_status(self: Self, status: Statuses) -> None:
+    def change_status(self, status: Statuses) -> None:
         self.status = status
         self.mark_dirty()
         self.record_event(
@@ -246,7 +246,7 @@ class Profile(UowedEntity[UUID], AgregateRoot):
             ),
         )
 
-    def delete_profile(self: Self) -> None:
+    def delete_profile(self) -> None:
         self.mark_deleted()
 
         for address in self.addresses:

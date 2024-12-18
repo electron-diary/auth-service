@@ -14,7 +14,7 @@ class SuccessfulResponse[Result](Response):
 @dataclass(frozen=True)
 class ErrorData[Error]:
     message: str = "Error occurred"
-    data: Error
+    data: Error | None = None
 
 
 @dataclass(frozen=True)

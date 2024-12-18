@@ -1,11 +1,10 @@
-from typing import Self
 
 from app.domain.profile.exceptions import InvalidFullNameError
 
 
 class Fullname:
     def __init__(
-        self: Self,
+        self,
         first_name: str,
         last_name: str,
         middle_name: str | None,
@@ -16,7 +15,7 @@ class Fullname:
 
         self.validate()
 
-    def validate(self: Self) -> None:
+    def validate(self) -> None:
         if not isinstance(self.first_name, str):
             raise InvalidFullNameError("First name must be a string")
 
@@ -29,7 +28,7 @@ class Fullname:
         if not self.first_name or not self.last_name:
             raise InvalidFullNameError("First name and last name must be provided")
 
-    def __str__(self: Self) -> str:
+    def __str__(self) -> str:
         if self.middle_name:
             return f"{self.first_name} {self.middle_name} {self.last_name}"
 

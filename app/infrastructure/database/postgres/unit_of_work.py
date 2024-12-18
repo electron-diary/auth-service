@@ -1,4 +1,3 @@
-from typing import Self
 
 from sqlalchemy.ext.asyncio import AsyncConnection
 
@@ -9,7 +8,7 @@ from app.infrastructure.database.postgres.interfaces.registry import Registry
 
 class UnitOfWorkImpl(UnitOfWork):
     def __init__(
-        self: Self,
+        self,
         registry: Registry,
         connection: AsyncConnection,
     ) -> None:
@@ -19,16 +18,16 @@ class UnitOfWorkImpl(UnitOfWork):
         self.registry = registry
         self.connection = connection
 
-    def register_new(self: Self, entity: UowedEntity) -> None:
+    def register_new(self, entity: UowedEntity) -> None:
         self.new.setdefault(type(entity), list()).append(entity)
 
-    def register_dirty(self: Self, entity: UowedEntity) -> None:
+    def register_dirty(self, entity: UowedEntity) -> None:
         self.dirty.setdefault(type(entity), list()).append(entity)
 
-    def register_deleted(self: Self, entity: UowedEntity) -> None:
+    def register_deleted(self, entity: UowedEntity) -> None:
         self.deleted.setdefault(type(entity), list()).append(entity)
 
-    async def commit(self: Self) -> None:
+    async def commit(self) -> None:
         for entity_type, entity in self.new.values():
             mapper = self.registry.get_mapper(entity_type)
             await mapper.add(entity)

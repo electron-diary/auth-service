@@ -1,7 +1,6 @@
-from typing import Self
 from uuid import UUID
 
-from sqlalchemy import CursorResult
+from sqlalchemy import CursorResult, text
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app.application.common.user_reader import UserReader
@@ -11,23 +10,14 @@ from app.infrastructure.database.postgres.converters.user_converters import resu
 
 class UserReaderImpl(UserReader):
     def __init__(
-        self: Self,
+        self,
         connection: AsyncConnection,
     ) -> None:
         self.connection = connection
 
-    async def get_user_by_id(self: Self, user_id: UUID) -> UserDto | None:
-        query = """
-            SELECT 
-                user_id,
-                email,
-                phone_number,
-                username,
-                status 
-            FROM users 
-            WHERE user_id = ?
-        """
-        cursor: CursorResult = await self.connection.execute(query, (user_id,))
+    async def get_user_by_id(self, user_id: UUID) -> UserDto | None:
+        query = "SELECT * FROM users(:user_id)"
+        cursor: CursorResult = await self.connection.execute(text(query), {"user_id": user_id})
         result = await cursor.fetchone()
 
         if result is None:

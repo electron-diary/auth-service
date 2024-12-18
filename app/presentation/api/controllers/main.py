@@ -18,7 +18,7 @@ from app.presentation.api.controllers.routers import (
 )
 
 
-def setup_roters(app: FastAPI) -> None:
+def setup_controllers(app: FastAPI) -> None:
     app.include_router(add_address.router, prefix="/profile", tags=["Profile"])
     app.include_router(add_social_netw_profile.router, prefix="/profile", tags=["Profile"])
     app.include_router(change_bio.router, prefix="/profile", tags=["Profile"])

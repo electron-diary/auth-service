@@ -12,14 +12,14 @@ from app.infrastructure.database.postgres.converters.user_converters import resu
 
 class UserRepositoryImpl(UserRepository):
     def __init__(
-        self: Self,
+        self,
         connection: AsyncConnection,
         uow: UnitOfWork,
     ) -> None:
         self.connection = connection
         self.unit_of_work = uow
 
-    async def load(self: Self, user_id: UUID) -> User | None:
+    async def load(self, user_id: UUID) -> User | None:
         query = """
             SELECT 
                 user_id,
@@ -38,7 +38,7 @@ class UserRepositoryImpl(UserRepository):
 
         return result_to_user_entity(result, self.unit_of_work)
 
-    async def check_email_exists(self: Self, email: str) -> User | None:
+    async def check_email_exists(self, email: str) -> User | None:
         query = """
             SELECT
                 user_id,
@@ -57,7 +57,7 @@ class UserRepositoryImpl(UserRepository):
 
         return result_to_user_entity(result, self.unit_of_work)
 
-    async def check_phone_number_exists(self: Self, phone_number: int) -> User | None:
+    async def check_phone_number_exists(self, phone_number: int) -> User | None:
         query = """
             SELECT
                 user_id,

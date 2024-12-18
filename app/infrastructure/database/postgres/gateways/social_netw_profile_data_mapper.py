@@ -8,12 +8,12 @@ from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapp
 
 class SocialNetwProfileDataMapper(DataMapper):
     def __init__(
-        self: Self,
+        self,
         connection: AsyncConnection,
     ) -> None:
         self.connection = connection
 
-    async def add(self: Self, entity: SocialNetwProfile) -> None:
+    async def add(self, entity: SocialNetwProfile) -> None:
         stmt = """
             INSERT INTO social_netw_profiles
                 social_netw_profile_id,
@@ -32,7 +32,7 @@ class SocialNetwProfileDataMapper(DataMapper):
             ),
         )
 
-    async def delete(self: Self, entity: SocialNetwProfile) -> None:
+    async def delete(self, entity: SocialNetwProfile) -> None:
         stmt = """
             DELETE FROM social_netw_profiles
             WHERE social_netw_profile_id = ?

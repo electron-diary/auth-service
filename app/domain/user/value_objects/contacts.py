@@ -1,11 +1,10 @@
-from typing import Self
 
 from app.domain.user.exceptions import InvalidContactsError
 
 
 class Contacts:
     def __init__(
-        self: Self,
+        self,
         phone_number: int | None,
         email: str | None,
     ) -> None:
@@ -14,7 +13,7 @@ class Contacts:
 
         self.validate()
 
-    def validate(self: Self) -> None:
+    def validate(self) -> None:
         if self.phone_number is None and self.email is None:
             raise InvalidContactsError("At least one contact must be provided")
 
@@ -24,7 +23,7 @@ class Contacts:
         if self.email and not isinstance(self.email, str):
             raise InvalidContactsError("Email must be a string")
 
-    def __str__(self: Self) -> str:
+    def __str__(self) -> str:
         if self.phone_number and self.email:
             return f"{self.phone_number} {self.email}"
 

@@ -1,4 +1,3 @@
-from typing import Self
 
 from sqlalchemy.ext.asyncio import AsyncConnection
 
@@ -8,12 +7,12 @@ from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapp
 
 class AddressDataMapper(DataMapper):
     def __init__(
-        self: Self,
+        self,
         connection: AsyncConnection,
     ) -> None:
         self.connection = connection
 
-    async def add(self: Self, entity: Address) -> None:
+    async def add(self, entity: Address) -> None:
         stmt = """
             INSERT INTO addresses
                 address_id,
@@ -41,12 +40,12 @@ class AddressDataMapper(DataMapper):
             ),
         )
 
-    async def delete(self: Self, entity: Address) -> None:
+    async def delete(self, entity: Address) -> None:
         stmt = """
             DELETE FROM addresses
             WHERE address_id = ?
         """
         await self.connection.execute(stmt, (entity.id,))
 
-    async def update(self: Self, entity: Address) -> None:
+    async def update(self, entity: Address) -> None:
         ...

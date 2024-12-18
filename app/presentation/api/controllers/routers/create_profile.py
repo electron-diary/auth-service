@@ -15,7 +15,7 @@ router = APIRouter()
 @router.post(
     "/create",
     responses={
-        status.HTTP_201_OK: {
+        status.HTTP_201_CREATED: {
             "model": SuccessfulResponse[UUID],
         },
         status.HTTP_400_BAD_REQUEST: {

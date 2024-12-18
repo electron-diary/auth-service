@@ -1,4 +1,3 @@
-from typing import Self
 from uuid import UUID
 
 from sqlalchemy import CursorResult
@@ -10,12 +9,12 @@ from app.application.dto.profile_dto import ProfileDto
 
 class ProfileReaderImpl(ProfileReader):
     def __init__(
-        self: Self,
+        self,
         connection: AsyncConnection,
     ) -> None:
         self.connection = connection
 
-    async def get_profile_by_id(self: Self, profile_id: UUID) -> ProfileDto | None:
+    async def get_profile_by_id(self, profile_id: UUID) -> ProfileDto | None:
         query = """
             SELECT 
                 profiles.profile_id, 
@@ -50,7 +49,7 @@ class ProfileReaderImpl(ProfileReader):
 
         return ProfileDto(...)
 
-    async def get_user_profiles(self: Self, user_id: UUID) -> list[ProfileDto]:
+    async def get_user_profiles(self, user_id: UUID) -> list[ProfileDto]:
         query = """
             SELECT
                 profiles.profile_id,

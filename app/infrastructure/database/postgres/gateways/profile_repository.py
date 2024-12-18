@@ -1,4 +1,3 @@
-from typing import Self
 from uuid import UUID
 
 from sqlalchemy import CursorResult
@@ -11,14 +10,14 @@ from app.domain.profile.repositories.profile_repository import ProfileRepository
 
 class ProfileRepositoryImpl(ProfileRepository):
     def __init__(
-        self: Self,
+        self,
         unit_of_work: UnitOfWork,
         connection: AsyncConnection,
     ) -> None:
         self.unit_of_work = unit_of_work
         self.connection = connection
 
-    async def load(self: Self, profile_id: UUID) -> Profile | None:
+    async def load(self, profile_id: UUID) -> Profile | None:
         query = """
             SELECT 
                 profiles.profile_id, 
@@ -45,7 +44,7 @@ class ProfileRepositoryImpl(ProfileRepository):
             JOIN addresses ON addresses.address_owner_id = profiles.profile_id
             WHERE profiles.profile_id = ?
         """
-        cursor: CursorResult = await self._connection.execute(query, (profile_id, ))
+        cursor: CursorResult = await self.connection.execute(query, (profile_id, ))
         result = await cursor.fetchone()
 
         if result is None:
@@ -53,7 +52,7 @@ class ProfileRepositoryImpl(ProfileRepository):
 
         return Profile(uow=self.unit_of_work)
 
-    async def load_all_user_profiles(self: Self, profile_owner_id: UUID) -> list[Profile]:
+    async def load_all_user_profiles(self, profile_owner_id: UUID) -> list[Profile]:
         query = """
             SELECT
                 profiles.profile_id,
@@ -80,7 +79,7 @@ class ProfileRepositoryImpl(ProfileRepository):
             JOIN addresses ON addresses.address_owner_id = profiles.profile_id
             WHERE profiles.owner_id = ?
         """
-        cursor: CursorResult = await self._connection.execute(query, (profile_owner_id,))
+        cursor: CursorResult = await self.connection.execute(query, (profile_owner_id,))
         result = await cursor.fetchall()
 
         if result is None:

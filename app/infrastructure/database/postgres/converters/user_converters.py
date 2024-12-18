@@ -1,5 +1,5 @@
 from app.application.dto.user_dto import UserDto
-from app.domain.common.unit_of_work import UnitOfWorkTrackerInterface
+from app.domain.common.unit_of_work import UnitOfWorkTracker
 from app.domain.user.entities.user import User
 from app.domain.user.value_objects.contacts import Contacts
 
@@ -13,7 +13,7 @@ def result_to_dto(result: dict) -> UserDto:
         status=result["status"],
     )
 
-def result_to_user_entity(result: dict, uow: UnitOfWorkTrackerInterface) -> User:
+def result_to_user_entity(result: dict, uow: UnitOfWorkTracker) -> User:
     return User(
         uow=uow,
         user_id=result["user_id"],

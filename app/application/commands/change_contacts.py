@@ -17,7 +17,7 @@ class ChangeContactsCommand:
 
 class ChangeContacts:
     def __init__(
-        self: Self,
+        self,
         unit_of_work: UnitOfWorkCommitter,
         user_repository: UserRepository,
         event_bus: EventBus,
