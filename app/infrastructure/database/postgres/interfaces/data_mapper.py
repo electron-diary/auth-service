@@ -14,5 +14,5 @@ class DataMapper(Protocol):
         raise NotImplementedError("Method must be implemented by subclasses")
 
     @abstractmethod
-    async def update(entity: UowedEntity) -> None:
+    async def update(self, entity: UowedEntity) -> None:
         raise NotImplementedError("Method must be implemented by subclasses")
