@@ -39,6 +39,7 @@ async def exception_handler(request: Request, exception: ApplicationError, statu
             ),
         )
 
+
 async def internal_exception_handler(request: Request, exception: Exception) -> ErrorResponse:
     return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
