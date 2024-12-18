@@ -12,31 +12,31 @@ class UnitOfWorkImpl(UnitOfWork):
         registry: Registry,
         connection: AsyncConnection,
     ) -> None:
-        self.new: dict[type[UowedEntity], list[UowedEntity]] = dict()
-        self.dirty: dict[type[UowedEntity], list[UowedEntity]] = dict()
-        self.deleted: dict[type[UowedEntity], list[UowedEntity]] = dict()
+        self.new: dict[type[UowedEntity], UowedEntity] = dict()
+        self.dirty: dict[type[UowedEntity], UowedEntity] = dict()
+        self.deleted: dict[type[UowedEntity], UowedEntity] = dict()
         self.registry = registry
         self.connection = connection
 
     def register_new(self, entity: UowedEntity) -> None:
-        self.new.setdefault(type(entity), list()).append(entity)
+        self.new[type(entity)] = entity
 
     def register_dirty(self, entity: UowedEntity) -> None:
-        self.dirty.setdefault(type(entity), list()).append(entity)
+        self.dirty[type(entity)] = entity
 
     def register_deleted(self, entity: UowedEntity) -> None:
-        self.deleted.setdefault(type(entity), list()).append(entity)
+        self.deleted[type(entity)]
 
     async def commit(self) -> None:
-        for entity_type, entity in self.new.values():
+        for entity_type, entity in self.new.items():
             mapper = self.registry.get_mapper(entity_type)
             await mapper.add(entity)
 
-        for entity_type, entity in self.dirty.values():
+        for entity_type, entity in self.dirty.items():
             mapper = self.registry.get_mapper(entity_type)
             await mapper.update(entity)
 
-        for entity_type, entity in self.deleted.values():
+        for entity_type, entity in self.deleted.items():
             mapper = self.registry.get_mapper(entity_type)
             await mapper.delete(entity)
 

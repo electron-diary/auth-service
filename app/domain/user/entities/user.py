@@ -1,7 +1,7 @@
 from typing import Self
 from uuid import UUID
 
-from app.domain.common.agregate_root import AgregateRoot
+from app.domain.common.domain_event import DomainEvent
 from app.domain.common.unit_of_work import UnitOfWorkTracker
 from app.domain.common.uowed import UowedEntity
 from app.domain.user.events.contacts_changed import ContactsChanged
@@ -14,7 +14,7 @@ from app.domain.user.statuses import Statuses
 from app.domain.user.value_objects.contacts import Contacts
 
 
-class User(UowedEntity[UUID], AgregateRoot):
+class User(UowedEntity[UUID]):
     def __init__(
         self,
         uow: UnitOfWorkTracker,
@@ -28,6 +28,7 @@ class User(UowedEntity[UUID], AgregateRoot):
         self.username = username
         self.contacts = contacts
         self.status = status
+        self.domain_events: list[DomainEvent] = []
 
     @classmethod
     def create_user(
@@ -116,3 +117,12 @@ class User(UowedEntity[UUID], AgregateRoot):
             ),
         )
         self.mark_deleted()
+
+    def record_event(self, event: DomainEvent) -> None:
+        self.domain_events.append(event)
+
+    def push_events(self) -> list[DomainEvent]:
+        events = self.domain_events.copy()
+        self.domain_events.clear()
+
+        return events

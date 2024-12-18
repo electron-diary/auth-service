@@ -118,6 +118,7 @@ class PostgresDatabaseProvider(Provider):
         registry.register_mapper(Profile, profile_data_mapper)
         registry.register_mapper(SocialNetwProfile, social_netw_profile_data_mapper)
         registry.register_mapper(User, user_data_mapper)
+        return registry
 
     @provide(scope=Scope.REQUEST)
     def provide_unit_of_work(

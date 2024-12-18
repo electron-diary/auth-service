@@ -1,8 +1,11 @@
 
+from sqlalchemy import delete, insert, update
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app.domain.user.entities.user import User
+from app.infrastructure.database.postgres.converters import user_entity_to_dict
 from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapper
+from app.infrastructure.database.postgres.tables import user_table
 
 
 class UserDataMapper(DataMapper):
@@ -13,41 +16,18 @@ class UserDataMapper(DataMapper):
         self.connection = connection
 
     async def add(self, entity: User) -> None:
-        stmt = """
-            INSERT INTO users (user_id, email, phone_number, username, status)
-            VALUES (?, ?, ?, ?, ?)
-        """
-        await self.connection.execute(
-            stmt,
-            (
-                entity.id,
-                entity.contacts.email,
-                entity.contacts.phone_number,
-                entity.username,
-                entity.status,
-            ),
-        )
+        values = user_entity_to_dict(entity)
+        stmt = insert(user_table).values(values)
+
+        await self.connection.execute(stmt)
 
     async def update(self, entity: User) -> None:
-        stmt = """
-            UPDATE users
-            SET email = ?, phone_number = ?, username = ?, status = ?
-            WHERE user_id = ?
-        """
-        await self.connection.execute(
-            stmt,
-            (
-                entity.contacts.email,
-                entity.contacts.phone_number,
-                entity.username,
-                entity.status,
-                entity.user_id,
-            ),
-        )
+        values = user_entity_to_dict(entity)
+        stmt = update(user_table).where(user_table.c.user_id == entity.id).values(values)
+
+        await self.connection.execute(stmt)
 
     async def delete(self, entity: User) -> None:
-        stmt = """
-            DELETE FROM users
-            WHERE user_id = ?
-        """
-        await self.connection.execute(stmt, (entity.user_id, ))
+        stmt = delete(user_table).where(user_table.c.user_id == entity.id)
+
+        await self.connection.execute(stmt)

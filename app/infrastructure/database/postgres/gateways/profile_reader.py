@@ -1,10 +1,15 @@
 from uuid import UUID
 
-from sqlalchemy import CursorResult
+from sqlalchemy import CursorResult, select
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app.application.common.profile_reader import ProfileReader
 from app.application.dto.profile_dto import ProfileDto
+from app.infrastructure.database.postgres.tables import (
+    address_table,
+    profile_table,
+    social_netw_profile_table,
+)
 
 
 class ProfileReaderImpl(ProfileReader):
@@ -15,72 +20,88 @@ class ProfileReaderImpl(ProfileReader):
         self.connection = connection
 
     async def get_profile_by_id(self, profile_id: UUID) -> ProfileDto | None:
-        query = """
-            SELECT 
-                profiles.profile_id, 
-                profiles.owner_id, 
-                profiles.first_name
-                profiles.last_name, 
-                profiles.middle_name, 
-                profiles.bio, 
-                profiles.status,
-                social_netw_profiles.social_netw_profile_owner_id,
-                social_netw_profiles.social_netw_profile_id,
-                social_netw_profiles.social_netw_profile_name
-                social_netw_profiles.social_netw_profile_link
-                addresses.address_id,
-                addresses.address_owner_id
-                addresses.country,
-                addresses.city,
-                addresses.street,
-                addresses.house_number,
-                addresses.apartment_number,
-                addresses.postal_code
-            FROM profiles
-            JOIN social_netw_profiles ON social_netw_profiles.social_netw_profile_owner_id = profiles.profile_id
-            JOIN addresses ON addresses.address_owner_id = profiles.profile_id
-            WHERE profiles.profile_id = ?
-        """
-        cursor: CursorResult = await self.connection.execute(query, (profile_id, ))
+        query = (
+            select(
+                profile_table.c.profile_id,
+                profile_table.c.user_ud,
+                profile_table.c.first_name,
+                profile_table.c.last_name,
+                profile_table.c.middle_name,
+                profile_table.c.bio,
+                profile_table.c.status,
+                address_table.c.address_id,
+                address_table.c.country,
+                address_table.c.city,
+                address_table.c.street,
+                address_table.c.house_number,
+                address_table.c.apartament_number,
+                address_table.c.postal_code,
+                social_netw_profile_table.c.social_netw_profile_id,
+                social_netw_profile_table.c.social_netw_profile_name,
+                social_netw_profile_table.c.social_netw_profile_link,
+            )
+            .join(
+                profile_table,
+                address_table,
+                isouter=True,
+            )
+            .join(
+                profile_table,
+                social_netw_profile_table,
+                isouter=True,
+            )
+            .where(profile_table.c.profile_id == profile_id)
+        )
+
+        cursor: CursorResult = await self.connection.execute(query)
         result = await cursor.fetchone()
 
         if result is None:
             return None
 
-        return ProfileDto(...)
+        print(result)
+        return None
 
     async def get_user_profiles(self, user_id: UUID) -> list[ProfileDto]:
-        query = """
-            SELECT
-                profiles.profile_id,
-                profiles.owner_id,
-                profiles.first_name
-                profiles.last_name,
-                profiles.middle_name,
-                profiles.bio,
-                profiles.status,
-                social_netw_profiles.social_netw_profile_owner_id,
-                social_netw_profiles.social_netw_profile_id,
-                social_netw_profiles.social_netw_profile_name
-                social_netw_profiles.social_netw_profile_link
-                addresses.address_id,
-                addresses.address_owner_id
-                addresses.country,
-                addresses.city,
-                addresses.street,
-                addresses.house_number,
-                addresses.apartment_number,
-                addresses.postal_code
-            FROM profiles
-            JOIN social_netw_profiles ON social_netw_profiles.social_netw_profile_owner_id = profiles.profile_id
-            JOIN addresses ON addresses.address_owner_id = profiles.profile_id
-            WHERE profiles.owner_id = ?
-        """
-        cursor: CursorResult = await self.connection.execute(query, (user_id,))
+        query = (
+            select(
+                profile_table.c.profile_id,
+                profile_table.c.user_ud,
+                profile_table.c.first_name,
+                profile_table.c.last_name,
+                profile_table.c.middle_name,
+                profile_table.c.bio,
+                profile_table.c.status,
+                address_table.c.address_id,
+                address_table.c.country,
+                address_table.c.city,
+                address_table.c.street,
+                address_table.c.house_number,
+                address_table.c.apartament_number,
+                address_table.c.postal_code,
+                social_netw_profile_table.c.social_netw_profile_id,
+                social_netw_profile_table.c.social_netw_profile_name,
+                social_netw_profile_table.c.social_netw_profile_link,
+            )
+            .join(
+                profile_table,
+                address_table,
+                isouter=True,
+            )
+            .join(
+                profile_table,
+                social_netw_profile_table,
+                isouter=True,
+            )
+            .where(profile_table.c.user_id == user_id)
+        )
+
+        cursor: CursorResult = await self.connection.execute(query)
         result = await cursor.fetchall()
 
         if result is None:
             return None
 
-        return ...
+        print(result)
+        return []
 

@@ -1,8 +1,11 @@
 
+from sqlalchemy import delete, insert
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app.domain.profile.entities.address import Address
+from app.infrastructure.database.postgres.converters import address_entity_to_dict
 from app.infrastructure.database.postgres.interfaces.data_mapper import DataMapper
+from app.infrastructure.database.postgres.tables import address_table
 
 
 class AddressDataMapper(DataMapper):
@@ -13,39 +16,14 @@ class AddressDataMapper(DataMapper):
         self.connection = connection
 
     async def add(self, entity: Address) -> None:
-        stmt = """
-            INSERT INTO addresses
-                address_id,
-                address_owner_id,
-                country,
-                city,
-                street,
-                house_number,
-                apartament_number,
-                postal_code,
-            VALUES
-                (?, ?, ?, ?, ?, ?, ?, ?)
-        """
-        await self.connection.execute(
-            stmt,
-            (
-                entity.id,
-                entity.profile_id,
-                entity.country,
-                entity.city,
-                entity.street,
-                entity.house_number,
-                entity.apartament_number,
-                entity.postal_code,
-            ),
-        )
+        values = address_entity_to_dict(entity)
+        stmt = insert(address_table).values(values)
+
+        await self.connection.execute(stmt)
 
     async def delete(self, entity: Address) -> None:
-        stmt = """
-            DELETE FROM addresses
-            WHERE address_id = ?
-        """
-        await self.connection.execute(stmt, (entity.id,))
+        stmt = delete(address_table).where(address_table.c.address_id == entity.id)
+        await self.connection.execute(stmt)
 
     async def update(self, entity: Address) -> None:
         ...

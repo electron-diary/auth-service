@@ -1,7 +1,7 @@
 from typing import Self
 from uuid import UUID
 
-from app.domain.common.agregate_root import AgregateRoot
+from app.domain.common.domain_event import DomainEvent
 from app.domain.common.unit_of_work import UnitOfWorkTracker
 from app.domain.common.uowed import UowedEntity
 from app.domain.profile.entities.address import Address
@@ -24,7 +24,7 @@ from app.domain.profile.statuses import Statuses
 from app.domain.profile.value_objects.fullname import Fullname
 
 
-class Profile(UowedEntity[UUID], AgregateRoot):
+class Profile(UowedEntity[UUID]):
     def __init__(
         self,
         uow: UnitOfWorkTracker,
@@ -44,6 +44,7 @@ class Profile(UowedEntity[UUID], AgregateRoot):
         self.bio = bio
         self.addresses = addresses
         self.social_netw_profiles = social_netw_profiles
+        self.domain_events: list[DomainEvent] = []
 
     @classmethod
     def create_profile(
@@ -267,3 +268,12 @@ class Profile(UowedEntity[UUID], AgregateRoot):
                 profile_owner_id=self.profile_owner_id,
             ),
         )
+
+    def record_event(self, event: DomainEvent) -> None:
+        self.domain_events.append(event)
+
+    def push_events(self) -> list[DomainEvent]:
+        events = self.domain_events.copy()
+        self.domain_events.clear()
+
+        return events

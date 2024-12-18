@@ -6,7 +6,7 @@ from app.application.common.event_bus import EventBus
 from app.infrastructure.brokers.config import NatsConfig
 from app.infrastructure.brokers.interfaces import MessagePublisher
 from app.infrastructure.brokers.main import get_nats_client, get_nats_jetstream
-from app.infrastructure.brokers.message_publisher import MessagePublisherImpl
+from app.infrastructure.brokers.message_publisher import MessagePublisherMock
 from app.infrastructure.event_queue.event_bus import EventBusImpl
 
 
@@ -32,9 +32,8 @@ class NatsBrokerProvider(Provider):
     @provide(scope=Scope.REQUEST)
     def provide_message_publisher(
         self,
-        jetstream: JetStreamContext,
     ) -> MessagePublisher:
-        return MessagePublisherImpl(jetstream)
+        return MessagePublisherMock()
 
     @provide(scope=Scope.REQUEST)
     def provide_event_bus(

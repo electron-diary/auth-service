@@ -17,3 +17,15 @@ class MessagePublisherImpl(MessagePublisher):
     async def publish(self, message: Message, key: str) -> None:
         nats_message = to_json(asdict(message))
         await self.jetstream.publish(key, nats_message)
+
+
+class MessagePublisherMock(MessagePublisher):
+    def __init__(
+        self,
+    ) -> None:
+        ...
+
+    async def publish(self, message: Message, key: str) -> None:
+        nats_message = to_json(asdict(message))
+        print(f"Published message: {nats_message}")
+

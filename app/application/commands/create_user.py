@@ -39,12 +39,12 @@ class CreateUser:
 
         user_uuid = uuid4()
 
-        user: User = User.create_user(
+        user = User.create_user(
             uow=self.unit_of_work,
             user_id=user_uuid,
             username=command.username,
             email=command.email,
-            phone=command.phone,
+            phone_number=command.phone,
         )
 
         await self.event_bus.publish(user.push_events())
