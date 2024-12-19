@@ -44,7 +44,7 @@ class User(UowedEntity[UUID]):
             user_id=user_id,
             username=username,
             contacts=Contacts(phone_number=phone_number, email=email),
-            status=Statuses.INACTIVE,
+            status=Statuses.ACTIVE,
         )
         user.mark_new()
         user.record_event(
@@ -102,7 +102,7 @@ class User(UowedEntity[UUID]):
                 event_type="UserStatusChanged",
                 agregate_name="User",
                 user_id=self.id,
-                status=self.statusSS,
+                status=self.status,
             ),
         )
         self.mark_dirty()

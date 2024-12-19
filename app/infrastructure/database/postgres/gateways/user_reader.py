@@ -20,7 +20,7 @@ class UserReaderImpl(UserReader):
         query = select(user_table).where(user_table.c.user_id == user_id)
         cursor: CursorResult = await self.connection.execute(query)
 
-        result = await cursor.fetchone()
+        result = cursor.mappings().first()
 
         if result is None:
             return None

@@ -25,7 +25,7 @@ class UnitOfWorkImpl(UnitOfWork):
         self.dirty[type(entity)] = entity
 
     def register_deleted(self, entity: UowedEntity) -> None:
-        self.deleted[type(entity)]
+        self.deleted[type(entity)] = entity
 
     async def commit(self) -> None:
         for entity_type, entity in self.new.items():
@@ -40,5 +40,5 @@ class UnitOfWorkImpl(UnitOfWork):
             mapper = self.registry.get_mapper(entity_type)
             await mapper.delete(entity)
 
-        await self.connection.execute("COMMIT")
+        await self.connection.commit()
 

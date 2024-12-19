@@ -19,6 +19,6 @@ class GetUserProfiles:
         self.profile_reader = profile_reader
 
     async def handle(self: Self, query: GetUserProfilesQuery) -> list[ProfileDto]:
-        profiles = await self.profile_reader.get_user_profiles(query.user_id)
+        profiles = await self.profile_reader.get_user_profiles(query.profile_owner_id)
 
         return profiles

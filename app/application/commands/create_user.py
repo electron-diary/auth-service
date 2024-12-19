@@ -50,4 +50,5 @@ class CreateUser:
         await self.event_bus.publish(user.push_events())
         await self.unit_of_work.commit()
 
+        return user_uuid
 

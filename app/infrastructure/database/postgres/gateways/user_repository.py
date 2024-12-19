@@ -24,7 +24,7 @@ class UserRepositoryImpl(UserRepository):
         query = select(user_table).where(user_table.c.user_id == user_id)
         cursor: CursorResult = await self.connection.execute(query)
 
-        result = cursor.fetchone()
+        result = cursor.mappings().fetchone()
 
         if result is None:
             return None
@@ -35,7 +35,7 @@ class UserRepositoryImpl(UserRepository):
         query = select(user_table).where(user_table.c.email == email)
         cursor: CursorResult = await self.connection.execute(query)
 
-        result = cursor.fetchone()
+        result = cursor.mappings().fetchone()
 
         if result is None:
             return None
@@ -46,7 +46,7 @@ class UserRepositoryImpl(UserRepository):
         query = select(user_table).where(user_table.c.phone_number == phone_number)
         cursor: CursorResult = await self.connection.execute(query)
 
-        result = cursor.fetchone()
+        result = cursor.mappings().fetchone()
 
         if result is None:
             return None
@@ -57,10 +57,11 @@ class UserRepositoryImpl(UserRepository):
         query = select(user_table).where(user_table.c.username == username)
         cursor: CursorResult = await self.connection.execute(query)
 
-        result = cursor.fetchone()
+        result = cursor.mappings().fetchone()
 
         if result is None:
             return None
 
         return result_to_user_entity(result, self.unit_of_work)
+
 

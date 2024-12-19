@@ -70,11 +70,11 @@ class Profile(UowedEntity[UUID]):
         profile.mark_new()
         profile.record_event(
             ProfileCreated(
-                aggregate_id=profile.profile_id,
+                aggregate_id=profile.id,
                 event_type="ProfileCreated",
                 agregate_name="Profile",
                 profile_status=profile.status.value,
-                profile_id=profile.profile_id,
+                profile_id=profile.id,
                 profile_owner_id=profile.profile_owner_id,
                 first_name=profile.fullname.first_name,
                 last_name=profile.fullname.last_name,
@@ -122,6 +122,8 @@ class Profile(UowedEntity[UUID]):
                 house_number=address.house_number,
                 apartment_number=address.apartament_number,
                 postal_code=address.postal_code,
+                profile_id=self.id,
+                profile_owner_id=self.profile_owner_id,
             ),
         )
 
@@ -255,9 +257,6 @@ class Profile(UowedEntity[UUID]):
 
         for social_netw_profile in self.social_netw_profiles:
             social_netw_profile.delete_social_netw_profile()
-
-        for avatar in self.avatars:
-            avatar.delete_avatar()
 
         self.record_event(
             ProfileDeleted(

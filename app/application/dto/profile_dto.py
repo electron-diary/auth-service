@@ -29,5 +29,5 @@ class ProfileDto:
     middle_name: str | None
     status: str
     bio: str
-    address: list[AddressData]
+    addresses: list[AddressData]
     social_netw_profiles: list[SocialNetwProfileData]
